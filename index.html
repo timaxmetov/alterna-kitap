@@ -13,6 +13,12 @@
     try{ t=localStorage.getItem('alterna_theme'); }catch(e){}
     if(!t) t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme',t);
+
+    // заставка показывается раз за сессию вкладки и только если анимации разрешены
+    var seen=false;
+    try{ seen = sessionStorage.getItem('alterna_intro')==='1'; }catch(e){}
+    var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(seen||calm) document.documentElement.setAttribute('data-intro','off');
   })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -975,6 +981,290 @@
     .tlv b{font-size:10px;top:-18px;}
   }
 
+  /* ============================================================
+     ЗАСТАВКА: книга раскрывается, проявляются буквы,
+     которых нет ни в одном другом алфавите
+     ============================================================ */
+  :root[data-intro="off"] .intro{display:none !important;}
+  .intro{
+    position:fixed;inset:0;z-index:500;background:var(--bg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transition:opacity .55s var(--ease),transform .55s var(--ease);
+  }
+  .intro.out{opacity:0;transform:scale(1.05);pointer-events:none;}
+  .intro-in{display:flex;flex-direction:column;align-items:center;}
+
+  .ibook{position:relative;width:236px;height:154px;perspective:1000px;}
+  .ispine{
+    position:absolute;left:50%;top:0;bottom:0;width:3px;margin-left:-1.5px;
+    background:var(--ink);border-radius:2px;transform:scaleY(0);transform-origin:top center;
+    animation:i-spine .55s var(--ease-out) forwards;
+  }
+  @keyframes i-spine{to{transform:scaleY(1);}}
+  .ipage{
+    position:absolute;top:0;width:114px;height:154px;
+    background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh-2);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+  }
+  .il{right:50%;transform-origin:right center;transform:rotateY(-94deg);
+    border-radius:9px 2px 2px 9px;animation:i-openL .85s .4s var(--ease-out) forwards;}
+  .ir{left:50%;transform-origin:left center;transform:rotateY(94deg);
+    border-radius:2px 9px 9px 2px;animation:i-openR .85s .4s var(--ease-out) forwards;}
+  @keyframes i-openL{to{transform:rotateY(-9deg);}}
+  @keyframes i-openR{to{transform:rotateY(9deg);}}
+  /* строки текста на страницах */
+  .ilines{width:74px;display:flex;flex-direction:column;gap:7px;}
+  .ilines i{display:block;height:2px;border-radius:2px;background:var(--line-2);
+    transform:scaleX(0);transform-origin:left center;animation:i-line .4s var(--ease-out) forwards;}
+  .ir .ilines i{transform-origin:right center;}
+  .ilines i:nth-child(1){animation-delay:1.05s;}
+  .ilines i:nth-child(2){animation-delay:1.13s;width:88%;}
+  .ilines i:nth-child(3){animation-delay:1.21s;}
+  .ilines i:nth-child(4){animation-delay:1.29s;width:64%;}
+  @keyframes i-line{to{transform:scaleX(1);}}
+
+  .iletters{display:flex;gap:11px;margin-top:40px;perspective:600px;}
+  .iletters span{
+    font-family:'Inter Tight','Inter',sans-serif;font-size:27px;font-weight:600;
+    color:var(--accent);opacity:0;transform:translateY(12px) rotateX(-70deg);
+    animation:i-letter .55s var(--ease-out) forwards;
+  }
+  .iletters span:nth-child(1){animation-delay:1.10s;}
+  .iletters span:nth-child(2){animation-delay:1.18s;}
+  .iletters span:nth-child(3){animation-delay:1.26s;}
+  .iletters span:nth-child(4){animation-delay:1.34s;}
+  .iletters span:nth-child(5){animation-delay:1.42s;}
+  .iletters span:nth-child(6){animation-delay:1.50s;}
+  .iletters span:nth-child(7){animation-delay:1.58s;}
+  @keyframes i-letter{to{opacity:1;transform:none;}}
+
+  .icap{
+    font-size:12px;color:var(--ink-3);margin-top:14px;letter-spacing:.04em;text-align:center;
+    opacity:0;animation:i-up .6s 1.72s var(--ease-out) forwards;
+  }
+  .ititle{
+    font-family:'Inter Tight','Inter',sans-serif;font-size:31px;font-weight:600;letter-spacing:-.03em;
+    margin-top:30px;opacity:0;animation:i-up .6s 1.90s var(--ease-out) forwards;
+  }
+  .isub{
+    font-size:11px;color:var(--ink-3);letter-spacing:.2em;text-transform:uppercase;margin-top:7px;
+    opacity:0;animation:i-up .6s 2.02s var(--ease-out) forwards;
+  }
+  @keyframes i-up{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+
+  .iskip{
+    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+    background:none;border:1px solid var(--line);border-radius:var(--r-full);
+    padding:8px 18px;font-size:12.5px;color:var(--ink-3);
+    opacity:0;animation:i-up .5s 1.2s var(--ease-out) forwards;
+    transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);
+  }
+  .iskip:hover{color:var(--ink);border-color:var(--line-2);}
+
+  .foot-act{
+    display:flex;gap:14px;flex-wrap:wrap;margin-top:16px;
+  }
+  .foot-act button{
+    background:none;border:none;padding:0;font-size:12.5px;color:var(--ink-3);
+    border-bottom:1px solid var(--line-2);transition:color var(--dur) var(--ease);
+  }
+  .foot-act button:hover{color:var(--accent);border-color:var(--accent);}
+
+  @media (max-width:640px){
+    .ibook{width:190px;height:126px;}
+    .ipage{width:92px;height:126px;}
+    .ilines{width:58px;}
+    .iletters{gap:8px;margin-top:32px;}
+    .iletters span{font-size:22px;}
+    .ititle{font-size:25px;margin-top:24px;}
+  }
+
+  /* ============================================================
+     РАЗДЕЛ «ЯЗЫК»
+     ============================================================ */
+  .era-rail{position:relative;margin-bottom:28px;padding-top:6px;overflow-x:auto;padding-bottom:6px;}
+  .era-rail::-webkit-scrollbar{height:0;}
+  .era-line{display:flex;gap:0;min-width:min-content;position:relative;}
+  .era-line::before{
+    content:"";position:absolute;left:22px;right:22px;top:11px;height:2px;background:var(--line);
+  }
+  .era-b{
+    position:relative;flex:1;min-width:118px;background:none;border:none;padding:0;
+    display:flex;flex-direction:column;align-items:center;gap:11px;
+  }
+  .era-b .dot{
+    width:15px;height:15px;border-radius:50%;background:var(--surface);
+    border:2px solid var(--line-2);z-index:2;
+    transition:all .25s var(--ease);
+  }
+  .era-b:hover .dot{border-color:var(--accent);transform:scale(1.18);}
+  .era-b.on .dot{background:var(--accent);border-color:var(--accent);
+    box-shadow:0 0 0 5px var(--accent-soft);transform:scale(1.1);}
+  .era-b .ey{font-size:11.5px;font-weight:700;color:var(--ink-3);letter-spacing:.03em;
+    font-variant-numeric:tabular-nums;transition:color var(--dur) var(--ease);}
+  .era-b .en{font-size:12.5px;color:var(--ink-2);text-align:center;line-height:1.35;max-width:130px;
+    transition:color var(--dur) var(--ease);}
+  .era-b.on .ey,.era-b.on .en{color:var(--ink);}
+  .era-b.on .en{font-weight:600;}
+  .era-b:hover .ey,.era-b:hover .en{color:var(--accent);}
+
+  .era-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:32px 34px;animation:eraIn .4s var(--ease-out);
+  }
+  @keyframes eraIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+  .era-card .eyy{
+    display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.1em;
+    color:var(--accent);background:var(--accent-soft);padding:5px 12px;border-radius:var(--r-full);
+    margin-bottom:14px;font-variant-numeric:tabular-nums;
+  }
+  .era-card h3{font-size:clamp(20px,2.6vw,26px);margin:0 0 14px;letter-spacing:-.025em;}
+  .era-card p{font-size:15px;line-height:1.7;color:var(--ink-2);margin:0 0 14px;max-width:68ch;}
+  .era-card p:last-of-type{margin-bottom:0;}
+  .era-note{
+    border-left:3px solid var(--accent);padding:2px 0 2px 16px;margin:20px 0 0;
+    font-size:15px;line-height:1.65;color:var(--ink);
+  }
+  .era-foot{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);
+    display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+
+  /* пары слов старое → новое */
+  .wpairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:9px;margin-top:22px;}
+  .wp{
+    display:flex;align-items:center;gap:9px;background:var(--surface-2);
+    border-radius:var(--r-sm);padding:11px 14px;font-size:13.5px;
+    opacity:0;transform:translateY(8px);
+  }
+  .wp.in{opacity:1;transform:none;transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);}
+  .wp .old{color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--line-2);}
+  .wp .arr{color:var(--ink-3);flex:none;}
+  .wp .new{font-weight:600;color:var(--accent);}
+  .wp .ru{margin-left:auto;font-size:12px;color:var(--ink-3);}
+
+  /* алфавит */
+  .alpha{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px;}
+  .al{
+    width:38px;height:38px;border-radius:var(--r-sm);background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Inter Tight';font-size:15px;font-weight:600;color:var(--ink-2);
+    opacity:0;transform:scale(.8);
+  }
+  .al.in{opacity:1;transform:none;transition:opacity .3s var(--ease-out),transform .3s var(--ease-out);}
+  .al.new{background:var(--accent);color:var(--accent-ink);}
+  .al.gone{background:none;border:1px dashed var(--line-2);color:var(--ink-3);text-decoration:line-through;}
+  .alpha-l{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--ink-3);}
+  .alpha-l i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;}
+
+  /* ---------- КАРТОЧКИ СЛОВ ---------- */
+  .deck-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:22px;}
+  .deck-prog{flex:1;min-width:150px;height:6px;border-radius:var(--r-full);background:var(--surface-2);overflow:hidden;}
+  .deck-prog i{display:block;height:100%;width:0;border-radius:var(--r-full);background:var(--accent);
+    transition:width .35s var(--ease-out);}
+  .deck-n{font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .deck-n b{color:var(--ink);font-weight:600;}
+
+  .fcard{perspective:1400px;max-width:460px;margin:0 auto 22px;}
+  .fc-in{
+    position:relative;width:100%;aspect-ratio:3/2;
+    transform-style:preserve-3d;transition:transform .5s var(--ease-out);cursor:pointer;
+  }
+  .fcard.flip .fc-in{transform:rotateY(180deg);}
+  .fc-s{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:var(--r-lg);border:1px solid var(--line);background:var(--surface);
+    box-shadow:var(--sh-2);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:26px;
+  }
+  .fc-b{transform:rotateY(180deg);background:var(--accent);border-color:var(--accent);}
+  .fc-w{font-family:'Inter Tight';font-size:clamp(28px,6vw,40px);font-weight:600;letter-spacing:-.03em;text-align:center;}
+  .fc-b .fc-w{color:var(--accent-ink);}
+  .fc-t{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);}
+  .fc-b .fc-t{color:color-mix(in srgb,var(--accent-ink) 68%,transparent);}
+  .fc-hint{position:absolute;bottom:16px;font-size:11.5px;color:var(--ink-3);}
+  .fc-b .fc-hint{color:color-mix(in srgb,var(--accent-ink) 60%,transparent);}
+  .deck-act{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  .deck-done{
+    text-align:center;padding:52px 24px;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--r-lg);max-width:460px;margin:0 auto 22px;
+  }
+  .deck-done b{display:block;font-family:'Inter Tight';font-size:22px;margin-bottom:8px;font-weight:600;}
+  .deck-done span{font-size:14px;color:var(--ink-2);}
+
+  /* ---------- ТЕКСТЫ ---------- */
+  .story-pick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;}
+  .sp{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-full);
+    padding:9px 17px;font-size:13.5px;font-weight:500;display:inline-flex;align-items:center;gap:8px;
+    transition:all var(--dur) var(--ease);
+  }
+  .sp:hover{border-color:var(--line-2);}
+  .sp.on{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600;}
+  .sp i{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;
+    background:var(--accent-soft);color:var(--accent);padding:2px 8px;border-radius:var(--r-full);}
+  .sp.on i{background:color-mix(in srgb,var(--bg) 22%,transparent);color:var(--bg);}
+
+  .story{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:32px 34px;max-width:760px;animation:eraIn .4s var(--ease-out);
+  }
+  .story h3{font-size:22px;margin:0 0 4px;}
+  .story .st-m{font-size:12.5px;color:var(--ink-3);margin-bottom:22px;}
+  .story .st-b{font-size:17px;line-height:1.85;color:var(--ink);}
+  .story .st-b p{margin:0 0 15px;}
+  .story .w{
+    border-bottom:1.5px dotted var(--accent);cursor:pointer;
+    transition:background-color var(--dur) var(--ease);border-radius:3px;
+  }
+  .story .w:hover{background:var(--accent-soft);}
+  .story .w.on{background:var(--accent);color:var(--accent-ink);border-bottom-color:transparent;}
+  .gloss{
+    position:sticky;bottom:14px;margin-top:22px;
+    background:var(--ink);color:var(--bg);border-radius:var(--r-md);
+    padding:13px 18px;font-size:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    opacity:0;transform:translateY(8px);pointer-events:none;
+    transition:all .25s var(--ease);
+  }
+  .gloss.on{opacity:1;transform:none;pointer-events:auto;}
+  .gloss b{font-family:'Inter Tight';font-size:16px;font-weight:600;}
+  .gloss span{color:color-mix(in srgb,var(--bg) 72%,transparent);}
+  .st-tr{
+    margin-top:24px;padding-top:20px;border-top:1px solid var(--line);
+  }
+  .st-tr .tr-b{
+    display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease-out);
+  }
+  .st-tr.open .tr-b{grid-template-rows:1fr;}
+  .st-tr .tr-b > div{overflow:hidden;min-height:0;}
+  .st-tr p{font-size:15px;line-height:1.7;color:var(--ink-2);margin:14px 0 0;}
+
+  /* ---------- ФАКТ ДНЯ ---------- */
+  .factbox{
+    display:flex;align-items:center;gap:22px;flex-wrap:wrap;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:26px 28px;margin-bottom:72px;
+  }
+  .fact-i{
+    width:46px;height:46px;border-radius:14px;flex:none;
+    background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .fact-t{flex:1;min-width:220px;}
+  .fact-t .fl{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+    font-weight:700;margin-bottom:6px;}
+  .fact-t p{margin:0;font-size:15.5px;line-height:1.6;}
+  .fact-t p.swap{animation:factIn .4s var(--ease-out);}
+  @keyframes factIn{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:none;}}
+
+  @media (max-width:640px){
+    .era-card,.story{padding:22px 20px;border-radius:var(--r-md);}
+    .era-b{min-width:104px;}
+    .era-b .en{font-size:11.5px;max-width:104px;}
+    .wpairs{grid-template-columns:1fr;}
+    .al{width:33px;height:33px;font-size:14px;}
+    .story .st-b{font-size:16px;line-height:1.8;}
+    .factbox{padding:20px;gap:16px;}
+  }
+
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
       transition-duration:.01ms !important;scroll-behavior:auto !important;}
@@ -985,6 +1275,21 @@
 </style>
 </head>
 <body>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-in">
+    <div class="ibook">
+      <div class="ispine"></div>
+      <div class="ipage il"><div class="ilines"><i></i><i></i><i></i><i></i></div></div>
+      <div class="ipage ir"><div class="ilines"><i></i><i></i><i></i><i></i></div></div>
+    </div>
+    <div class="iletters"><span>Ç</span><span>Ğ</span><span>I</span><span>İ</span><span>Ö</span><span>Ş</span><span>Ü</span></div>
+    <div class="icap">Семь букв, которые турецкий получил в 1928 году,<br>когда за три месяца перешёл с арабской вязи на латиницу</div>
+    <div class="ititle">Alterna Kitap</div>
+    <div class="isub">Türkçe oku</div>
+  </div>
+  <button class="iskip" onclick="endIntro()">Пропустить</button>
+</div>
 
 <div class="sprog" id="sprog"></div>
 
@@ -1029,6 +1334,18 @@
       <div class="st"><b id="stA1">0</b><span>для начинающих</span></div>
       <div class="st"><b id="stFree">0</b><span>можно скачать бесплатно</span></div>
       <div class="st"><b id="stAuthors">0</b><span>авторов</span></div>
+    </div>
+
+    <div class="factbox">
+      <div class="fact-i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18h6M10 21h4" stroke-linecap="round"/><path d="M12 3a6 6 0 0 1 3.6 10.8c-.5.4-.8 1-.8 1.6v.6H9.2v-.6c0-.6-.3-1.2-.8-1.6A6 6 0 0 1 12 3z" stroke-linejoin="round"/></svg></div>
+      <div class="fact-t">
+        <div class="fl">Факт о турецком</div>
+        <p id="factText"></p>
+      </div>
+      <button class="btn btn-gh" onclick="nextFact()">
+        Ещё факт
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 11.5a8 8 0 1 1-2.6-5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20 3.5v4h-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
 
     <section class="block">
@@ -1209,6 +1526,39 @@
     <div id="body"></div>
   </section>
 
+  <section class="view" id="view-lang">
+    <div class="page-h">
+      <h2>Язык</h2>
+      <p class="lede">Почему турецкая книга 1935 года читается тяжелее, чем книга 1995-го, какие слова встречаются в книгах чаще всего и что можно почитать по-турецки прямо сейчас, не выходя отсюда.</p>
+    </div>
+
+    <div class="lib-tabs">
+      <button id="lgHist" class="lt active" onclick="setLangTab('hist')">Как менялся язык</button>
+      <button id="lgWords" class="lt" onclick="setLangTab('words')">Слова из книг <span id="cntWords">0</span></button>
+      <button id="lgStory" class="lt" onclick="setLangTab('story')">Тексты для чтения <span id="cntStory">0</span></button>
+    </div>
+
+    <div id="paneHist" class="lang-pane">
+      <div class="era-rail"><div class="era-line" id="eraNav"></div></div>
+      <div id="eraBody"></div>
+    </div>
+
+    <div id="paneWords" class="lang-pane" style="display:none">
+      <div class="deck-top">
+        <div class="story-pick" id="deckCats" style="margin:0;"></div>
+        <div class="deck-prog"><i id="deckBar"></i></div>
+        <div class="deck-n"><b id="deckI">1</b> / <span id="deckN">0</span></div>
+      </div>
+      <div id="deckWrap"></div>
+      <div class="deck-act" id="deckAct"></div>
+    </div>
+
+    <div id="paneStory" class="lang-pane" style="display:none">
+      <div class="story-pick" id="storyPick"></div>
+      <div id="storyBody"></div>
+    </div>
+  </section>
+
   <section class="view" id="view-where">
     <div class="page-h">
       <h2>Где брать книги</h2>
@@ -1279,6 +1629,10 @@
 
   <footer class="foot">
     Каталог собран командой Alterna. Уровень отражает сложность языка книги: длину предложений, объём лексики, количество устаревших и диалектных слов. Он не совпадает с возрастной аудиторией: детская книга может быть на A2, а короткий рассказ классика на C1.
+    <div class="foot-act">
+      <button onclick="playIntro()">Показать заставку ещё раз</button>
+      <button onclick="setView('lang')">История турецкого языка</button>
+    </div>
   </footer>
 </div>
 
@@ -1967,11 +2321,12 @@ const PERIODS=[
 ];
 
 const NAV=[
- {id:"home",   label:"Главная",       icon:'<path d="M4 10.6 12 4l8 6.6V20a1 1 0 0 1-1 1h-4v-6.2H9V21H5a1 1 0 0 1-1-1z" stroke-linejoin="round"/>'},
- {id:"catalog",label:"Каталог",       icon:'<rect x="3.2" y="4" width="7" height="16" rx="1.6"/><rect x="13.8" y="4" width="7" height="16" rx="1.6"/>'},
- {id:"lib",    label:"Библиотека",    icon:'<path d="M6.5 3h11v18l-5.5-4-5.5 4z" stroke-linejoin="round"/>'},
- {id:"where",  label:"Где брать",     icon:'<path d="M4 9.2h16V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z" stroke-linejoin="round"/><path d="M4 9.2 5.6 3.8h12.8L20 9.2" stroke-linejoin="round"/>'},
- {id:"faq",    label:"Вопросы",       icon:'<circle cx="12" cy="12" r="8.6"/><path d="M9.6 9.4A2.6 2.6 0 0 1 14.6 10.2c0 1.7-2.6 2.1-2.6 3.7" stroke-linecap="round"/><path d="M12 17.2h.01" stroke-linecap="round" stroke-width="2.4"/>'}
+ {id:"home",   label:"Главная",    short:"Главная", icon:'<path d="M4 10.6 12 4l8 6.6V20a1 1 0 0 1-1 1h-4v-6.2H9V21H5a1 1 0 0 1-1-1z" stroke-linejoin="round"/>'},
+ {id:"catalog",label:"Каталог",    short:"Каталог", icon:'<rect x="3.2" y="4" width="7" height="16" rx="1.6"/><rect x="13.8" y="4" width="7" height="16" rx="1.6"/>'},
+ {id:"lang",   label:"Язык",       short:"Язык",    icon:'<path d="M3.5 5.4h9.6M8.3 3.4v2M11 5.4c0 4.3-3 7.7-7.5 9.4" stroke-linecap="round"/><path d="M5.6 10.2c1.6 2.5 3.6 4 6 5" stroke-linecap="round"/><path d="M12.6 20.6 16.8 10l4.6 10.6M14.4 17.4h4.9" stroke-linecap="round" stroke-linejoin="round"/>'},
+ {id:"lib",    label:"Библиотека", short:"Полка",   icon:'<path d="M6.5 3h11v18l-5.5-4-5.5 4z" stroke-linejoin="round"/>'},
+ {id:"where",  label:"Где брать",  short:"Купить",  icon:'<path d="M4 9.2h16V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z" stroke-linejoin="round"/><path d="M4 9.2 5.6 3.8h12.8L20 9.2" stroke-linejoin="round"/>'},
+ {id:"faq",    label:"Вопросы",    short:"Вопросы", icon:'<circle cx="12" cy="12" r="8.6"/><path d="M9.6 9.4A2.6 2.6 0 0 1 14.6 10.2c0 1.7-2.6 2.1-2.6 3.7" stroke-linecap="round"/><path d="M12 17.2h.01" stroke-linecap="round" stroke-width="2.4"/>'}
 ];
 
 const HUES=[
@@ -2028,6 +2383,7 @@ function setView(v){
   renderNav();
   if(v==='catalog') render();
   if(v==='lib') renderLib();
+  if(v==='lang') renderLang();
   if(v==='home'){ observeReveal(); stats(); animateViz(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -2037,8 +2393,8 @@ function renderNav(){
   const tb=document.getElementById('tabbar');
   if(tb) tb.innerHTML=NAV.map(n=>
     `<button class="${st.view===n.id?'active':''}" onclick="setView('${n.id}')" aria-label="${n.label}">
-       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">${n.icon}</svg>
-       <span>${n.label}</span></button>`).join('');
+       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">${n.icon}</svg>
+       <span>${n.short||n.label}</span></button>`).join('');
 }
 
 /* ============================================================
@@ -2267,7 +2623,7 @@ function openBook(id){
  document.body.style.overflow='hidden';
 }
 function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){ if(introOn) endIntro(); else closeModal(); }});
 function randomItem(){openBook(BOOKS[Math.floor(Math.random()*BOOKS.length)].id);}
 
 /* ============================================================
@@ -2504,6 +2860,401 @@ function initTilt(){
   },{passive:true});
 }
 
+
+/* ============================================================
+   РАЗДЕЛ «ЯЗЫК»: история, слова, тексты
+   ============================================================ */
+
+// ---- шесть поворотных точек в истории турецкого литературного языка ----
+// period указывает на индекс в PERIODS, чтобы открыть книги этой эпохи
+const ERAS=[
+{
+  y:'до 1839', n:'Диван',
+  h:'Диванная поэзия',
+  p:[
+   'Литературный язык османской эпохи писался арабским письмом и был почти отдельным языком. Диванная поэзия строилась на арабской и персидской лексике и персидской метрике аруз: доля собственно тюркских слов в стихах могла быть меньше половины.',
+   'Народный язык при этом жил своей жизнью. Ашыки пели на простом тюркском, и Юнус Эмре в XIII–XIV веках писал так, что его строки понятны и сегодня, тогда как придворная касыда того же времени без комментария не читается.'
+  ],
+  note:'Уже здесь турецкий раздваивается: язык книги и язык улицы расходятся почти на шесть веков.',
+  period:0
+},
+{
+  y:'1839–1896', n:'Танзимат',
+  h:'Танзимат: появляется роман',
+  p:[
+   'С реформами Танзимата в турецкую литературу приходят европейские жанры. Первым турецким романом принято считать «Taaşşuk-ı Talat ve Fitnat» Шемсеттина Сами, вышедший в 1872 году.',
+   'Намык Кемаль и Ахмет Митхат Эфенди начинают писать проще — потому что пишут для газеты и широкого читателя, а не для двора. Язык всё ещё османский, письмо всё ещё арабское, но предложение уже становится короче.'
+  ],
+  note:'Проза требует ясности сильнее, чем поэзия. Роман начал упрощать турецкий раньше любых реформ.',
+  period:0
+},
+{
+  y:'1911–1923', n:'Новый язык',
+  h:'Yeni Lisan: писать так, как говорят',
+  p:[
+   'В 1911 году в Салониках, в журнале «Genç Kalemler», выходит манифест «Yeni Lisan» — новый язык. Требование простое: писать так, как говорит Стамбул, и отказаться от арабских и персидских грамматических конструкций.',
+   'Омер Сейфеттин, один из авторов манифеста, доводит короткий рассказ до формы, которую и сегодня разбирают в школе. Именно с этого поколения турецкая проза становится читаемой без словаря.'
+  ],
+  note:'Для изучающего это первая эпоха, чьи тексты реально можно взять в руки на B1–B2.',
+  period:1
+},
+{
+  y:'1928', n:'Реформа алфавита',
+  h:'1 ноября 1928: страна меняет письмо',
+  p:[
+   'Закон о новом турецком алфавите принят 1 ноября 1928 года. На переход дали считанные месяцы: газеты перешли на латиницу к декабрю, официальные документы — с 1 января 1929 года. По стране открыли Millet Mektepleri, школы для взрослых, где заново учили читать.',
+   'В алфавите 29 букв. Из латиницы убрали Q, W и X, зато добавили Ç, Ğ, I, İ, Ö, Ş, Ü. Точка над «i» стала различать звуки: I и ı — один гласный, İ и i — другой, и путать их нельзя даже в заглавных.'
+  ],
+  note:'Целое поколение в один момент перестало читать то, что было напечатано до него. Всё, что вышло раньше 1928 года, сегодня существует только в переизданиях на латинице.',
+  alpha:true,
+  period:1
+},
+{
+  y:'1932–1960-е', n:'Öz Türkçe',
+  h:'Чистка словаря',
+  p:[
+   'В 1932 году основано Türk Dil Kurumu — общество турецкого языка. Задача: заменить арабские и персидские заимствования словами тюркского корня. Часть новых слов вытеснила старые, часть встала рядом с ними как синоним, часть не прижилась вовсе.',
+   'Поэтому книги 1930–1950-х читаются тяжелее всего: в них ещё живёт старая лексика, а новая только входит. Пары ниже — не архаизмы из словаря, а слова, которые вы встретите в книгах этой эпохи.'
+  ],
+  pairs:[
+   ['mektep','okul','школа'],['muallim','öğretmen','учитель'],['tayyare','uçak','самолёт'],
+   ['hürriyet','özgürlük','свобода'],['millet','ulus','нация'],['vazife','görev','обязанность'],
+   ['cevap','yanıt','ответ'],['hayat','yaşam','жизнь'],['tabiat','doğa','природа'],
+   ['kelime','sözcük','слово'],['sene','yıl','год'],['misal','örnek','пример']
+  ],
+  note:'Старое слово редко исчезает полностью. «Hayat» и «yaşam» живы оба, просто первое звучит книжнее.',
+  period:2
+},
+{
+  y:'1960 →', n:'Современность',
+  h:'Язык книги догоняет язык улицы',
+  p:[
+   'К 1960-м разрыв закрывается: то, как пишут в романе, и то, как говорят в автобусе, наконец совпадает. Появляется поколение, которое пишет свободно — Юсуф Атылган, Огуз Атай, позже Орхан Памук, получивший Нобелевскую премию по литературе в 2006 году.',
+   'Для изучающего это лучшая точка входа. Современный роман читается на B1–B2, тогда как классика 1930-х уверенно требует C1 — и дело не в сюжете, а именно в словаре.'
+  ],
+  note:'Если классика не идёт, это не ваш уровень виноват. Возьмите книгу на сорок лет новее.',
+  period:5
+}
+];
+
+const TR_ALPHA='A B C Ç D E F G Ğ H I İ J K L M N O Ö P R S Ş T U Ü V Y Z'.split(' ');
+const TR_NEW=['Ç','Ğ','I','İ','Ö','Ş','Ü'];
+const TR_GONE=['Q','W','X'];
+
+let eraI=3;   // открываем сразу на реформе алфавита, это самое интересное
+function setEra(i){ eraI=i; drawEra(); }
+function drawEra(){
+  const nav=document.getElementById('eraNav'); if(!nav) return;
+  nav.innerHTML=ERAS.map((e,i)=>
+    `<button class="era-b ${i===eraI?'on':''}" onclick="setEra(${i})">
+       <span class="dot"></span><span class="ey">${e.y}</span><span class="en">${e.n}</span></button>`).join('');
+
+  const e=ERAS[eraI];
+  let h=`<div class="era-card"><span class="eyy">${e.y}</span><h3>${e.h}</h3>`
+       + e.p.map(t=>`<p>${t}</p>`).join('');
+  if(e.alpha){
+    h+='<div class="alpha">'
+      + TR_ALPHA.map(l=>`<span class="al${TR_NEW.includes(l)?' new':''}">${l}</span>`).join('')
+      + TR_GONE.map(l=>`<span class="al gone">${l}</span>`).join('')
+      + '</div><div class="alpha-l">'
+      + '<span><i style="background:var(--accent)"></i>семь букв, которых нет в латинице</span>'
+      + '<span><i style="border:1px dashed var(--line-2)"></i>Q, W и X в алфавит не вошли</span>'
+      + '</div>';
+  }
+  if(e.pairs){
+    h+='<div class="wpairs">'+e.pairs.map(p=>
+      `<div class="wp"><span class="old">${p[0]}</span><span class="arr">→</span><span class="new">${p[1]}</span><span class="ru">${p[2]}</span></div>`).join('')+'</div>';
+  }
+  if(e.note) h+=`<p class="era-note">${e.note}</p>`;
+  h+=`<div class="era-foot">
+        <button class="btn btn-acc" onclick="jumpPeriod(${e.period})">Книги этой эпохи</button>
+        <span style="font-size:13px;color:var(--ink-3);">${PERIODS[e.period].k} в каталоге</span>
+      </div></div>`;
+  document.getElementById('eraBody').innerHTML=h;
+
+  // пары слов и буквы проявляются по очереди
+  const stagger=(sel,step)=>{
+    const items=document.querySelectorAll(sel);
+    if(REDUCED){ items.forEach(x=>x.classList.add('in')); return; }
+    items.forEach((x,i)=>setTimeout(()=>x.classList.add('in'), 120+i*step));
+  };
+  stagger('#eraBody .wp',45);
+  stagger('#eraBody .al',22);
+}
+
+/* ============================================================
+   КАРТОЧКИ СЛОВ
+   ============================================================ */
+// слова, которые чаще всего попадаются именно в книгах
+const WORDS=[
+ ['kitap','книга','Книги'],['okumak','читать','Книги'],['yazmak','писать','Книги'],
+ ['yazar','писатель','Книги'],['roman','роман','Книги'],['öykü','рассказ','Книги'],
+ ['şiir','стихотворение','Книги'],['sayfa','страница','Книги'],['söz','слово, речь','Книги'],
+ ['dil','язык','Книги'],['masal','сказка','Книги'],['kahraman','герой','Книги'],
+
+ ['adam','мужчина, человек','Люди'],['kadın','женщина','Люди'],['çocuk','ребёнок','Люди'],
+ ['anne','мать','Люди'],['baba','отец','Люди'],['arkadaş','друг','Люди'],
+ ['insan','человек','Люди'],['komşu','сосед','Люди'],['halk','народ','Люди'],
+
+ ['gün','день','Время'],['gece','ночь','Время'],['sabah','утро','Время'],
+ ['akşam','вечер','Время'],['yıl','год','Время'],['zaman','время','Время'],
+ ['şimdi','сейчас','Время'],['sonra','потом','Время'],['önce','раньше, до','Время'],
+ ['hep','всегда, всё время','Время'],['artık','теперь уже','Время'],
+
+ ['ev','дом','Место'],['şehir','город','Место'],['köy','деревня','Место'],
+ ['yol','дорога','Место'],['deniz','море','Место'],['sokak','улица','Место'],
+ ['oda','комната','Место'],['kapı','дверь','Место'],['pencere','окно','Место'],
+
+ ['sevmek','любить','Чувства'],['korkmak','бояться','Чувства'],['gülmek','смеяться','Чувства'],
+ ['ağlamak','плакать','Чувства'],['beklemek','ждать','Чувства'],['unutmak','забывать','Чувства'],
+ ['hatırlamak','помнить, вспоминать','Чувства'],['özlemek','скучать','Чувства'],
+
+ ['gitmek','идти, уезжать','Глаголы'],['gelmek','приходить','Глаголы'],['görmek','видеть','Глаголы'],
+ ['bilmek','знать','Глаголы'],['istemek','хотеть','Глаголы'],['söylemek','говорить, сказать','Глаголы'],
+ ['yapmak','делать','Глаголы'],['olmak','быть, становиться','Глаголы'],['bakmak','смотреть','Глаголы'],
+ ['almak','брать, покупать','Глаголы'],['vermek','давать','Глаголы'],['durmak','стоять, останавливаться','Глаголы'],
+
+ ['büyük','большой','Признаки'],['küçük','маленький','Признаки'],['güzel','красивый','Признаки'],
+ ['eski','старый','Признаки'],['yeni','новый','Признаки'],['uzun','длинный, долгий','Признаки'],
+ ['kısa','короткий','Признаки'],['zor','трудный','Признаки'],['kolay','лёгкий','Признаки'],
+ ['çok','очень, много','Признаки'],['az','мало','Признаки'],['her','каждый','Признаки']
+];
+
+let deck=[], deckI=0, deckCat='Все', deckFlip=false;
+function deckCats(){ return ['Все'].concat([...new Set(WORDS.map(w=>w[2]))]); }
+function buildDeck(){
+  deck=WORDS.filter(w=>deckCat==='Все'||w[2]===deckCat).slice();
+  deckI=0; deckFlip=false;
+}
+function shuffleDeck(){
+  for(let i=deck.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [deck[i],deck[j]]=[deck[j],deck[i]]; }
+  deckI=0; deckFlip=false; drawDeck();
+}
+function setDeckCat(c){ deckCat=c; buildDeck(); drawDeck(); }
+function flipCard(){ deckFlip=!deckFlip; const el=document.querySelector('.fcard'); if(el) el.classList.toggle('flip',deckFlip); }
+function deckNext(){ if(deckI<deck.length-1){ deckI++; deckFlip=false; drawDeck(); } else { deckI=deck.length; drawDeck(); } }
+function deckPrev(){ if(deckI>0){ deckI--; deckFlip=false; drawDeck(); } }
+function deckRestart(){ deckI=0; deckFlip=false; drawDeck(); }
+
+function drawDeck(){
+  const wrap=document.getElementById('deckWrap'); if(!wrap) return;
+  if(!deck.length) buildDeck();
+
+  document.getElementById('deckCats').innerHTML=deckCats().map(c=>
+    `<button class="sp ${deckCat===c?'on':''}" onclick="setDeckCat('${c}')">${c}</button>`).join('');
+
+  const done=deckI>=deck.length;
+  document.getElementById('deckI').textContent=done?deck.length:(deckI+1);
+  document.getElementById('deckN').textContent=deck.length;
+  document.getElementById('deckBar').style.width=(deck.length?((done?deck.length:deckI)/deck.length*100):0)+'%';
+  document.getElementById('cntWords').textContent=WORDS.length;
+
+  if(done){
+    wrap.innerHTML=`<div class="deck-done"><b>Колода пройдена</b><span>${deck.length} слов в категории «${deckCat}». Перемешайте и пройдите ещё раз — так они запоминаются лучше.</span></div>`;
+    document.getElementById('deckAct').innerHTML=
+      `<button class="btn btn-acc" onclick="shuffleDeck()">Перемешать и начать заново</button>
+       <button class="btn btn-gh" onclick="deckRestart()">С начала</button>`;
+    return;
+  }
+
+  const w=deck[deckI];
+  wrap.innerHTML=`<div class="fcard${deckFlip?' flip':''}" onclick="flipCard()">
+    <div class="fc-in">
+      <div class="fc-s"><span class="fc-t">по-турецки</span><span class="fc-w">${esc(w[0])}</span><span class="fc-hint">нажмите, чтобы перевернуть</span></div>
+      <div class="fc-s fc-b"><span class="fc-t">по-русски</span><span class="fc-w">${esc(w[1])}</span><span class="fc-hint">${esc(w[2])}</span></div>
+    </div></div>`;
+  document.getElementById('deckAct').innerHTML=
+    `<button class="btn btn-gh" onclick="deckPrev()" ${deckI===0?'disabled style="opacity:.45"':''}>Назад</button>
+     <button class="btn btn-gh" onclick="flipCard()">Перевернуть</button>
+     <button class="btn btn-pri" onclick="deckNext()">Дальше</button>
+     <button class="btn btn-gh" onclick="shuffleDeck()">Перемешать</button>`;
+}
+
+/* ============================================================
+   ТЕКСТЫ ДЛЯ ЧТЕНИЯ
+   ============================================================ */
+// слова в фигурных скобках получают перевод по клику
+const STORIES=[
+{
+  lvl:'A1', t:'Kitapçıda', ru:'В книжном', w:'96 слов',
+  body:[
+   'Ali bugün {kitapçıya|в книжный магазин} gidiyor. {Hava|погода} çok güzel. Kitapçı {sokağın|улицы} {sonunda|в конце}. Ali {kapıyı|дверь} açıyor ve {içeri|внутрь} giriyor.',
+   '{İçeride|внутри} çok kitap var. Ali {eski|старые} kitapları seviyor. Bir kitap {alıyor|берёт, покупает} ve okuyor. Kitabın {adı|название} «Deniz ve Gece».',
+   'Kitapçı {soruyor|спрашивает}: «Bu kitabı {istiyor musun|хочешь ли ты}?» Ali «Evet, istiyorum» {diyor|говорит}. Kitap on lira. Ali {parayı|деньги} {veriyor|даёт}.',
+   '{Şimdi|сейчас} Ali eve gidiyor. Bu {akşam|вечер} yeni kitabını {okuyacak|будет читать}.'
+  ],
+  tr:[
+   'Али сегодня идёт в книжный. Погода очень хорошая. Книжный в конце улицы. Али открывает дверь и входит внутрь.',
+   'Внутри много книг. Али любит старые книги. Он берёт одну книгу и читает. Название книги — «Море и ночь».',
+   'Продавец спрашивает: «Хочешь эту книгу?» Али говорит: «Да, хочу». Книга стоит десять лир. Али отдаёт деньги.',
+   'Теперь Али идёт домой. Сегодня вечером он будет читать свою новую книгу.'
+  ]
+},
+{
+  lvl:'A2', t:'Büyükannemin sandığı', ru:'Сундук моей бабушки', w:'104 слова',
+  body:[
+   '{Büyükannemin|моей бабушки} odasında eski bir {sandık|сундук} vardı. {Çocukken|в детстве} o sandığı hep {merak ederdim|мне было любопытно} ama {açmama izin yoktu|мне не разрешали открывать}.',
+   '{Geçen yaz|прошлым летом} büyükannem bana {anahtarı|ключ} verdi. «{Artık|теперь уже} {büyüdün|ты вырос}» dedi.',
+   'Sandığın {içinde|внутри} {mektuplar|письма}, fotoğraflar ve {sararmış|пожелтевшая} bir {defter|тетрадь} vardı. Defteri {açtım|я открыл}. İçinde {eski harflerle|старыми буквами} {yazılmış|написанные} {satırlar|строки} gördüm.',
+   'Büyükannem {gülümsedi|улыбнулась}: «Bunu {dedem|мой дед} {yazmış|написал, как оказалось}. O zamanlar Türkçe {başka|другими} harflerle {yazılıyordu|писался}.»',
+   'O gün {ilk defa|впервые} {anladım|я понял}: bir dil de {tıpkı|точно так же, как} insanlar {gibi|как} {değişiyor|меняется}.'
+  ],
+  tr:[
+   'В комнате моей бабушки стоял старый сундук. В детстве мне всегда было любопытно, что в нём, но открывать не разрешали.',
+   'Прошлым летом бабушка дала мне ключ. «Ты уже вырос», — сказала она.',
+   'Внутри сундука были письма, фотографии и пожелтевшая тетрадь. Я открыл тетрадь. Внутри я увидел строки, написанные старыми буквами.',
+   'Бабушка улыбнулась: «Это писал мой дед. В те времена турецкий писали другими буквами».',
+   'В тот день я впервые понял: язык тоже меняется, совсем как люди.'
+  ]
+},
+{
+  lvl:'B1', t:'Vapur', ru:'Паром', w:'112 слов',
+  body:[
+   'İstanbul\'da yaşamak, {hayatının|своей жизни} bir {kısmını|часть} {vapurda|на пароме} {geçirmek|проводить} {demektir|означает}.',
+   '{Sabahları|по утрам} herkes {acele eder|торопится}; herkesin {gideceği|куда пойти} bir yer, {yetişeceği|куда успеть} bir iş vardır. Ama vapur {kalkınca|когда отходит} şehir {birden|вдруг} {yavaşlar|замедляется}.',
+   '{Martılar|чайки} {peşimizden|за нами} gelir, biri {simidini|свой симит} {onlara|им} {atar|бросает}, {bir başkası|кто-то другой} {çayını|свой чай} {karıştırır|размешивает} ve {pencereden|из окна} {dışarı|наружу} {bakar|смотрит}.',
+   '{Yirmi|двадцать} dakika {sürer|длится} bu {yolculuk|поездка}. Yirmi dakika {boyunca|в течение} {kimse|никто} kimseden bir şey {istemez|не требует}.',
+   '{Karşı kıyıya|на другой берег} {vardığımızda|когда мы приплываем} herkes {yeniden|снова} acele {etmeye başlar|начинает}. Ama o yirmi dakikayı {hatırlarız|мы помним}.'
+  ],
+  tr:[
+   'Жить в Стамбуле — значит проводить часть жизни на пароме.',
+   'По утрам все торопятся: у каждого есть место, куда он идёт, и дело, к которому надо успеть. Но стоит парому отойти, город вдруг замедляется.',
+   'За нами летят чайки, кто-то бросает им свой симит, кто-то другой размешивает чай и смотрит в окно.',
+   'Эта поездка длится двадцать минут. Двадцать минут никто ни от кого ничего не требует.',
+   'Когда мы причаливаем к другому берегу, все снова начинают торопиться. Но те двадцать минут мы помним.'
+  ]
+}
+];
+
+let storyI=0, storyTr=false;
+function setStory(i){ storyI=i; storyTr=false; drawStory(); }
+function toggleStoryTr(){
+  storyTr=!storyTr;
+  const el=document.querySelector('.st-tr');
+  if(el){
+    el.classList.toggle('open',storyTr);
+    el.querySelector('button').textContent = storyTr ? 'Скрыть перевод' : 'Показать перевод целиком';
+  }
+}
+function parseStory(t){
+  return esc(t).replace(/\{([^|}]+)\|([^}]+)\}/g,'<span class="w" data-t="$2">$1</span>');
+}
+function showGloss(el){
+  document.querySelectorAll('.story .w.on').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+  const g=document.getElementById('glossBar');
+  g.innerHTML=`<b>${el.textContent}</b><span>${el.dataset.t}</span>`;
+  g.classList.add('on');
+}
+function drawStory(){
+  const pick=document.getElementById('storyPick'); if(!pick) return;
+  document.getElementById('cntStory').textContent=STORIES.length;
+  pick.innerHTML=STORIES.map((s,i)=>
+    `<button class="sp ${i===storyI?'on':''}" onclick="setStory(${i})"><i>${s.lvl}</i>${esc(s.t)}</button>`).join('');
+  const s=STORIES[storyI];
+  document.getElementById('storyBody').innerHTML=
+   `<div class="story">
+      <h3>${esc(s.t)}</h3>
+      <div class="st-m">${s.lvl} · ${s.w} · ${esc(s.ru)} · подчёркнутые слова переводятся по клику</div>
+      <div class="st-b" id="storyText">${s.body.map(p=>'<p>'+parseStory(p)+'</p>').join('')}</div>
+      <div class="gloss" id="glossBar"></div>
+      <div class="st-tr">
+        <button class="reset" onclick="toggleStoryTr()">Показать перевод целиком</button>
+        <div class="tr-b"><div>${s.tr.map(p=>'<p>'+esc(p)+'</p>').join('')}</div></div>
+      </div>
+    </div>`;
+  document.getElementById('storyText').addEventListener('click',e=>{
+    const w=e.target.closest('.w'); if(w) showGloss(w);
+  });
+}
+
+/* ---- переключение вкладок раздела ---- */
+let langTab='hist';
+function setLangTab(t){
+  langTab=t;
+  [['hist','lgHist','paneHist'],['words','lgWords','paneWords'],['story','lgStory','paneStory']].forEach(([k,btn,pane])=>{
+    document.getElementById(pane).style.display=(k===t)?'':'none';
+    document.getElementById(btn).classList.toggle('active',k===t);
+  });
+  if(t==='hist') drawEra();
+  if(t==='words') drawDeck();
+  if(t==='story') drawStory();
+}
+function renderLang(){
+  document.getElementById('cntWords').textContent=WORDS.length;
+  document.getElementById('cntStory').textContent=STORIES.length;
+  setLangTab(langTab);
+}
+
+/* ============================================================
+   ФАКТ О ТУРЕЦКОМ
+   ============================================================ */
+const FACTS=[
+ 'Турецкий перешёл с арабского письма на латиницу 1 ноября 1928 года. Газетам дали на переход один месяц, официальным документам — два.',
+ 'В турецком алфавите 29 букв. Q, W и X в него не вошли: их просто нечем было озвучить.',
+ 'В турецком нет грамматического рода. Одно слово «o» значит и «он», и «она», и «оно».',
+ 'Заглавная от «i» — это «İ» с точкой, а «I» без точки читается как отдельный гласный. Поэтому город пишется İstanbul, а не Istanbul.',
+ 'Турецкий агглютинативный: смысл наращивается суффиксами. «Evlerinizden» — «из ваших домов» — это одно слово из четырёх частей.',
+ 'Гармония гласных: окончание подстраивается под последний гласный корня. Поэтому «в доме» — evde, а «в школе» — okulda.',
+ 'Глагол в турецком почти всегда стоит в конце предложения, поэтому смысл фразы часто становится ясен только на последнем слове.',
+ 'В турецком нет артиклей и нет глагола «иметь» в привычном виде: «у меня есть книга» звучит как «моя книга существует».',
+ '«Hayat» и «yaşam» значат одно и то же — жизнь. Первое пришло из арабского, второе придумали в 1930-е из тюркского корня.',
+ 'Орхан Памук получил Нобелевскую премию по литературе в 2006 году — единственный турецкий писатель с этой наградой.',
+ 'Назым Хикмет, главный турецкий поэт XX века, провёл в тюрьме больше тринадцати лет и там же написал значительную часть своих стихов.',
+ '«Kürk Mantolu Madonna» Сабахаттина Али вышла в 1943 году и стала абсолютным бестселлером только через семьдесят лет, в 2010-е.',
+ 'Türk Dil Kurumu, общество турецкого языка, основано в 1932 году специально ради замены арабских и персидских слов тюркскими.',
+ 'Многие бытовые слова пришли из французского почти без изменений: kuaför, şoför, asansör, plaj, kravat.',
+ 'Слово «yoğurt» вошло в европейские языки из турецкого — как и «kiosk» из «köşk» и «caviar» через «havyar».',
+ 'Вопрос в турецком задаётся отдельной частицей mi, которая пишется отдельным словом, но подчиняется гармонии гласных: mi, mı, mu, mü.',
+ 'Юнус Эмре писал в XIII веке на таком простом тюркском, что его строки понятны и сегодня, — а придворная поэзия того же века без комментария не читается.',
+ 'В турецком одно и то же окончание -ler или -lar означает множественное число, а какое именно — решает последний гласный слова.'
+];
+let factI=-1;
+function nextFact(){
+  const el=document.getElementById('factText'); if(!el) return;
+  let i;
+  do { i=Math.floor(Math.random()*FACTS.length); } while(FACTS.length>1 && i===factI);
+  factI=i;
+  el.textContent=FACTS[i];
+  el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap');
+}
+
+/* ============================================================
+   ЗАСТАВКА
+   ============================================================ */
+let introTimer=null, introOn=false;
+function endIntro(){
+  if(!introOn) return;
+  introOn=false;
+  clearTimeout(introTimer);
+  const el=document.getElementById('intro');
+  if(el){ el.classList.add('out'); setTimeout(()=>el.classList.remove('run'),600); }
+  document.body.style.overflow='';
+  try{ sessionStorage.setItem('alterna_intro','1'); }catch(e){}
+}
+function startIntro(){
+  const el=document.getElementById('intro'); if(!el) return;
+  document.documentElement.removeAttribute('data-intro');
+  el.classList.remove('out');
+  // перезапуск CSS-анимаций
+  el.querySelectorAll('.ispine,.ipage,.ilines i,.iletters span,.icap,.ititle,.isub,.iskip').forEach(n=>{
+    n.style.animation='none'; void n.offsetWidth; n.style.animation='';
+  });
+  introOn=true;
+  document.body.style.overflow='hidden';
+  introTimer=setTimeout(endIntro,3000);
+}
+function playIntro(){ window.scrollTo({top:0,behavior:'auto'}); startIntro(); }
+if(document.documentElement.getAttribute('data-intro')!=='off'){
+  introOn=true;
+  document.body.style.overflow='hidden';
+  introTimer=setTimeout(endIntro,3000);
+  document.getElementById('intro').addEventListener('click',endIntro);
+  document.addEventListener('keydown',e=>{ if(introOn) endIntro(); },{once:true});
+} else {
+  const iel=document.getElementById('intro'); if(iel) iel.remove();
+}
+
 /* ============================================================
    ПРОКРУТКА
    ============================================================ */
@@ -2542,6 +3293,8 @@ shelf();
 renderQuick();
 renderViz();
 initTilt();
+nextFact();
+drawEra();
 markKey();
 setTheme(document.documentElement.getAttribute('data-theme')||'light');
 if(window.innerWidth<=900){
