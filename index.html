@@ -1,0 +1,2558 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f6f6f4">
+<meta name="description" content="Каталог книг на турецком языке по уровням A1-C1: что читать, где купить и что можно скачать бесплатно.">
+<title>Alterna Kitap. Türkçe Oku</title>
+<script>
+  // тема выставляется до отрисовки, чтобы не было вспышки белым
+  (function(){
+    var t=null;
+    try{ t=localStorage.getItem('alterna_theme'); }catch(e){}
+    if(!t) t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme',t);
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     ТОКЕНЫ
+     ============================================================ */
+  :root{
+    --bg:#f6f6f4;
+    --surface:#ffffff;
+    --surface-2:#f0f0ed;
+    --surface-3:#e9e9e5;
+    --ink:#15171b;
+    --ink-2:#5c6169;
+    --ink-3:#8d939b;
+    --line:#e6e6e1;
+    --line-2:#d6d6d0;
+    --accent:#0f6b5c;
+    --accent-ink:#ffffff;
+    --accent-soft:#e6f1ee;
+    --danger:#a63a2d;
+    --danger-soft:#f7ebe9;
+    --gold:#a8781f;
+
+    --r-xs:6px; --r-sm:10px; --r-md:14px; --r-lg:20px; --r-full:999px;
+    --sh-1:0 1px 2px rgba(18,20,24,.05);
+    --sh-2:0 1px 2px rgba(18,20,24,.05), 0 10px 24px -14px rgba(18,20,24,.28);
+    --sh-3:0 2px 4px rgba(18,20,24,.05), 0 22px 44px -20px rgba(18,20,24,.36);
+    --sh-cover:0 2px 6px rgba(18,20,24,.10), 0 18px 34px -20px rgba(18,20,24,.45);
+
+    --hdr:66px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+    --ease-out:cubic-bezier(.16,1,.3,1);
+    --dur:.22s;
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e0f12;
+    --surface:#16181d;
+    --surface-2:#1c1f25;
+    --surface-3:#23272e;
+    --ink:#eceef1;
+    --ink-2:#9aa1ab;
+    --ink-3:#6d747e;
+    --line:#262a31;
+    --line-2:#333841;
+    --accent:#3cbfa4;
+    --accent-ink:#08130f;
+    --accent-soft:#12302a;
+    --danger:#e08276;
+    --danger-soft:#2a1c1a;
+    --gold:#d1a44a;
+    --sh-1:0 1px 2px rgba(0,0,0,.4);
+    --sh-2:0 1px 2px rgba(0,0,0,.4), 0 10px 24px -14px rgba(0,0,0,.8);
+    --sh-3:0 2px 4px rgba(0,0,0,.4), 0 22px 44px -20px rgba(0,0,0,.9);
+    --sh-cover:0 2px 6px rgba(0,0,0,.5), 0 18px 34px -20px rgba(0,0,0,.9);
+  }
+
+  /* ============================================================
+     БАЗА
+     ============================================================ */
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);overflow-x:clip;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    font-size:16px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    font-feature-settings:'cv02','cv03','cv04','ss01';
+    transition:background-color .3s var(--ease), color .3s var(--ease);
+  }
+  h1,h2,h3,h4,.brand-name,.p-title,.num{font-family:'Inter Tight','Inter',sans-serif;letter-spacing:-.02em;font-weight:600;}
+  a{color:inherit;text-decoration:none;}
+  button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit;}
+  button{cursor:pointer;}
+  img{max-width:100%;display:block;}
+  ::selection{background:var(--accent);color:var(--accent-ink);}
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:var(--r-full);border:2px solid var(--bg);}
+  ::-webkit-scrollbar-thumb:hover{background:var(--ink-3);}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-xs);}
+
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px;}
+
+  /* ============================================================
+     ШАПКА
+     ============================================================ */
+  .topbar{
+    position:sticky;top:0;z-index:60;
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter:saturate(180%) blur(16px);
+    -webkit-backdrop-filter:saturate(180%) blur(16px);
+    border-bottom:1px solid transparent;
+    transition:border-color .25s var(--ease), background-color .25s var(--ease);
+  }
+  .topbar.stuck{border-bottom-color:var(--line);}
+  .tp{max-width:1240px;margin:0 auto;padding:0 24px;height:var(--hdr);display:flex;align-items:center;gap:20px;}
+  .brand{display:flex;align-items:center;gap:11px;flex:none;cursor:pointer;}
+  .logo{
+    width:34px;height:34px;border-radius:10px;flex:none;
+    background:var(--ink);color:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform var(--dur) var(--ease);
+  }
+  .brand:hover .logo{transform:rotate(-6deg) scale(1.05);}
+  .brand-name{font-size:16px;line-height:1.15;font-weight:600;display:block;}
+  .brand-sub{font-size:10px;color:var(--ink-3);letter-spacing:.13em;text-transform:uppercase;display:block;margin-top:1px;}
+
+  .navl{display:flex;gap:2px;background:var(--surface-2);padding:3px;border-radius:var(--r-full);margin:0 auto;}
+  .navl button{
+    background:none;border:none;padding:7px 15px;border-radius:var(--r-full);
+    font-size:14px;font-weight:500;color:var(--ink-2);
+    transition:color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  }
+  .navl button:hover{color:var(--ink);}
+  .navl button.active{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:var(--sh-1);}
+
+  .tp-act{display:flex;align-items:center;gap:8px;flex:none;margin-left:auto;}
+  .icon-btn{
+    width:38px;height:38px;flex:none;border-radius:var(--r-full);
+    border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+    display:flex;align-items:center;justify-content:center;
+    transition:all var(--dur) var(--ease);
+  }
+  .icon-btn:hover{color:var(--ink);border-color:var(--line-2);transform:translateY(-1px);}
+  .icon-btn:active{transform:translateY(0) scale(.94);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:10px 18px;border-radius:var(--r-full);font-size:14px;font-weight:600;
+    border:1px solid transparent;white-space:nowrap;
+    transition:all var(--dur) var(--ease);
+  }
+  .btn svg{flex:none;}
+  .btn-pri{background:var(--ink);color:var(--bg);}
+  .btn-pri:hover{transform:translateY(-1px);box-shadow:var(--sh-2);}
+  .btn-pri:active{transform:translateY(0) scale(.98);}
+  .btn-acc{background:var(--accent);color:var(--accent-ink);}
+  .btn-acc:hover{transform:translateY(-1px);box-shadow:var(--sh-2);filter:brightness(1.06);}
+  .btn-acc:active{transform:translateY(0) scale(.98);}
+  .btn-gh{background:var(--surface);color:var(--ink);border-color:var(--line);}
+  .btn-gh:hover{border-color:var(--line-2);background:var(--surface-2);}
+  .btn-gh:active{transform:scale(.98);}
+  .btn-lg{padding:13px 24px;font-size:15px;}
+  .btn-sm{padding:7px 13px;font-size:13px;}
+  .rnd{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:var(--r-full);
+    font-size:14px;font-weight:600;border:none;background:var(--ink);color:var(--bg);
+    transition:all var(--dur) var(--ease);}
+  .rnd:hover{transform:translateY(-1px);box-shadow:var(--sh-2);}
+  .rnd:active{transform:translateY(0) scale(.98);}
+  .rnd svg{transition:transform .4s var(--ease-out);}
+  .rnd:hover svg{transform:rotate(180deg);}
+
+  /* нижняя панель, только мобильные */
+  .tabbar{
+    display:none;position:fixed;left:0;right:0;bottom:0;z-index:70;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:saturate(180%) blur(18px);-webkit-backdrop-filter:saturate(180%) blur(18px);
+    border-top:1px solid var(--line);
+    padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+  }
+  .tabbar button{
+    flex:1;background:none;border:none;padding:7px 2px 5px;border-radius:var(--r-sm);
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    font-size:10.5px;font-weight:500;color:var(--ink-3);
+    transition:color var(--dur) var(--ease);
+  }
+  .tabbar button.active{color:var(--ink);font-weight:600;}
+  .tabbar button.active svg{stroke:var(--accent);}
+  .tabbar svg{transition:transform var(--dur) var(--ease);}
+  .tabbar button:active svg{transform:scale(.88);}
+
+  /* ============================================================
+     ЭКРАНЫ
+     ============================================================ */
+  .view{display:none;padding:44px 0 90px;}
+  .view.active{display:block;animation:viewIn .38s var(--ease-out);}
+  @keyframes viewIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+    color:var(--accent);background:var(--accent-soft);
+    padding:6px 13px;border-radius:var(--r-full);
+  }
+  h1.headline{font-size:clamp(34px,5.2vw,58px);line-height:1.05;font-weight:600;margin:20px 0 18px;max-width:15ch;letter-spacing:-.035em;}
+  h1.headline em{font-style:normal;color:var(--accent);}
+  .lede{font-size:17px;color:var(--ink-2);max-width:56ch;line-height:1.62;margin:0 0 26px;}
+  .page-h{margin-bottom:28px;}
+  .page-h h2{font-size:clamp(26px,3.4vw,36px);margin:0 0 8px;letter-spacing:-.03em;}
+  .page-h .lede{margin-bottom:0;}
+
+  /* ---- герой ---- */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;margin-bottom:56px;}
+  .hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px;}
+  .quick{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .quick .ql{font-size:12px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-right:2px;}
+  .quick button{
+    padding:7px 14px;border-radius:var(--r-full);border:1px solid var(--line);
+    background:var(--surface);font-size:13px;font-weight:600;
+    transition:all var(--dur) var(--ease);
+  }
+  .quick button:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px);}
+
+  .hero-vis{position:relative;}
+  .hero-shelf{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .hs{border-radius:var(--r-sm);overflow:hidden;position:relative;aspect-ratio:2/3;
+    box-shadow:var(--sh-cover);transition:transform .45s var(--ease-out);}
+  .hs:nth-child(3n+1){transform:translateY(-14px);}
+  .hs:nth-child(3n+3){transform:translateY(14px);}
+  .hero-shelf:hover .hs{transform:translateY(0);}
+  .hs .hs-t{position:absolute;inset:auto 0 0 0;z-index:4;padding:12px 11px;
+    font-family:'Inter Tight';font-size:12px;font-weight:600;line-height:1.25;color:#fff;
+    background:linear-gradient(to top,rgba(0,0,0,.62),transparent);
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .hs img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3;}
+
+  /* ---- цифры ---- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:72px;}
+  .st{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:22px 20px;transition:all .3s var(--ease);
+  }
+  .st:hover{border-color:var(--line-2);transform:translateY(-2px);box-shadow:var(--sh-2);}
+  .st b{display:block;font-family:'Inter Tight';font-size:36px;line-height:1;font-weight:600;letter-spacing:-.04em;}
+  .st span{display:block;font-size:13px;color:var(--ink-2);margin-top:8px;}
+
+  /* ---- блоки ---- */
+  .block{margin-bottom:64px;}
+  .block-h{margin-bottom:28px;}
+  .block-h h2{font-size:clamp(24px,3vw,32px);margin:0 0 10px;letter-spacing:-.03em;}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .step{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:24px 22px;transition:all .3s var(--ease);
+  }
+  .step:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:var(--sh-2);}
+  .step .n{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;border-radius:var(--r-full);margin-bottom:16px;
+    background:var(--accent-soft);color:var(--accent);
+    font-family:'Inter Tight';font-size:13px;font-weight:600;
+  }
+  .step h3{font-size:16.5px;margin:0 0 8px;line-height:1.3;}
+  .step p{font-size:14px;color:var(--ink-2);line-height:1.6;margin:0;}
+
+  /* ============================================================
+     КАТАЛОГ, ПАНЕЛЬ УПРАВЛЕНИЯ
+     ============================================================ */
+  .ctrl{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:16px;margin-bottom:20px;box-shadow:var(--sh-1);
+  }
+  .ctrl-main{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .sbox{
+    flex:1;min-width:220px;display:flex;align-items:center;gap:10px;
+    background:var(--surface-2);border:1px solid transparent;border-radius:var(--r-full);
+    padding:0 8px 0 15px;height:44px;
+    transition:all var(--dur) var(--ease);
+  }
+  .sbox:focus-within{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 3px var(--accent-soft);}
+  .sbox svg{flex:none;color:var(--ink-3);}
+  .sbox input{border:none;outline:none;background:transparent;font-size:15px;width:100%;height:100%;}
+  .sbox input::placeholder{color:var(--ink-3);}
+  .sclear{
+    width:28px;height:28px;flex:none;border:none;border-radius:var(--r-full);
+    background:var(--surface-3);color:var(--ink-2);font-size:15px;line-height:1;
+    display:none;align-items:center;justify-content:center;transition:all var(--dur) var(--ease);
+  }
+  .sclear.on{display:flex;}
+  .sclear:hover{background:var(--ink);color:var(--bg);}
+
+  .fbtn{position:relative;height:44px;}
+  .fbtn .fcount{
+    min-width:19px;height:19px;padding:0 5px;border-radius:var(--r-full);
+    background:var(--accent);color:var(--accent-ink);
+    font-size:11px;font-weight:700;display:none;align-items:center;justify-content:center;
+  }
+  .fbtn .fcount.on{display:inline-flex;}
+  .fbtn .chev{transition:transform var(--dur) var(--ease);}
+  .fbtn.open .chev{transform:rotate(180deg);}
+
+  .vt{display:flex;background:var(--surface-2);border-radius:var(--r-full);padding:3px;height:44px;flex:none;}
+  .vt button{
+    background:none;border:none;padding:0 16px;border-radius:var(--r-full);
+    font-size:13.5px;font-weight:500;color:var(--ink-2);
+    display:flex;align-items:center;gap:7px;
+    transition:all var(--dur) var(--ease);
+  }
+  .vt button.active{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:var(--sh-1);}
+
+  .fpanel{
+    display:grid;grid-template-rows:1fr;
+    transition:grid-template-rows .32s var(--ease-out), opacity .25s var(--ease), margin .3s var(--ease);
+    margin-top:16px;
+  }
+  .fpanel.hide{grid-template-rows:0fr;opacity:0;margin-top:0;pointer-events:none;}
+  .fpanel > .fpin{overflow:hidden;min-height:0;}
+  .fgrid{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
+  .sel{
+    display:flex;align-items:center;gap:9px;
+    background:var(--surface-2);border:1px solid transparent;border-radius:var(--r-full);
+    padding:0 14px;height:40px;transition:all var(--dur) var(--ease);
+  }
+  .sel:hover{border-color:var(--line-2);}
+  .sel label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);font-weight:600;white-space:nowrap;}
+  .sel select{border:none;background:transparent;font-size:14px;font-weight:500;outline:none;max-width:190px;}
+  .flab{font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.09em;font-weight:600;margin:18px 0 9px;}
+  .frow{display:flex;flex-wrap:wrap;gap:7px;}
+
+  /* чипы */
+  .chipline{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:16px;}
+  .chipline .lb{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-right:4px;}
+  .lp,.fc{
+    padding:8px 15px;border-radius:var(--r-full);font-size:13.5px;font-weight:500;
+    background:var(--surface);border:1px solid var(--line);color:var(--ink);
+    display:inline-flex;align-items:center;gap:6px;
+    transition:all var(--dur) var(--ease);
+  }
+  .lp{font-weight:600;}
+  .lp:hover,.fc:hover{border-color:var(--line-2);transform:translateY(-1px);}
+  .lp span,.fc .n{color:var(--ink-3);font-size:12px;font-weight:500;}
+  .lp.on,.fc.on{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+  .lp.on span,.fc.on .n{color:color-mix(in srgb,var(--bg) 65%,transparent);}
+  .fc.free-chip{border-color:var(--accent);color:var(--accent);}
+  .fc.free-chip .n{color:color-mix(in srgb,var(--accent) 65%,transparent);}
+  .fc.free-chip.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+  .fc.free-chip.on .n{color:color-mix(in srgb,var(--accent-ink) 70%,transparent);}
+  .ctrl .fpanel .frow .fc{background:var(--surface-2);border-color:transparent;}
+  .ctrl .fpanel .frow .fc:hover{border-color:var(--line-2);}
+  .ctrl .fpanel .frow .fc.on{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+  .ctrl .fpanel .frow .fc.free-chip{background:var(--accent-soft);color:var(--accent);border-color:transparent;}
+  .ctrl .fpanel .frow .fc.free-chip.on{background:var(--accent);color:var(--accent-ink);}
+
+  .tbot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+    padding-top:14px;margin-top:16px;border-top:1px solid var(--line);}
+  .found{font-size:13.5px;color:var(--ink-2);}
+  .found b{color:var(--ink);font-weight:600;}
+  .fnote,.cover-note{display:block;font-size:12px;color:var(--ink-3);margin-top:4px;max-width:560px;line-height:1.5;}
+  .cover-note.warn{color:var(--danger);}
+  .reset{
+    background:none;border:1px solid var(--line);border-radius:var(--r-full);
+    padding:8px 16px;font-size:13px;font-weight:500;color:var(--ink-2);
+    transition:all var(--dur) var(--ease);
+  }
+  .reset:hover{border-color:var(--danger);color:var(--danger);}
+
+  .keybar{
+    display:flex;align-items:center;gap:11px;flex-wrap:wrap;
+    background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:13px 16px;margin-bottom:20px;
+  }
+  .kb-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex:none;
+    box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 18%,transparent);}
+  .keybar.on .kb-dot{background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft);}
+  .kb-txt{font-size:13px;color:var(--ink-2);flex:1;min-width:220px;line-height:1.5;}
+  .keybar input{
+    flex:1;min-width:170px;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--r-full);padding:9px 15px;font-size:13px;outline:none;
+    transition:border-color var(--dur) var(--ease);
+  }
+  .keybar input:focus{border-color:var(--accent);}
+  .kb-btn{
+    background:var(--accent);color:var(--accent-ink);border:none;border-radius:var(--r-full);
+    padding:9px 17px;font-size:13px;font-weight:600;transition:all var(--dur) var(--ease);
+  }
+  .kb-btn:hover{filter:brightness(1.08);transform:translateY(-1px);}
+  .kb-btn:active{transform:scale(.97);}
+  .kb-help{font-size:13px;color:var(--accent);font-weight:500;border-bottom:1px solid color-mix(in srgb,var(--accent) 40%,transparent);}
+  .kb-clear{background:none;border:1px solid var(--line);border-radius:var(--r-full);
+    width:30px;height:30px;font-size:15px;color:var(--ink-3);transition:all var(--dur) var(--ease);}
+  .kb-clear:hover{border-color:var(--danger);color:var(--danger);}
+
+  /* ============================================================
+     СЕТКА КНИГ
+     ============================================================ */
+  .sec{margin-bottom:48px;}
+  .sech{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+  .sech h3{font-size:20px;margin:0;white-space:nowrap;letter-spacing:-.02em;}
+  .sech .cnt{
+    font-size:12px;font-weight:600;color:var(--ink-2);
+    background:var(--surface-2);padding:3px 10px;border-radius:var(--r-full);
+  }
+  .sech hr{flex:1;border:none;border-top:1px solid var(--line);}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(190px,100%),1fr));gap:34px 22px;}
+  .grid > *{min-width:0;}
+  .card{display:flex;flex-direction:column;cursor:pointer;}
+  .cover{
+    position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:var(--r-sm);
+    display:flex;flex-direction:column;justify-content:space-between;padding:14px;
+    box-shadow:var(--sh-cover);
+    transition:transform .34s var(--ease-out), box-shadow .34s var(--ease-out);
+  }
+  .card:hover .cover{transform:translateY(-6px) scale(1.015);
+    box-shadow:0 4px 10px rgba(18,20,24,.12), 0 30px 50px -24px rgba(18,20,24,.5);}
+  .card:active .cover{transform:translateY(-2px) scale(1);}
+  .cover::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;
+    border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);}
+  .c-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3;
+    opacity:0;transition:opacity .45s var(--ease);}
+  .c-photo.in{opacity:1;}
+  .c-top{position:relative;z-index:4;display:flex;justify-content:space-between;align-items:flex-start;gap:6px;padding-right:32px;min-width:0;}
+  .c-top > span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .c-top > .b-lvl{flex:none;}
+  .c-mid{position:relative;z-index:2;}
+  .p-title{
+    font-size:15px;font-weight:600;line-height:1.24;color:#fff;
+    text-shadow:0 1px 10px rgba(0,0,0,.35);
+    display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .c-auth{
+    position:relative;z-index:2;font-size:11.5px;color:rgba(255,255,255,.78);margin-top:9px;
+    border-top:1px solid rgba(255,255,255,.22);padding-top:9px;
+  }
+  .b-lvl{
+    background:rgba(255,255,255,.94);color:#15171b;
+    font-size:11px;font-weight:700;padding:3px 9px;border-radius:var(--r-full);letter-spacing:.02em;
+  }
+  .b-fmt{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;
+    padding:4px 9px;border-radius:var(--r-full);color:#fff;background:rgba(0,0,0,.42);backdrop-filter:blur(4px);}
+  .b-free{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    padding:4px 9px;border-radius:var(--r-full);color:var(--accent-ink);background:var(--accent);}
+  .b-own{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    padding:4px 9px;border-radius:var(--r-full);color:#fff;background:#3c6fb5;}
+
+  .bm{
+    position:absolute;top:10px;right:10px;z-index:6;width:30px;height:30px;
+    border-radius:var(--r-full);border:none;padding:0;
+    background:rgba(255,255,255,.9);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transform:scale(.8);
+    transition:all var(--dur) var(--ease);
+  }
+  .card:hover .bm,.bm.on,.bm:focus-visible{opacity:1;transform:scale(1);}
+  .bm:hover{background:#fff;transform:scale(1.1);}
+  .bm:active{transform:scale(.9);}
+  .bm{color:#15171b;}
+  .bm.on{color:var(--accent-ink);}
+  .bm svg{width:14px;height:14px;}
+  .bm.on{background:var(--accent);}
+
+  .cb{padding:14px 2px 0;}
+  .cb{min-width:0;}
+  .cb h4{font-size:15px;margin:0 0 4px;line-height:1.3;font-weight:600;overflow-wrap:anywhere;}
+  .cb .meta{font-size:12.5px;color:var(--ink-3);margin-bottom:8px;}
+  .cb p{font-size:13px;color:var(--ink-2);line-height:1.55;margin:0;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .links{display:flex;gap:7px;margin-top:12px;}
+  .links a{
+    flex:1;text-align:center;padding:8px 0;border-radius:var(--r-full);font-size:12.5px;font-weight:500;
+    background:var(--surface);border:1px solid var(--line);color:var(--ink-2);
+    transition:all var(--dur) var(--ease);
+  }
+  .links a:hover{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+  .mine-actions{display:flex;gap:7px;margin-top:8px;}
+  .mine-actions button{
+    flex:1;padding:8px 0;border-radius:var(--r-full);font-size:12.5px;font-weight:500;
+    background:var(--surface);border:1px solid var(--line);color:var(--ink-2);
+    transition:all var(--dur) var(--ease);
+  }
+  .mine-actions button:hover{border-color:var(--danger);color:var(--danger);background:var(--danger-soft);}
+
+  /* список */
+  .list{display:flex;flex-direction:column;gap:6px;}
+  .row{
+    display:flex;align-items:center;gap:16px;padding:12px 14px;
+    border-radius:var(--r-md);border:1px solid transparent;cursor:pointer;
+    transition:all var(--dur) var(--ease);
+  }
+  .row:hover{background:var(--surface);border-color:var(--line);box-shadow:var(--sh-1);}
+  .mini{
+    width:44px;height:64px;border-radius:var(--r-xs);flex:none;position:relative;overflow:hidden;
+    box-shadow:var(--sh-1);
+  }
+  .mini-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s var(--ease);}
+  .mini-img.in{opacity:1;}
+  .ri{flex:1;min-width:0;}
+  .ri h4{font-size:15.5px;margin:0 0 3px;font-weight:600;overflow-wrap:anywhere;}
+  .ri .meta{font-size:12.5px;color:var(--ink-3);}
+  .rm{display:flex;align-items:center;gap:7px;flex-wrap:wrap;flex:none;}
+  .rm .b-lvl{background:var(--surface-2);color:var(--ink);}
+  .rm .b-fmt{background:var(--surface-3);color:var(--ink-2);}
+  .rl{display:flex;gap:7px;flex:none;}
+  .rl a{
+    padding:8px 14px;border-radius:var(--r-full);font-size:12.5px;font-weight:500;
+    background:var(--surface-2);border:1px solid transparent;color:var(--ink-2);
+    transition:all var(--dur) var(--ease);
+  }
+  .rl a:hover{background:var(--ink);color:var(--bg);}
+
+  /* скелетон обложки */
+  .sk::before{
+    content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.16) 50%,transparent 80%);
+    background-size:220% 100%;animation:shimmer 1.5s linear infinite, skfade 12s forwards;
+  }
+  .sk.done::before{animation:none;opacity:0;}
+  @keyframes shimmer{from{background-position:180% 0;}to{background-position:-80% 0;}}
+  @keyframes skfade{0%,85%{opacity:1;}100%{opacity:0;}}
+
+  /* появление карточек */
+  .js-reveal .reveal:not(.in){opacity:0;transform:translateY(14px);}
+  .reveal{transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);}
+
+  .empty,.lib-empty{
+    text-align:center;padding:64px 20px;color:var(--ink-2);font-size:14.5px;
+    background:var(--surface);border:1px dashed var(--line-2);border-radius:var(--r-lg);
+  }
+  .lib-empty b{display:block;font-family:'Inter Tight';font-size:18px;color:var(--ink);margin-bottom:8px;font-weight:600;}
+
+  /* ============================================================
+     БИБЛИОТЕКА И ФОРМА
+     ============================================================ */
+  .lib-tabs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:26px;}
+  .lt{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-full);
+    padding:9px 17px;font-size:14px;font-weight:500;
+    display:inline-flex;align-items:center;gap:7px;
+    transition:all var(--dur) var(--ease);
+  }
+  .lt:hover{border-color:var(--line-2);}
+  .lt span{
+    color:var(--ink-3);font-size:12px;font-weight:600;
+    background:var(--surface-2);padding:1px 8px;border-radius:var(--r-full);
+  }
+  .lt.active{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600;}
+  .lt.active span{background:color-mix(in srgb,var(--bg) 22%,transparent);color:var(--bg);}
+  .lib-tools{margin-left:auto;display:flex;gap:8px;}
+
+  .form{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:30px;box-shadow:var(--sh-1);max-width:840px;
+  }
+  .frm-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .frm-grid label{display:flex;flex-direction:column;gap:7px;font-size:12.5px;color:var(--ink-2);font-weight:500;}
+  .frm-grid label.wide{grid-column:1 / -1;}
+  .req{font-size:10px;color:var(--danger);text-transform:uppercase;letter-spacing:.07em;font-weight:600;}
+  .frm-grid input,.frm-grid select,.frm-grid textarea{
+    background:var(--surface-2);border:1px solid transparent;border-radius:var(--r-sm);
+    padding:11px 14px;font-size:14.5px;outline:none;resize:vertical;
+    transition:all var(--dur) var(--ease);
+  }
+  .frm-grid input:focus,.frm-grid textarea:focus,.frm-grid select:focus{
+    border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 3px var(--accent-soft);
+  }
+  .lvpick{display:flex;gap:6px;flex-wrap:wrap;}
+  .lvpick button{
+    background:var(--surface-2);border:1px solid transparent;border-radius:var(--r-full);
+    padding:8px 15px;font-size:13px;font-weight:600;
+    transition:all var(--dur) var(--ease);
+  }
+  .lvpick button:hover{border-color:var(--line-2);}
+  .lvpick button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+  .frm-actions{display:flex;gap:10px;align-items:center;margin-top:24px;flex-wrap:wrap;}
+  .frm-msg{font-size:13.5px;font-weight:500;}
+  .frm-msg.ok{color:var(--accent);}
+  .frm-msg.err{color:var(--danger);}
+
+  /* ============================================================
+     FAQ
+     ============================================================ */
+  .faqwrap{max-width:820px;}
+  .faq{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    margin-bottom:10px;overflow:hidden;transition:border-color var(--dur) var(--ease);
+  }
+  .faq:hover{border-color:var(--line-2);}
+  .faq.open{border-color:var(--line-2);}
+  .faq-q{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:18px 20px;font-weight:600;font-size:15.5px;font-family:'Inter Tight';
+    cursor:pointer;letter-spacing:-.01em;
+  }
+  .faq-i{
+    flex:none;width:26px;height:26px;border-radius:var(--r-full);background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-2);
+    transition:transform .3s var(--ease-out),background-color var(--dur) var(--ease);
+  }
+  .faq.open .faq-i{transform:rotate(45deg);background:var(--accent);color:var(--accent-ink);}
+  .faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease-out);}
+  .faq.open .faq-a{grid-template-rows:1fr;}
+  .faq-a > div{overflow:hidden;min-height:0;}
+  .faq-a p{margin:0;padding:0 20px 20px;color:var(--ink-2);font-size:14.5px;line-height:1.65;}
+
+  /* ============================================================
+     ИСТОЧНИКИ
+     ============================================================ */
+  .srcs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .src{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:26px 24px;transition:all .3s var(--ease);
+  }
+  .src:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:var(--sh-2);}
+  .src .tag{
+    display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+    padding:5px 11px;border-radius:var(--r-full);margin-bottom:16px;
+    background:var(--surface-2);color:var(--ink-2);
+  }
+  .src.acc .tag{background:var(--accent-soft);color:var(--accent);}
+  .src h3{font-size:17px;margin:0 0 9px;}
+  .src p{font-size:14px;color:var(--ink-2);line-height:1.6;margin:0;}
+
+  footer.foot{
+    margin-top:56px;border-top:1px solid var(--line);padding-top:26px;
+    color:var(--ink-3);font-size:13px;line-height:1.65;max-width:820px;
+  }
+
+  /* ============================================================
+     МОДАЛКА
+     ============================================================ */
+  .modal{
+    position:fixed;inset:0;z-index:200;display:none;
+    align-items:center;justify-content:center;padding:24px;
+    background:color-mix(in srgb,#0b0d10 62%,transparent);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  }
+  .modal.open{display:flex;animation:fadeIn .2s var(--ease);}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  .mbox{
+    position:relative;background:var(--surface);border-radius:var(--r-lg);
+    max-width:860px;width:100%;max-height:88vh;overflow-y:auto;
+    box-shadow:var(--sh-3);
+    animation:popIn .34s var(--ease-out);
+  }
+  @keyframes popIn{from{opacity:0;transform:translateY(18px) scale(.97);}to{opacity:1;transform:none;}}
+  .mx{
+    position:absolute;top:14px;right:14px;z-index:8;
+    width:34px;height:34px;border-radius:var(--r-full);border:none;
+    background:color-mix(in srgb,var(--surface) 80%,transparent);backdrop-filter:blur(8px);
+    color:var(--ink);font-size:17px;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    transition:all var(--dur) var(--ease);
+  }
+  .mx:hover{background:var(--ink);color:var(--bg);transform:rotate(90deg);}
+  .mgrid{display:grid;grid-template-columns:270px 1fr;}
+  .mcover{
+    position:relative;overflow:hidden;aspect-ratio:2/3;
+    display:flex;flex-direction:column;justify-content:flex-end;padding:22px 20px;
+    border-radius:var(--r-lg) 0 0 var(--r-lg);
+  }
+  .mcover .c-photo{opacity:0;}
+  .mcover .c-photo.in{opacity:1;}
+  .minfo{padding:32px 34px 34px;}
+  .mbg{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+  .m-lv{
+    background:var(--surface-2);font-size:11.5px;font-weight:600;
+    padding:4px 11px;border-radius:var(--r-full);color:var(--ink-2);
+  }
+  .minfo h2{font-size:clamp(22px,3vw,30px);margin:0 0 6px;line-height:1.15;letter-spacing:-.03em;}
+  .mmeta{font-size:14px;color:var(--ink-3);margin-bottom:18px;}
+  .mdesc{font-size:15px;line-height:1.66;color:var(--ink-2);margin:0 0 24px;}
+  .mblk{margin-bottom:20px;}
+  .mlab{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);font-weight:600;margin-bottom:10px;}
+  .mlinks{display:flex;flex-wrap:wrap;gap:8px;}
+  .mlinks a{
+    padding:9px 16px;border-radius:var(--r-full);font-size:13px;font-weight:500;
+    background:var(--surface-2);border:1px solid transparent;color:var(--ink-2);
+    transition:all var(--dur) var(--ease);
+  }
+  .mlinks a:hover{background:var(--ink);color:var(--bg);transform:translateY(-1px);}
+  .mlinks a.pri{background:var(--accent);color:var(--accent-ink);}
+  .mlinks a.pri:hover{filter:brightness(1.08);background:var(--accent);color:var(--accent-ink);}
+  .mtip{
+    font-size:13px;color:var(--ink-2);line-height:1.6;
+    background:var(--surface-2);border-radius:var(--r-md);padding:14px 16px;
+  }
+
+  /* наверх */
+  .totop{
+    position:fixed;right:24px;bottom:24px;z-index:80;
+    width:44px;height:44px;border-radius:var(--r-full);border:1px solid var(--line);
+    background:var(--surface);color:var(--ink);box-shadow:var(--sh-2);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;
+    transition:all .3s var(--ease-out);
+  }
+  .totop.on{opacity:1;transform:none;pointer-events:auto;}
+  .totop:hover{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+
+  /* ============================================================
+     АДАПТИВ
+     ============================================================ */
+  @media (max-width:1080px){
+    .hero{grid-template-columns:1fr .9fr;gap:36px;}
+    .steps,.srcs{grid-template-columns:repeat(2,1fr);}
+    .stats{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:900px){
+    .navl{display:none;}
+    .tabbar{display:flex;}
+    body{padding-bottom:64px;}
+    .tp{gap:12px;}
+    .tp-act{margin-left:auto;}
+    .view{padding:30px 0 40px;}
+    .hero{grid-template-columns:1fr;gap:34px;margin-bottom:44px;}
+    .hero-vis{order:-1;}
+    .hero-shelf{grid-template-columns:repeat(3,1fr);gap:12px;max-width:380px;}
+    .hs:nth-child(n+4){display:none;}
+    .hs{transform:none !important;}
+    h1.headline{max-width:none;}
+    .lede{font-size:16px;}
+    .mgrid{grid-template-columns:1fr;}
+    .mcover{aspect-ratio:16/9;border-radius:var(--r-lg) var(--r-lg) 0 0;}
+    .minfo{padding:26px 22px 28px;}
+    .totop{bottom:78px;right:16px;}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 16px;}
+    .tp{padding:0 16px;}
+    .brand-sub{display:none;}
+    .rnd span{display:none;}
+    .rnd{padding:10px 12px;}
+    .ctrl{padding:12px;border-radius:var(--r-md);}
+    .ctrl-main{gap:8px;}
+    .sbox{min-width:100%;order:-1;}
+    .fbtn{flex:1;}
+    .vt{flex:1;}
+    .vt button{flex:1;justify-content:center;padding:0 10px;}
+    .vt button span{display:none;}
+    .sel{width:100%;justify-content:space-between;}
+    .sel select{max-width:none;flex:1;text-align:right;}
+    .fgrid{flex-direction:column;}
+    .stats{gap:10px;}
+    .st{padding:16px 15px;}
+    .st b{font-size:28px;}
+    .st span{font-size:12px;}
+    .steps,.srcs{grid-template-columns:1fr;}
+    .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px;}
+    .cb h4{font-size:14px;}
+    .cb p{display:none;}
+    .links a{font-size:12px;padding:7px 0;}
+    .row{gap:12px;padding:10px 8px;}
+    .rm,.rl{display:none;}
+    .frm-grid{grid-template-columns:1fr;}
+    .form{padding:20px;border-radius:var(--r-md);}
+    .lib-tools{margin-left:0;width:100%;}
+    .lib-tools .reset{flex:1;}
+    .modal{padding:0;align-items:flex-end;}
+    .mbox{max-height:92vh;border-radius:var(--r-lg) var(--r-lg) 0 0;animation:sheetIn .34s var(--ease-out);}
+    .mcover{border-radius:var(--r-lg) var(--r-lg) 0 0;}
+    .empty,.lib-empty{padding:44px 16px;}
+  }
+  @keyframes sheetIn{from{transform:translateY(100%);}to{transform:none;}}
+
+  /* ============================================================
+     ПОЛОСА ПРОКРУТКИ СТРАНИЦЫ
+     ============================================================ */
+  .sprog{
+    position:fixed;top:0;left:0;height:2.5px;width:0;z-index:100;pointer-events:none;
+    background:linear-gradient(90deg,var(--accent),var(--gold));
+    transition:width .1s linear,opacity .3s var(--ease);opacity:0;
+  }
+  .sprog.on{opacity:1;}
+
+  /* ============================================================
+     РИСОВАННАЯ ОБЛОЖКА: узор, рамка, блик
+     ============================================================ */
+  .c-pat{position:absolute;inset:0;z-index:1;pointer-events:none;}
+  .pt-0{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.085) 0 2px,transparent 2px 13px);}
+  .pt-1{background-image:radial-gradient(rgba(255,255,255,.15) 1.4px,transparent 1.6px);background-size:15px 15px;}
+  .pt-2{background-image:repeating-radial-gradient(circle at 50% 116%,transparent 0 17px,rgba(255,255,255,.11) 17px 19px);}
+  .pt-3{background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.09) 0 1px,transparent 1px 10px);}
+  .pt-4{background-image:linear-gradient(rgba(255,255,255,.06) 50%,transparent 50%),linear-gradient(90deg,rgba(255,255,255,.06) 50%,transparent 50%);background-size:20px 20px,20px 20px;}
+  .pt-5{background-image:
+      radial-gradient(circle at 50% 32%,transparent 0 38px,rgba(255,255,255,.13) 38px 40px,transparent 40px),
+      radial-gradient(circle at 50% 32%,rgba(255,255,255,.07) 0 24px,transparent 24px);}
+  .pt-6{background-image:repeating-linear-gradient(-45deg,rgba(255,255,255,.075) 0 7px,transparent 7px 16px);}
+  .pt-7{background-image:
+      repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 1px,transparent 1px 12px),
+      repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,transparent 1px 12px);}
+  .c-frame{position:absolute;inset:8px;z-index:1;pointer-events:none;
+    border:1px solid rgba(255,255,255,.20);border-radius:5px;}
+  .mini .c-frame{inset:4px;border-radius:3px;}
+  .c-mark{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:8px;}
+  .c-shine{
+    position:absolute;inset:-20% -60%;z-index:4;pointer-events:none;opacity:0;
+    background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.30) 50%,transparent 62%);
+  }
+  .card:hover .c-shine,.hs:hover .c-shine{opacity:1;animation:shine .9s var(--ease-out);}
+  @keyframes shine{from{transform:translateX(-55%);}to{transform:translateX(55%);}}
+
+  /* лёгкий наклон обложки за курсором */
+  .grid .card .cover{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));}
+  .grid .card:hover .cover{
+    transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-6px) scale(1.02);
+  }
+  .grid .card.tilting .cover{transition:box-shadow .34s var(--ease-out);}
+
+  /* ============================================================
+     ВИЗУАЛИЗАЦИЯ КАТАЛОГА
+     ============================================================ */
+  .viz{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;}
+  .viz-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:26px 24px;transition:border-color var(--dur) var(--ease);
+  }
+  .viz-card:hover{border-color:var(--line-2);}
+  .viz-card h3{font-size:16.5px;margin:0 0 5px;}
+  .vsub{font-size:13px;color:var(--ink-3);margin:0 0 22px;line-height:1.5;}
+
+  .bars{display:flex;flex-direction:column;gap:11px;}
+  .bar{display:grid;grid-template-columns:46px 1fr 76px;align-items:center;gap:12px;
+    background:none;border:none;padding:3px 0;text-align:left;}
+  .bar .bk{font-family:'Inter Tight';font-weight:600;font-size:14px;transition:color var(--dur) var(--ease);}
+  .bar .bt{height:13px;border-radius:var(--r-full);background:var(--surface-2);position:relative;overflow:hidden;}
+  .bar .bf{
+    position:absolute;left:0;top:0;bottom:0;width:0;border-radius:var(--r-full);
+    background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 45%,var(--gold)));
+    transition:width 1.1s var(--ease-out);
+  }
+  .bar .bn{font-size:12.5px;color:var(--ink-3);text-align:right;font-variant-numeric:tabular-nums;}
+  .bar .bn b{color:var(--ink);font-weight:600;}
+  .bar:hover .bk{color:var(--accent);}
+  .bar:hover .bt{background:var(--surface-3);}
+
+  .dwrap{display:flex;align-items:center;gap:26px;}
+  @property --sweep{syntax:'<angle>';initial-value:1turn;inherits:false;}
+  .donut{
+    --sweep:1turn;width:168px;height:168px;flex:none;border-radius:50%;position:relative;
+    -webkit-mask:conic-gradient(#000 var(--sweep),transparent 0);
+            mask:conic-gradient(#000 var(--sweep),transparent 0);
+  }
+  .donut.in{animation:sweep 1.15s var(--ease-out);}
+  @keyframes sweep{from{--sweep:0turn;}to{--sweep:1turn;}}
+  .donut::after{content:"";position:absolute;inset:27%;border-radius:50%;background:var(--surface);}
+  .dmid{
+    position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;pointer-events:none;
+  }
+  .dmid b{font-family:'Inter Tight';font-size:26px;font-weight:600;line-height:1;letter-spacing:-.03em;}
+  .dmid span{font-size:10.5px;color:var(--ink-3);margin-top:4px;letter-spacing:.06em;text-transform:uppercase;}
+  .dleg{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;}
+  .dleg button{
+    display:flex;align-items:center;gap:9px;background:none;border:none;
+    padding:5px 8px;border-radius:var(--r-sm);font-size:13px;color:var(--ink-2);
+    transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease);
+  }
+  .dleg button:hover{background:var(--surface-2);color:var(--ink);}
+  .dleg i{width:10px;height:10px;border-radius:3px;flex:none;}
+  .dleg span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .dleg b{margin-left:auto;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;}
+
+  /* ============================================================
+     КАК ПОЛЬЗОВАТЬСЯ
+     ============================================================ */
+  .howto{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .ht{
+    position:relative;overflow:hidden;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:24px 22px 22px;transition:all .3s var(--ease);
+  }
+  .ht:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:var(--sh-2);}
+  .ht::after{
+    content:attr(data-n);position:absolute;right:-6px;bottom:-22px;
+    font-family:'Inter Tight';font-size:82px;font-weight:600;line-height:1;
+    color:var(--ink);opacity:.045;pointer-events:none;
+  }
+  .ht-i{
+    width:40px;height:40px;border-radius:12px;margin-bottom:16px;
+    background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .35s var(--ease-out);
+  }
+  .ht:hover .ht-i{transform:translateY(-2px) rotate(-6deg) scale(1.06);}
+  .ht h3{font-size:16px;margin:0 0 8px;line-height:1.3;}
+  .ht p{font-size:13.5px;color:var(--ink-2);line-height:1.6;margin:0 0 14px;}
+  .ht-go{
+    display:inline-flex;align-items:center;gap:6px;background:none;border:none;padding:0;
+    font-size:13px;font-weight:600;color:var(--accent);
+  }
+  .ht-go svg{transition:transform var(--dur) var(--ease);}
+  .ht:hover .ht-go svg{transform:translateX(3px);}
+
+  /* сводка библиотеки */
+  .libsum{
+    display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:20px 24px;margin-bottom:24px;
+  }
+  .libsum .lsn{display:flex;flex-direction:column;gap:2px;padding-right:24px;border-right:1px solid var(--line);}
+  .libsum .lsn b{font-family:'Inter Tight';font-size:30px;line-height:1;font-weight:600;letter-spacing:-.03em;}
+  .libsum .lsn span{font-size:12px;color:var(--ink-3);}
+  .lsbars{display:flex;gap:6px;flex:1;min-width:220px;align-items:flex-end;height:56px;}
+  .lsb{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:flex-end;height:100%;}
+  .lsb .lsv{width:100%;max-width:38px;border-radius:5px 5px 2px 2px;background:var(--accent);
+    height:0;transition:height .9s var(--ease-out);min-height:3px;opacity:.85;}
+  .lsb .lsk{font-size:11px;color:var(--ink-3);font-weight:600;}
+
+  @media (max-width:1080px){ .viz{grid-template-columns:1fr;} .howto{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:640px){
+    .howto{grid-template-columns:1fr;}
+    .dwrap{flex-direction:column;gap:18px;}
+    .donut{width:150px;height:150px;}
+    .dleg{width:100%;}
+    .viz-card{padding:20px 18px;}
+    .libsum{padding:16px 18px;gap:16px;}
+    .libsum .lsn{padding-right:16px;}
+    .grid .card .cover,.grid .card:hover .cover{transform:none;}
+    .grid .card:hover .cover{transform:translateY(-4px);}
+  }
+
+  /* ============================================================
+     КАРТА КАТАЛОГА: матрица и таймлайн
+     ============================================================ */
+  .hm{display:grid;gap:5px;align-items:stretch;}
+  .hm-h{font-size:11.5px;font-weight:700;color:var(--ink-3);text-align:center;
+    padding:0 0 8px;letter-spacing:.08em;}
+  .hm-r{
+    font-size:12.5px;color:var(--ink-2);display:flex;align-items:center;
+    padding-right:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px;
+  }
+  .hm-c{
+    border:none;border-radius:9px;height:46px;padding:0;
+    font-family:'Inter Tight';font-size:13.5px;font-weight:600;color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .2s var(--ease),box-shadow .2s var(--ease),opacity .35s var(--ease);
+  }
+  .hm-c.hot{color:#fff;}
+  :root[data-theme="dark"] .hm-c.hot{color:#08130f;}
+  .hm-c.z{background:var(--surface-2);color:var(--ink-3);opacity:.45;cursor:default;font-size:15px;}
+  .hm-c:not(.z):hover{transform:scale(1.09);box-shadow:var(--sh-2);z-index:2;position:relative;}
+  .hm-c:not(.z):active{transform:scale(1.02);}
+
+  .tl{display:flex;gap:10px;align-items:flex-end;height:170px;padding-top:22px;}
+  .tlb{
+    flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;
+    gap:10px;height:100%;background:none;border:none;padding:0;
+  }
+  .tlv{
+    position:relative;width:100%;height:0;min-height:5px;border-radius:9px 9px 4px 4px;
+    background:var(--surface-2);
+    transition:height .8s var(--ease-out),background-color var(--dur) var(--ease);
+  }
+  .tlv b{
+    position:absolute;top:-21px;left:0;right:0;text-align:center;
+    font-size:11.5px;font-weight:600;color:var(--ink-3);font-variant-numeric:tabular-nums;
+    transition:color var(--dur) var(--ease);
+  }
+  .tlb:hover .tlv{background:color-mix(in srgb,var(--accent) 55%,var(--surface-2));}
+  .tlb:hover .tlv b{color:var(--ink);}
+  .tlb.on .tlv{background:var(--accent);}
+  .tlb.on .tlv b{color:var(--accent);}
+  .tlk{font-size:11.5px;color:var(--ink-2);text-align:center;line-height:1.35;font-weight:600;}
+  .tlk i{font-style:normal;font-weight:400;color:var(--ink-3);font-size:10.5px;}
+  .tlb:hover .tlk{color:var(--accent);}
+
+  .pchip span{margin-left:7px;font-size:14px;}
+
+  @media (max-width:640px){
+    .hm{gap:3px;}
+    .hm-r{font-size:11px;padding-right:8px;max-width:96px;}
+    .hm-c{height:38px;font-size:12px;border-radius:7px;}
+    .hm-h{font-size:10.5px;}
+    .tl{height:150px;gap:5px;}
+    .tlk{font-size:9.5px;}
+    .tlk i{display:none;}
+    .tlv b{font-size:10px;top:-18px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;scroll-behavior:auto !important;}
+    .reveal{opacity:1;transform:none;}
+    .c-shine{display:none;}
+    .grid .card .cover{transform:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sprog" id="sprog"></div>
+
+<header class="topbar" id="topbar"><div class="tp">
+  <a class="brand" onclick="setView('home')">
+    <span class="logo">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H19v3H6.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+    </span>
+    <span><span class="brand-name">Alterna Kitap</span><span class="brand-sub">Türkçe oku</span></span>
+  </a>
+  <nav class="navl" id="nav"></nav>
+  <div class="tp-act">
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Сменить тему" aria-label="Сменить тему"></button>
+    <button class="rnd" onclick="randomItem()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M16 3h5v5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 20 21 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M21 16v5h-5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 15l6 6M4 4l5 5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+      <span>Случайная книга</span>
+    </button>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <section class="view" id="view-home">
+    <div class="hero">
+      <div class="hero-txt">
+        <span class="eyebrow">Книжная полка школы Alterna</span>
+        <h1 class="headline">Читайте по-турецки <em>с той страницы</em>, где вам понятно</h1>
+        <p class="lede">Чтение это единственный вид практики, где вы полностью управляете темпом. Можно перечитать фразу, посмотреть слово, вернуться назад. Каталог разложен по уровням, чтобы вы взяли книгу по силам, а не по обложке.</p>
+        <div class="hero-cta">
+          <button class="btn btn-pri btn-lg" onclick="setView('catalog')">
+            Открыть каталог
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn btn-gh btn-lg" onclick="setView('where')">Где брать книги</button>
+        </div>
+        <div class="quick" id="lvlQuick"></div>
+      </div>
+      <div class="hero-vis"><div class="hero-shelf" id="shelf"></div></div>
+    </div>
+
+    <div class="stats">
+      <div class="st"><b id="stTotal">0</b><span>книг в каталоге</span></div>
+      <div class="st"><b id="stA1">0</b><span>для начинающих</span></div>
+      <div class="st"><b id="stFree">0</b><span>можно скачать бесплатно</span></div>
+      <div class="st"><b id="stAuthors">0</b><span>авторов</span></div>
+    </div>
+
+    <section class="block">
+      <div class="block-h">
+        <h2>Как пользоваться каталогом</h2>
+        <p class="lede">Шесть шагов, после которых каталог начинает работать на вас, а не наоборот.</p>
+      </div>
+      <div class="howto">
+        <div class="ht reveal" data-n="1">
+          <div class="ht-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 18V7M10 18V4M16 18v-8M22 18v-5" stroke-linecap="round"/></svg></div>
+          <h3>Начните с уровня</h3>
+          <p>Наверху каталога стоят A1–C1. Берите на ступень ниже своей: комфортное чтение это когда понятно почти всё.</p>
+          <button class="ht-go" onclick="setView('catalog')">Выбрать уровень <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="ht reveal" data-n="2">
+          <div class="ht-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M7 12h10M10 18h4" stroke-linecap="round"/></svg></div>
+          <h3>Сузьте фильтрами</h3>
+          <p>Жанр, тип издания и переключатель «только бесплатное». Фильтры складываются друг с другом, счётчик показывает, сколько их включено.</p>
+          <button class="ht-go" onclick="openFilters()">Открыть фильтры <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="ht reveal" data-n="3">
+          <div class="ht-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg></div>
+          <h3>Ищите словами</h3>
+          <p>Поиск смотрит на название, автора, год и описание. Можно искать «детектив», «Стамбул» или «Pamuk» — найдётся и то, и другое.</p>
+          <button class="ht-go" onclick="focusSearch()">Попробовать поиск <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="ht reveal" data-n="4">
+          <div class="ht-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/></svg></div>
+          <h3>Откройте карточку</h3>
+          <p>Клик по книге показывает описание, все уровни и ссылки: где купить бумагу, где электронную версию и что можно скачать бесплатно.</p>
+          <button class="ht-go" onclick="randomItem()">Показать пример <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="ht reveal" data-n="5">
+          <div class="ht-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 3h11v18l-5.5-4-5.5 4z" stroke-linejoin="round"/></svg></div>
+          <h3>Сохраняйте закладкой</h3>
+          <p>Значок в углу обложки складывает книгу в «Мою библиотеку». Всё хранится только в вашем браузере и переносится файлом на другое устройство.</p>
+          <button class="ht-go" onclick="setView('lib')">Моя библиотека <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="ht reveal" data-n="6">
+          <div class="ht-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          <h3>Добавьте свои книги</h3>
+          <p>Учебник с курса или книга с полки: внесите её один раз, и она встанет в каталог рядом с остальными со значком «своя».</p>
+          <button class="ht-go" onclick="setView('lib');setLibTab('add')">Добавить книгу <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-h">
+        <h2>Что лежит в каталоге</h2>
+        <p class="lede">Кликните по любой полосе или сектору, чтобы сразу открыть эти книги.</p>
+      </div>
+      <div class="viz">
+        <div class="viz-card">
+          <h3>Книги по уровням</h3>
+          <p class="vsub">Одна книга может стоять сразу на двух уровнях, поэтому сумма больше размера каталога.</p>
+          <div class="bars" id="lvlBars"></div>
+        </div>
+        <div class="viz-card">
+          <h3>Типы изданий</h3>
+          <p class="vsub">От адаптированных текстов и учебников до романов в оригинале.</p>
+          <div class="dwrap">
+            <div style="position:relative;">
+              <div class="donut" id="fmtDonut"></div>
+              <div class="dmid"><b id="dTotal">0</b><span>книг</span></div>
+            </div>
+            <div class="dleg" id="fmtLeg"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-h">
+        <h2>Карта каталога</h2>
+        <p class="lede">Две интерактивные схемы. В матрице каждая клетка это пересечение уровня и жанра, на таймлайне книги разложены по эпохам. Клик по любой клетке или столбику сразу открывает эти книги в каталоге.</p>
+      </div>
+      <div class="viz-card" style="margin-bottom:16px;">
+        <h3>Уровень и жанр</h3>
+        <p class="vsub">Чем насыщеннее клетка, тем больше книг на этом пересечении. Точка значит, что таких книг нет.</p>
+        <div class="hm" id="heat"></div>
+      </div>
+      <div class="viz-card">
+        <h3>По эпохам</h3>
+        <p class="vsub">Турецкий язык сильно менялся в XX веке, поэтому эпоха издания напрямую влияет на сложность текста.</p>
+        <div class="tl" id="tline"></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-h">
+        <h2>Как читать, чтобы это работало</h2>
+        <p class="lede">Читать со словарём каждое слово это верный способ бросить на двадцатой странице. Работает другой подход.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><div class="n">01</div><h3>Возьмите книгу ниже уровня</h3><p>Если на странице больше пяти незнакомых слов, книга слишком сложная. Комфортное чтение это когда понятно почти всё.</p></div>
+        <div class="step reveal"><div class="n">02</div><h3>Не лезьте в словарь сразу</h3><p>Читайте абзац целиком. Большинство слов раскроются из контекста, а те, что нет, повторятся снова.</p></div>
+        <div class="step reveal"><div class="n">03</div><h3>Выписывайте только повторы</h3><p>Слово, встреченное трижды, действительно нужно. Слово, встреченное один раз, подождёт.</p></div>
+        <div class="step reveal"><div class="n">04</div><h3>Читайте вслух пять минут</h3><p>Это связывает написанное со звучанием и заметно улучшает восприятие речи на слух.</p></div>
+      </div>
+    </section>
+  </section>
+
+  <section class="view" id="view-catalog">
+    <div class="page-h">
+      <h2>Каталог</h2>
+      <p class="lede">Клик по книге открывает карточку с обложкой, описанием и ссылками, где её купить или прочитать.</p>
+    </div>
+
+    <div class="chipline" id="lvlbar"></div>
+
+    <div class="ctrl">
+      <div class="ctrl-main">
+        <div class="sbox">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.9"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          <input id="search" type="text" placeholder="Название, автор, тема..." autocomplete="off">
+          <button class="sclear" id="sClear" onclick="clearSearch()" aria-label="Очистить">&times;</button>
+        </div>
+        <button class="btn btn-gh fbtn" id="fBtn" onclick="toggleFilters()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M7 12h10M10 18h4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          Фильтры
+          <span class="fcount" id="fCount">0</span>
+          <svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="vt">
+          <button id="bGrid" class="active" onclick="setMode('grid')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6" stroke="currentColor" stroke-width="1.9"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6" stroke="currentColor" stroke-width="1.9"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6" stroke="currentColor" stroke-width="1.9"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6" stroke="currentColor" stroke-width="1.9"/></svg>
+            <span>Полка</span>
+          </button>
+          <button id="bList" onclick="setMode('list')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+            <span>Список</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="fpanel" id="fPanel"><div class="fpin">
+        <div class="fgrid">
+          <div class="sel"><label for="sortSel">Сортировка</label>
+            <select id="sortSel" onchange="setSort(this.value)">
+              <option value="level">По уровню, от простого</option>
+              <option value="author">По автору</option>
+              <option value="name-asc">По названию (А-Я)</option>
+              <option value="year-asc">Сначала старые</option>
+              <option value="year-desc">Сначала новые</option>
+              <option value="genre">По жанру</option>
+            </select>
+          </div>
+          <div class="sel"><label for="groupSel">Группировка</label>
+            <select id="groupSel" onchange="setGroup(this.value)">
+              <option value="level">По уровню</option>
+              <option value="none">Без группировки</option>
+              <option value="fmt">По типу издания</option>
+              <option value="genre">По жанру</option>
+            </select>
+          </div>
+        </div>
+        <div class="flab">Тип издания</div><div class="frow" id="fmtF"></div>
+        <div class="flab">Жанр</div><div class="frow" id="genreF"></div>
+        <div class="flab">Доступ</div><div class="frow" id="freeF"></div>
+      </div></div>
+
+      <div class="tbot">
+        <div class="found">Найдено <b id="foundNum">0</b> из <b id="totalNum">0</b><span class="fnote" id="fnote"></span><span class="cover-note" id="coverNote"></span></div>
+        <button class="reset" onclick="resetFilters()">Сбросить фильтры</button>
+      </div>
+    </div>
+
+    <div class="keybar" id="keybar">
+      <span class="kb-dot"></span>
+      <span class="kb-txt" id="kbTxt">Обложки берутся из Open Library. Для более полного покрытия можно добавить бесплатный ключ Google Books.</span>
+      <input id="kbInput" type="text" placeholder="Google Books API key, необязательно" autocomplete="off">
+      <button class="kb-btn" onclick="applyKey()">Сохранить</button>
+      <a class="kb-help" href="https://console.cloud.google.com/apis/library/books.googleapis.com" target="_blank" rel="noopener">Получить ключ</a>
+      <button class="kb-clear" onclick="clearKey()" title="Удалить">&times;</button>
+    </div>
+
+    <div id="body"></div>
+  </section>
+
+  <section class="view" id="view-where">
+    <div class="page-h">
+      <h2>Где брать книги</h2>
+      <p class="lede">У каждой карточки есть ссылки на магазины и библиотеки. Вот как они устроены.</p>
+    </div>
+    <div class="srcs">
+      <div class="src reveal"><span class="tag">Бумага</span><h3>Kitapyurdu и D&amp;R</h3><p>Крупнейшие турецкие книжные магазины. Доставляют за границу, цены на турецкие книги заметно ниже европейских.</p></div>
+      <div class="src reveal"><span class="tag">Электронно</span><h3>Google Books, 1000Kitap и Goodreads</h3><p>Часть книг доступна в электронном виде. 1000Kitap это турецкий книжный каталог с изданиями и отзывами, Goodreads полезен, чтобы понять, ваша ли это книга.</p></div>
+      <div class="src acc reveal"><span class="tag">Бесплатно</span><h3>Пять открытых источников</h3><p>Электронная библиотека Министерства культуры Турции, Vikikaynak, Project Gutenberg, Archive.org и Open Library. У книг со значком FREE в карточке есть отдельный блок со ссылками на все пять.</p></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-lib">
+    <div class="page-h">
+      <h2>Моя библиотека</h2>
+      <p class="lede">Отмечайте книги закладкой в каталоге, и они соберутся здесь. Всё хранится только в вашем браузере, никуда не отправляется и никому не видно.</p>
+    </div>
+
+    <div class="lib-tabs">
+      <button id="ltSaved" class="lt active" onclick="setLibTab('saved')">Сохранённые <span id="cntSaved">0</span></button>
+      <button id="ltMine" class="lt" onclick="setLibTab('mine')">Мои книги <span id="cntMine">0</span></button>
+      <button id="ltAdd" class="lt" onclick="setLibTab('add')">Добавить книгу</button>
+      <div class="lib-tools">
+        <button class="reset" onclick="exportLib()">Выгрузить в файл</button>
+        <label class="reset" style="cursor:pointer;">Загрузить из файла
+          <input type="file" id="libFile" accept="application/json" style="display:none" onchange="importLib(event)">
+        </label>
+      </div>
+    </div>
+
+    <div class="libsum" id="libSum" style="display:none"></div>
+    <div id="libSaved" class="lib-pane"></div>
+    <div id="libMine" class="lib-pane" style="display:none"></div>
+
+    <div id="libAdd" class="lib-pane" style="display:none">
+      <div class="form">
+        <h3 style="font-size:19px;margin:0 0 6px;">Своя книга</h3>
+        <p style="font-size:13.5px;color:var(--ink-2);margin:0 0 24px;line-height:1.55;">Добавьте книгу, которой нет в каталоге: свой учебник, книгу с полки или то, что посоветовал преподаватель. Она появится в вашей библиотеке и в общем каталоге со значком "своя".</p>
+        <div class="frm-grid">
+          <label>Название<span class="req">обязательно</span><input id="fName" type="text" placeholder="Kürk Mantolu Madonna"></label>
+          <label>Автор<span class="req">обязательно</span><input id="fAuthor" type="text" placeholder="Sabahattin Ali"></label>
+          <label>Год<input id="fYear" type="number" placeholder="1943"></label>
+          <label>Тип издания<select id="fFmt"></select></label>
+          <label>Жанр<select id="fGenre"></select></label>
+          <label>Уровни<span class="req">хотя бы один</span>
+            <div class="lvpick" id="fLevels"></div>
+          </label>
+          <label class="wide">Описание<textarea id="fDesc" rows="3" placeholder="Пара предложений: о чём книга и почему стоит читать на этом уровне."></textarea></label>
+          <label class="wide">Ссылка на книгу<input id="fLink" type="url" placeholder="https://... необязательно"></label>
+          <label class="wide">Ссылка на обложку<input id="fCover" type="url" placeholder="https://... необязательно, иначе нарисуем сами"></label>
+        </div>
+        <div class="frm-actions">
+          <button class="btn btn-acc" onclick="saveCustom()">Добавить в библиотеку</button>
+          <button class="reset" onclick="clearForm()">Очистить</button>
+          <span id="frmMsg" class="frm-msg"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-faq">
+    <div class="page-h">
+      <h2>Частые вопросы</h2>
+      <p class="lede">Короткие ответы на то, что спрашивают чаще всего.</p>
+    </div>
+    <div class="faqwrap" id="faqList"></div>
+  </section>
+
+  <footer class="foot">
+    Каталог собран командой Alterna. Уровень отражает сложность языка книги: длину предложений, объём лексики, количество устаревших и диалектных слов. Он не совпадает с возрастной аудиторией: детская книга может быть на A2, а короткий рассказ классика на C1.
+  </footer>
+</div>
+
+<nav class="tabbar" id="tabbar"></nav>
+
+<button class="totop" id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Наверх">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="mbox">
+    <button class="mx" onclick="closeModal()">&times;</button>
+    <div class="mgrid">
+      <div class="mcover" id="mCover"></div>
+      <div class="minfo">
+        <div class="mbg" id="mBadges"></div>
+        <h2 id="mTitle"></h2>
+        <div class="mmeta" id="mMeta"></div>
+        <p class="mdesc" id="mDesc"></p>
+        <div class="mblk"><button class="btn btn-acc" id="mSaveBtn">Сохранить в библиотеку</button></div>
+        <div class="mblk"><div class="mlab">Где взять</div><div class="mlinks" id="mBuy"></div></div>
+        <div class="mblk" id="mFreeBlk"><div class="mlab">Скачать бесплатно</div><div class="mlinks" id="mFree"></div></div>
+        <div class="mblk"><div class="mlab">Об этой книге</div><div class="mlinks" id="mInfo"></div></div>
+        <div class="mtip" id="mTip"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// ============================================================
+// Ключ Google Books, необязательный. Обложки работают и без него,
+// через Open Library. Ключ добавляет покрытие по редким изданиям.
+const GB_KEY = "";
+// ============================================================
+let RUNTIME_KEY = "";
+try{ RUNTIME_KEY = localStorage.getItem('alterna_gb') || ""; }catch(e){}
+function activeKey(){ return RUNTIME_KEY || GB_KEY; }
+function applyKey(){
+  const v=document.getElementById('kbInput').value.trim(); if(!v) return;
+  RUNTIME_KEY=v; try{ localStorage.setItem('alterna_gb',v); }catch(e){}
+  forgetCovers(); markKey(); render();
+}
+function clearKey(){
+  RUNTIME_KEY=""; try{ localStorage.removeItem('alterna_gb'); }catch(e){}
+  document.getElementById('kbInput').value=""; forgetCovers(); markKey(); render();
+}
+function markKey(){
+  const bar=document.getElementById('keybar'); if(!bar) return;
+  const on=!!activeKey(); bar.classList.toggle('on',on);
+  document.getElementById('kbTxt').textContent = on
+    ? 'Ключ Google Books подключён. Обложки ищутся в Open Library и Google Books, результат запоминается в этом браузере.'
+    : 'Обложки берутся из Open Library. Для более полного покрытия можно добавить бесплатный ключ Google Books.';
+}
+
+const coverCache=new Map();
+let netBlocked=false, coversFound=0, coversTried=0;
+
+// найденные обложки переживают перезагрузку страницы
+let COV_DISK={};
+try{ COV_DISK=JSON.parse(localStorage.getItem('alterna_covers')||'{}'); }catch(e){}
+Object.keys(COV_DISK).forEach(k=>coverCache.set(k, COV_DISK[k]||null));
+let covSaveTimer=null;
+function rememberCover(key,path){
+  COV_DISK[key]=path||"";
+  clearTimeout(covSaveTimer);
+  covSaveTimer=setTimeout(()=>{ try{ localStorage.setItem('alterna_covers',JSON.stringify(COV_DISK)); }catch(e){} },1200);
+}
+function forgetCovers(){
+  COV_DISK={}; coverCache.clear(); coversFound=0; coversTried=0;
+  try{ localStorage.removeItem('alterna_covers'); }catch(e){}
+}
+
+function fetchT(url,ms){
+  if(typeof AbortController==='undefined') return fetch(url);
+  const c=new AbortController();
+  const t=setTimeout(()=>c.abort(),ms||7000);
+  return fetch(url,{signal:c.signal}).finally(()=>clearTimeout(t));
+}
+function bigger(u){
+  return u.replace('http://','https://')
+          .replace('&edge=curl','')
+          .replace('zoom=1','zoom=2');
+}
+async function fromGoogleBooks(b, loose){
+  const K=activeKey();
+  const q = loose ? (b.name+' '+b.author)
+                  : ('intitle:'+b.name+'+inauthor:'+b.author);
+  const url='https://www.googleapis.com/books/v1/volumes?maxResults=3&q='+encodeURIComponent(q)+(K?('&key='+K):'');
+  const r=await fetchT(url); if(!r.ok) return null;
+  const d=await r.json();
+  const hit=(d.items||[]).find(x=>x.volumeInfo && x.volumeInfo.imageLinks);
+  if(!hit) return null;
+  const im=hit.volumeInfo.imageLinks;
+  return bigger(im.thumbnail||im.smallThumbnail||'');
+}
+async function fromOpenLibrary(b, mode){
+  let url;
+  if(mode==='exact') url='https://openlibrary.org/search.json?limit=3&title='+encodeURIComponent(b.name)+'&author='+encodeURIComponent(b.author);
+  else if(mode==='titleonly') url='https://openlibrary.org/search.json?limit=3&title='+encodeURIComponent(b.name);
+  else url='https://openlibrary.org/search.json?limit=5&q='+encodeURIComponent(b.name+' '+b.author);
+  const r=await fetchT(url); if(!r.ok) return null;
+  const d=await r.json();
+  const hit=(d.docs||[]).find(x=>x.cover_i);
+  return hit ? 'https://covers.openlibrary.org/b/id/'+hit.cover_i+'-L.jpg' : null;
+}
+// турецкая Википедия: у классики там почти всегда есть скан обложки
+function norm(x){
+  return String(x).toLowerCase()
+    .replace(/[ıİ]/g,'i').replace(/[şŞ]/g,'s').replace(/[ğĞ]/g,'g')
+    .replace(/[üÜ]/g,'u').replace(/[öÖ]/g,'o').replace(/[çÇ]/g,'c')
+    .replace(/[^a-z0-9 ]/g,' ').replace(/s+/g,' ').trim();
+}
+// страница Википедии считается страницей книги, а не автора
+function titleMatches(pageTitle,bookName){
+  const a=norm(pageTitle), b=norm(bookName);
+  if(!a||!b) return false;
+  if(a===b || a.indexOf(b)>-1 || b.indexOf(a)>-1) return true;
+  const aw=new Set(a.split(' ').filter(w=>w.length>3));
+  const bw=b.split(' ').filter(w=>w.length>3);
+  if(!bw.length) return false;
+  const hit=bw.filter(w=>aw.has(w)).length;
+  return hit>=Math.min(2,bw.length);
+}
+async function fromWikiTr(b){
+  const url='https://tr.wikipedia.org/w/api.php?action=query&format=json&origin=*'
+    +'&prop=pageimages&piprop=thumbnail&pithumbsize=520&generator=search&gsrlimit=3&gsrsearch='
+    +encodeURIComponent(b.name+' '+b.author);
+  const r=await fetchT(url); if(!r.ok) return null;
+  const d=await r.json();
+  const pages=d&&d.query&&d.query.pages; if(!pages) return null;
+  const hit=Object.values(pages)
+    .filter(p=>p&&p.thumbnail&&p.thumbnail.source)
+    .find(p=>titleMatches(p.title,b.name));
+  return hit ? hit.thumbnail.source : null;
+}
+async function resolveCover(b){
+  if(b.cover) return b.cover;
+  const key=b.name+'|'+b.author;
+  if(coverCache.has(key)) return coverCache.get(key);
+  let path=null, hadNetwork=false;
+  const chain=[
+    ()=>fromGoogleBooks(b,false),
+    ()=>fromOpenLibrary(b,'exact'),
+    ()=>fromWikiTr(b),
+    ()=>fromGoogleBooks(b,true),
+    ()=>fromOpenLibrary(b,'loose'),
+    ()=>fromOpenLibrary(b,'titleonly')
+  ];
+  for(const step of chain){
+    try{ path=await step(); hadNetwork=true; }
+    catch(e){ /* сеть недоступна или запрос заблокирован */ }
+    if(path) break;
+  }
+  coversTried++;
+  if(path) coversFound++;
+  if(!hadNetwork) netBlocked=true;
+  updateCoverNote();
+  coverCache.set(key,path);
+  rememberCover(key,path);
+  return path;
+}
+function updateCoverNote(){
+  const el=document.getElementById('coverNote'); if(!el) return;
+  if(netBlocked){
+    el.className='cover-note warn';
+    el.textContent='Обложки не загружаются: окружение блокирует внешние запросы. Так бывает в предпросмотре. Скачайте файл и откройте в браузере или выложите сайт, и обложки появятся.';
+    return;
+  }
+  if(coversTried<4){ el.textContent=''; el.className='cover-note'; return; }
+  el.className='cover-note';
+  el.textContent='Настоящих обложек подтянулось: '+coversFound+' из '+coversTried+' проверенных. Остальным нарисована своя, без обложки не остаётся ни одна книга.';
+}
+function applyCover(el,path,cls){
+  if(!el) return;
+  el.classList.add('done');           // гасим скелетон в любом случае
+  if(!path||el.querySelector('.'+cls)) return;
+  const img=document.createElement('img'); img.className=cls; img.loading='lazy'; img.alt=''; img.src=path;
+  img.onload=()=>requestAnimationFrame(()=>img.classList.add('in'));
+  img.onerror=()=>img.remove();
+  el.appendChild(img);
+}
+// обложки грузятся по мере прокрутки, не больше пяти запросов разом
+let covObs=null, covQueue=[], covActive=0;
+function queueCover(el){
+  if(!el || el.dataset.hyd) return;
+  el.dataset.hyd='1'; covQueue.push(el); pumpCovers();
+}
+function pumpCovers(){
+  while(covActive<5 && covQueue.length){
+    const el=covQueue.shift();
+    const b=BOOKS[+el.dataset.bid];
+    if(!b){ el.classList.add('done'); continue; }
+    covActive++;
+    resolveCover(b)
+      .then(p=>applyCover(el,p,el.classList.contains('mini')?'mini-img':'c-photo'))
+      .catch(()=>{ el.classList.add('done'); })
+      .then(()=>{ covActive--; pumpCovers(); });
+  }
+}
+function hydrate(){
+  const nodes=[...document.querySelectorAll('[data-bid]:not([data-hyd])')];
+  if(!('IntersectionObserver' in window)){ nodes.forEach(queueCover); return; }
+  if(!covObs) covObs=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ covObs.unobserve(e.target); queueCover(e.target); } });
+  },{rootMargin:'400px 0px'});
+  nodes.forEach(n=>covObs.observe(n));
+  // если наблюдатель почему-то молчит, через секунду грузим первые сорок
+  setTimeout(()=>{ if(!covActive && !covQueue.length) nodes.slice(0,40).forEach(queueCover); },1000);
+}
+const FMT={roman:"Роман",oyku:"Рассказы",siir:"Поэзия",cocuk:"Детская",adapte:"Адаптированное",ders:"Учебник",nonfic:"Нон-фикшн"};
+const FMT_ORDER={adapte:0,ders:1,cocuk:2,oyku:3,roman:4,siir:5,nonfic:6};
+const G={ogrenme:"Для изучающих",masal:"Сказки и фольклор",cagdas:"Современная проза",klasik:"Классика",polisiye:"Детектив",tarih:"Историческое",siir:"Поэзия",deneme:"Эссе и мемуары",cocukedeb:"Детская литература"};
+const LEVELS={A1:{},A2:{},B1:{},B2:{},C1:{}};
+
+// [название, автор, год, тип, жанр, уровни, описание]
+const RAW=[
+["İstanbul Yabancılar İçin Türkçe A1","İstanbul Üniversitesi",2012,"ders","ogrenme",["A1"],"Базовый учебник, по которому учат турецкому в самой Турции. Диалоги, упражнения и аудио."],
+["Yedi İklim Türkçe A1","Yunus Emre Enstitüsü",2015,"ders","ogrenme",["A1"],"Официальный учебник института Юнуса Эмре, бесплатно доступен в электронном виде."],
+["Hitit 1 Yabancılar İçin Türkçe","Ankara Üniversitesi TÖMER",2008,"ders","ogrenme",["A1","A2"],"Классический учебник TÖMER, до сих пор один из самых распространённых."],
+["Yedi İklim Türkçe A2","Yunus Emre Enstitüsü",2015,"ders","ogrenme",["A2"],"Продолжение курса, вводит прошедшее время и более длинные тексты."],
+["Hitit 2 Yabancılar İçin Türkçe","Ankara Üniversitesi TÖMER",2009,"ders","ogrenme",["A2","B1"],"Средний уровень курса TÖMER, тексты про культуру и быт."],
+["Yedi İklim Türkçe B1","Yunus Emre Enstitüsü",2015,"ders","ogrenme",["B1"],"Пороговый уровень, публицистические и литературные тексты."],
+["Yedi İklim Türkçe B2","Yunus Emre Enstitüsü",2016,"ders","ogrenme",["B2"],"Продвинутый уровень с абстрактными темами и развёрнутой аргументацией."],
+["Yedi İklim Türkçe C1","Yunus Emre Enstitüsü",2016,"ders","ogrenme",["C1"],"Высший уровень серии, академические и художественные тексты."],
+["Türkçe Öğreniyoruz Orhun 1","Ali Fuat Bilkan",2006,"ders","ogrenme",["A1"],"Учебник начального уровня с постепенным вводом грамматики."],
+["Adım Adım Türkçe 1","Dilset",2010,"ders","ogrenme",["A1"],"Пошаговый курс с большим количеством упражнений на повторение."],
+["Keloğlan Masalları","Türk halk edebiyatı",1900,"cocuk","masal",["A1","A2"],"Народные сказки о Келоглане, короткие тексты с повторяющимися оборотами."],
+["Nasreddin Hoca Fıkraları","Türk halk edebiyatı",1900,"cocuk","masal",["A1","A2"],"Короткие анекдоты про Насреддина Ходжу, по несколько строк каждый, идеальны для первого чтения."],
+["Dede Korkut Hikâyeleri","Anonim",1400,"cocuk","masal",["B1","B2"],"Огузский эпос в пересказе, архаичная лексика, но короткие ясные сюжеты."],
+["Küçük Prens","Antoine de Saint-Exupéry",1943,"cocuk","cocukedeb",["A2","B1"],"Маленький принц по-турецки: знакомый сюжет и простые предложения."],
+["La Fontaine Masalları","Jean de La Fontaine",1668,"cocuk","masal",["A2"],"Басни Лафонтена в турецком переводе, каждая на страницу."],
+["Ezop Masalları","Ezop",1900,"cocuk","masal",["A1","A2"],"Басни Эзопа: самые короткие тексты с ясной моралью в конце."],
+["Şeker Portakalı","José Mauro de Vasconcelos",1968,"roman","cocukedeb",["B1"],"Мой милый апельсин: один из самых читаемых в Турции переводных романов, простой язык."],
+["Pinokyo","Carlo Collodi",1883,"cocuk","cocukedeb",["A2"],"Пиноккио по-турецки, знакомая история и короткие главы."],
+["Heidi","Johanna Spyri",1881,"cocuk","cocukedeb",["A2","B1"],"Хайди в турецком переводе, спокойное повествование."],
+["Uçurtmayı Vurmasınlar","Feride Çiçekoğlu",1986,"roman","cagdas",["B1"],"Мальчик растёт в женской тюрьме. Короткая книга простым языком о непростом."],
+["Sevgili Arsız Ölüm","Latife Tekin",1983,"roman","cagdas",["C1"],"Деревня переезжает в город, магический реализм и очень плотный язык."],
+["Beyaz Diş","Jack London",1906,"roman","cocukedeb",["B1"],"Белый Клык по-турецки, динамичный сюжет и понятная лексика."],
+["Momo","Michael Ende",1973,"roman","cocukedeb",["B1"],"Момо в турецком переводе, философская сказка простым языком."],
+["Charlie'nin Çikolata Fabrikası","Roald Dahl",1964,"cocuk","cocukedeb",["A2","B1"],"Чарли и шоколадная фабрика: короткие главы и живые диалоги."],
+["Pippi Uzunçorap","Astrid Lindgren",1945,"cocuk","cocukedeb",["A2","B1"],"Пеппи Длинныйчулок по-турецки, весёлый и простой текст."],
+["Kırmızı Saçlı Kadın","Orhan Pamuk",2016,"roman","cagdas",["B2","C1"],"Самый короткий и самый доступный роман Памука, миф об Эдипе в турецких декорациях."],
+["Benim Adım Kırmızı","Orhan Pamuk",1998,"roman","tarih",["C1"],"Детектив о османских миниатюристах, много голосов и старинной лексики."],
+["Kar","Orhan Pamuk",2002,"roman","cagdas",["C1"],"Поэт приезжает в занесённый снегом Карс, политика и вера."],
+["Masumiyet Müzesi","Orhan Pamuk",2008,"roman","cagdas",["C1"],"Одержимость и Стамбул 70-х, длинные периоды и подробные описания."],
+["İstanbul: Hatıralar ve Şehir","Orhan Pamuk",2003,"nonfic","deneme",["C1"],"Мемуары о городе и детстве, эталон турецкой эссеистики."],
+["Beyaz Kale","Orhan Pamuk",1985,"roman","tarih",["B2","C1"],"Османский учёный и венецианский раб, короткий и стройный роман."],
+["Cevdet Bey ve Oğulları","Orhan Pamuk",1982,"roman","cagdas",["C1"],"Семейная сага трёх поколений стамбульских буржуа."],
+["Veba Geceleri","Orhan Pamuk",2021,"roman","tarih",["C1"],"Чума на вымышленном острове в 1901 году, стилизация под хронику."],
+["Kürk Mantolu Madonna","Sabahattin Ali",1943,"roman","klasik",["B2"],"Самая читаемая книга Турции последних лет. Ясный язык и сильная история любви."],
+["İçimizdeki Şeytan","Sabahattin Ali",1940,"roman","klasik",["B2","C1"],"Молодой человек и его слабость, психологический роман 40-х."],
+["Kuyucaklı Yusuf","Sabahattin Ali",1937,"roman","klasik",["C1"],"Провинция, насилие и бессилие, один из главных турецких романов."],
+["Değirmen","Sabahattin Ali",1935,"oyku","klasik",["B2"],"Сборник рассказов, каждый на несколько страниц, удобно читать порциями."],
+["İnce Memed","Yaşar Kemal",1955,"roman","klasik",["C1"],"Разбойник из Чукуровы, эпос о несправедливости, много диалектных слов."],
+["Yer Demir Gök Bakır","Yaşar Kemal",1963,"roman","klasik",["C1"],"Деревня в ожидании чуда, поэтичный и трудный язык."],
+["Çalıkuşu","Reşat Nuri Güntekin",1922,"roman","klasik",["B2","C1"],"Молодая учительница едет в Анатолию, классика, которую читают в школе."],
+["Yaprak Dökümü","Reşat Nuri Güntekin",1930,"roman","klasik",["B2","C1"],"Распад семьи чиновника, роман о переменах в обществе."],
+["Huzur","Ahmet Hamdi Tanpınar",1949,"roman","klasik",["C1"],"Стамбул накануне войны, длинные предложения и музыкальный ритм прозы."],
+["Saatleri Ayarlama Enstitüsü","Ahmet Hamdi Tanpınar",1961,"roman","klasik",["C1"],"Сатира на бюрократию и модернизацию, сложный ироничный язык."],
+["Beş Şehir","Ahmet Hamdi Tanpınar",1946,"nonfic","deneme",["C1"],"Эссе о пяти турецких городах, эталонная эссеистика."],
+["Tutunamayanlar","Oğuz Atay",1972,"roman","klasik",["C1"],"Легендарный экспериментальный роман, один из самых сложных турецких текстов."],
+["Korkuyu Beklerken","Oğuz Atay",1975,"oyku","klasik",["C1"],"Сборник рассказов Атая, чуть доступнее его романов."],
+["Aylak Adam","Yusuf Atılgan",1959,"roman","klasik",["B2","C1"],"Праздный человек бродит по Стамбулу, короткий роман с ясным языком."],
+["Anayurt Oteli","Yusuf Atılgan",1973,"roman","klasik",["C1"],"Психологический распад портье провинциальной гостиницы."],
+["Dokuzuncu Hariciye Koğuşu","Peyami Safa",1930,"roman","klasik",["B2"],"Подросток в больнице, короткая и очень сильная книга."],
+["Sinekli Bakkal","Halide Edip Adıvar",1936,"roman","klasik",["C1"],"Жизнь стамбульского квартала на рубеже эпох."],
+["Ateşten Gömlek","Halide Edip Adıvar",1922,"roman","tarih",["C1"],"Роман об освободительной войне, написан её участницей."],
+["Vurun Kahpeye","Halide Edip Adıvar",1926,"roman","tarih",["C1"],"Учительница в анатолийском городке во время войны."],
+["Devlet Ana","Kemal Tahir",1967,"roman","tarih",["C1"],"Основание Османского государства, тяжёлый исторический язык."],
+["Semaver","Sait Faik Abasıyanık",1936,"oyku","klasik",["B2"],"Рассказы о простых людях Стамбула, короткие и человечные."],
+["Alemdağ'da Var Bir Yılan","Sait Faik Abasıyanık",1954,"oyku","klasik",["C1"],"Поздние рассказы, более сложные и поэтичные."],
+["Zübük","Aziz Nesin",1961,"roman","cagdas",["B2"],"Сатира о деревенском проходимце в политике, живой разговорный язык."],
+["Şimdiki Çocuklar Harika","Aziz Nesin",1967,"cocuk","cocukedeb",["B1","B2"],"Дневники двух школьников, очень простой и смешной язык."],
+["Yaşar Ne Yaşar Ne Yaşamaz","Aziz Nesin",1977,"roman","cagdas",["B2","C1"],"Человек, которого официально не существует, абсурдистская сатира."],
+["Memleketimden İnsan Manzaraları","Nâzım Hikmet",1966,"siir","siir",["C1"],"Эпическая поэма о людях Турции, вершина турецкой поэзии XX века."],
+["Kuvâyi Milliye","Nâzım Hikmet",1965,"siir","siir",["C1"],"Поэма об освободительной войне, ритмичная и мощная."],
+["Bütün Şiirleri","Orhan Veli Kanık",1951,"siir","siir",["B1","B2"],"Стихи Орхана Вели: короткие, разговорные, почти без сложных слов. Лучшая поэзия для начинающих."],
+["Üvercinka","Cemal Süreya",1958,"siir","siir",["C1"],"Сложная образная поэзия второго нового направления."],
+["Ben Sana Mecburum","Attilâ İlhan",1960,"siir","siir",["B2","C1"],"Романтическая и мелодичная поэзия, многие стихи стали песнями."],
+["Yunus Emre Divanı","Yunus Emre",1320,"siir","siir",["C1"],"Суфийская поэзия XIII века, старотурецкий язык, но простые образы."],
+["Aşk","Elif Şafak",2009,"roman","cagdas",["B2"],"Самый популярный роман Шафак, две линии и довольно простой язык."],
+["Baba ve Piç","Elif Şafak",2006,"roman","cagdas",["B2","C1"],"Две семьи, турецкая и армянская, и общая история."],
+["Havva'nın Üç Kızı","Elif Şafak",2016,"roman","cagdas",["B2","C1"],"Три студентки в Оксфорде и вопросы веры."],
+["Serenad","Zülfü Livaneli",2011,"roman","tarih",["B2"],"История любви и трагедии корабля Struma, ясный современный язык."],
+["Mutluluk","Zülfü Livaneli",2002,"roman","cagdas",["B2"],"Девушка с востока и профессор, роман о переменах в Турции."],
+["Huzursuzluk","Zülfü Livaneli",2017,"roman","cagdas",["B2"],"Короткий роман о Мардине и войне за границей."],
+["Son Ada","Zülfü Livaneli",2008,"roman","cagdas",["B2","C1"],"Антиутопия об острове и власти, притчевый стиль."],
+["Veda","Ayşe Kulin",2007,"roman","tarih",["B2"],"Стамбул в годы оккупации, семейная сага доступным языком."],
+["Nefes Nefese","Ayşe Kulin",2002,"roman","tarih",["B2"],"Турецкие дипломаты спасают евреев во Второй мировой."],
+["Adı Aylin","Ayşe Kulin",1997,"roman","cagdas",["B2"],"Биографический роман о необычной судьбе, лёгкое чтение."],
+["Puslu Kıtalar Atlası","İhsan Oktay Anar",1995,"roman","tarih",["C1"],"Барочная фантазия об османском Стамбуле, намеренно архаичный язык."],
+["Beyoğlu Rapsodisi","Ahmet Ümit",2003,"roman","polisiye",["B2","C1"],"Детектив в стамбульском Бейоглу, живые диалоги."],
+["İstanbul Hatırası","Ahmet Ümit",2010,"roman","polisiye",["B2","C1"],"Убийства у исторических памятников Стамбула, детектив с историей."],
+["Patasana","Ahmet Ümit",2000,"roman","polisiye",["B2","C1"],"Археологическая экспедиция и древняя тайна."],
+["Sultanı Öldürmek","Ahmet Ümit",2012,"roman","tarih",["C1"],"Исторический детектив об османской эпохе."],
+["Daha","Hakan Günday",2013,"roman","cagdas",["C1"],"Сын перевозчика мигрантов, жёсткий и мощный текст."],
+["Az","Hakan Günday",2011,"roman","cagdas",["C1"],"Роман о взрослении и насилии, плотный язык."],
+["Uzun Beyaz Bulut Gelibolu","Buket Uzuner",2001,"roman","tarih",["B2","C1"],"Галлиполи глазами разных сторон, эмоциональная проза."],
+["İstanbul Bir Masaldı","Mario Levi",1999,"roman","cagdas",["C1"],"Сага еврейской семьи Стамбула, длинные ветвящиеся предложения."],
+["Ölmeye Yatmak","Adalet Ağaoğlu",1973,"roman","klasik",["C1"],"Женщина подводит итоги жизни, поток сознания."],
+["Kayıp Söz","Oya Baydar",2007,"roman","cagdas",["C1"],"Писатель теряет слова и едет на восток страны."],
+["Yüzünde Bir Yer","Sema Kaygusuz",2009,"roman","cagdas",["C1"],"Поэтичная проза о памяти и молчании."],
+["Sessiz Ev","Orhan Pamuk",1983,"roman","cagdas",["C1"],"Три внука приезжают к бабушке, пять голосов и пять стилей."],
+["Yeni Hayat","Orhan Pamuk",1994,"roman","cagdas",["C1"],"Книга, которая меняет жизнь, метафизический роман-путешествие."],
+["Bir Düğün Gecesi","Adalet Ağaoğlu",1979,"roman","klasik",["C1"],"Свадьба как срез общества после переворота."],
+["Tehlikeli Oyunlar","Oğuz Atay",1973,"roman","klasik",["C1"],"Второй роман Атая, игры разума и распад личности."],
+["Bir Bilim Adamının Romanı","Oğuz Atay",1975,"roman","deneme",["C1"],"Биографический роман об учёном, чуть проще остальных книг автора."],
+["Gece","Bilge Karasu",1985,"roman","cagdas",["C1"],"Экспериментальная притча о страхе и власти."],
+["Uzun Sürmüş Bir Günün Akşamı","Bilge Karasu",1970,"oyku","cagdas",["C1"],"Рассказы о вере и выборе, очень плотный язык."],
+["Çocukluğun Soğuk Geceleri","Tezer Özlü",1980,"roman","cagdas",["C1"],"Автобиографическая проза о взрослении и болезни."],
+["Ateş ve Deniz","Murathan Mungan",2010,"oyku","cagdas",["C1"],"Рассказы одного из главных современных авторов."],
+["İki Genç Kızın Romanı","Perihan Mağden",2002,"roman","cagdas",["B2","C1"],"Дружба двух девушек в Стамбуле, современный разговорный язык."],
+["Türkçe Okuma Kitabı A1","Türkçe Okuma Serisi",2018,"adapte","ogrenme",["A1"],"Адаптированные тексты уровня A1 с глоссарием на полях."],
+["Türkçe Okuma Kitabı A2","Türkçe Okuma Serisi",2018,"adapte","ogrenme",["A2"],"Адаптированные рассказы уровня A2 с вопросами после текста."],
+["Türkçe Okuma Kitabı B1","Türkçe Okuma Serisi",2019,"adapte","ogrenme",["B1"],"Адаптированные тексты порогового уровня."],
+["Türkçe Okuma Kitabı B2","Türkçe Okuma Serisi",2019,"adapte","ogrenme",["B2"],"Адаптированная литература для продвинутого уровня."],
+["Kolay Türkçe Hikâyeler","Yabancılar için",2020,"adapte","ogrenme",["A1","A2"],"Короткие простые истории с частотной лексикой и повторами."],
+["Adapte Türk Klasikleri","Türk Edebiyatı Serisi",2017,"adapte","klasik",["B1","B2"],"Турецкая классика в упрощённом изложении, мост к оригиналам."],
+["Türkçe Deyimler Sözlüğü","TDK",2010,"nonfic","ogrenme",["B1","B2"],"Словарь турецких идиом с примерами. Без идиом турецкий не звучит по-турецки."],
+["Atasözleri Sözlüğü","TDK",2010,"nonfic","ogrenme",["B1","B2"],"Словарь пословиц, полезен и для языка, и для понимания культуры."],
+["Türkçe Dilbilgisi","Tahsin Banguoğlu",1974,"nonfic","ogrenme",["C1"],"Академическая грамматика турецкого, справочник для серьёзного уровня."],
+["Yaban","Yakup Kadri Karaosmanoğlu",1932,"roman","klasik",["C1"],"Городской интеллигент в анатолийской деревне, классика школьной программы."],
+["Kiralık Konak","Yakup Kadri Karaosmanoğlu",1922,"roman","klasik",["C1"],"Три поколения одной семьи и распад империи."],
+["Fatih-Harbiye","Peyami Safa",1931,"roman","klasik",["B2","C1"],"Девушка между двумя мирами Стамбула, восток и запад."],
+["Sisli Yıllar","Emine Işınsu",1994,"roman","cagdas",["B2","C1"],"Историческая проза о переломных годах."],
+["Bir Deli Ağaç","Sunay Akın",2013,"siir","siir",["B1","B2"],"Короткие лирические тексты, доступные средним уровням."],
+["Yolculuk Nereye Hemşerim","Aziz Nesin",1971,"oyku","cagdas",["B1","B2"],"Сатирические рассказы, каждый на несколько страниц."],
+["Gulyabani","Hüseyin Rahmi Gürpınar",1912,"roman","klasik",["C1"],"Сатирический роман о суевериях, старый язык, но живой юмор."],
+["Küçük Ağa","Tarık Buğra",1963,"roman","tarih",["C1"],"Освободительная война глазами провинциального духовенства."],
+["Osmancık","Tarık Buğra",1983,"roman","tarih",["C1"],"Роман об основателе Османской династии."],
+["Dokuzuncu Sınıf","Mavisel Yener",2010,"cocuk","cocukedeb",["B1"],"Подростковая повесть современной турецкой писательницы."],
+["Uçtu Uçtu Pelin Uçtu","Aytül Akal",1999,"cocuk","cocukedeb",["A2","B1"],"Детская повесть одной из главных турецких детских писательниц."],
+["Fadiş","Gülten Dayıoğlu",1971,"cocuk","cocukedeb",["B1"],"Классика турецкой детской литературы о деревенской девочке."],
+["Suna'nın Serçeleri","Gülten Dayıoğlu",1975,"cocuk","cocukedeb",["B1"],"Детская повесть о дружбе и ответственности."],
+["Alfabetik Şehir","Behiç Ak",2011,"cocuk","cocukedeb",["A2","B1"],"Иллюстрированная детская книга с игрой слов и буквами."],
+["Bizim Sınıf Kahramanları","Sevim Ak",2005,"cocuk","cocukedeb",["A2","B1"],"Школьные истории простым современным языком."],
+["Kırmızı Pazartesi","Gabriel García Márquez",1981,"roman","cagdas",["B2"],"Хроника объявленной смерти по-турецки, короткий и напряжённый текст."],
+["Simyacı","Paulo Coelho",1988,"roman","cagdas",["B1","B2"],"Алхимик в турецком переводе, простой язык и знакомый сюжет."],
+["Hayvan Çiftliği","George Orwell",1945,"roman","cagdas",["B1","B2"],"Скотный двор по-турецки, короткая книга с ясным языком."],
+["Dönüşüm","Franz Kafka",1915,"roman","cagdas",["B2"],"Превращение в турецком переводе, небольшой объём и знакомый сюжет."],
+["Satranç","Stefan Zweig",1942,"roman","cagdas",["B2"],"Шахматная новелла по-турецки, одна из самых читаемых переводных книг."],
+["Kaşağı ve Diğer Hikâyeler","Ömer Seyfettin",1919,"oyku","klasik",["B1","B2"],"Короткие рассказы по три-четыре страницы. Лучший вход в турецкую классику: сюжеты ясные, язык уже почти современный.",1],
+["Falaka","Ömer Seyfettin",1917,"oyku","klasik",["B1","B2"],"Рассказ о школе старого образца, хрестоматийный текст.",1],
+["Forsa","Ömer Seyfettin",1919,"oyku","klasik",["B1","B2"],"Рассказ о старом пленнике и возвращении домой, сильный финал.",1],
+["Diyet","Ömer Seyfettin",1919,"oyku","klasik",["B1","B2"],"Рассказ о достоинстве кузнеца, короткий и напряжённый.",1],
+["Yalnız Efe","Ömer Seyfettin",1919,"oyku","klasik",["B1","B2"],"Девушка становится разбойницей ради справедливости.",1],
+["Aşk-ı Memnu","Halit Ziya Uşaklıgil",1900,"roman","klasik",["C1"],"Первый настоящий психологический роман турецкой литературы, тяжёлый османский язык.",1],
+["Mai ve Siyah","Halit Ziya Uşaklıgil",1897,"roman","klasik",["C1"],"Молодой поэт и крушение иллюзий, вершина литературы эпохи Сервет-и Фюнун.",1],
+["Eylül","Mehmet Rauf",1901,"roman","klasik",["C1"],"Первый турецкий психологический роман о запретном чувстве.",1],
+["Araba Sevdası","Recaizade Mahmut Ekrem",1896,"roman","klasik",["C1"],"Сатира о щёголе, помешанном на всём европейском.",1],
+["Felatun Bey ile Rakım Efendi","Ahmet Mithat Efendi",1875,"roman","klasik",["C1"],"Два типа османского человека, один из первых романов на турецком.",1],
+["İntibah","Namık Kemal",1876,"roman","klasik",["C1"],"Один из самых первых турецких романов, дидактический и патетичный.",1],
+["Taaşşuk-ı Talat ve Fitnat","Şemsettin Sami",1872,"roman","klasik",["C1"],"Считается первым турецким романом, историческая ценность выше литературной.",1],
+["Şıpsevdi","Hüseyin Rahmi Gürpınar",1911,"roman","klasik",["C1"],"Сатира на подражание Западу, живой стамбульский говор.",1],
+["Kuyruklu Yıldız Altında Bir İzdivaç","Hüseyin Rahmi Gürpınar",1910,"roman","klasik",["C1"],"Комета Галлея и паника в Стамбуле, ироничный роман.",1],
+["Safahat","Mehmet Âkif Ersoy",1911,"siir","siir",["C1"],"Главный поэтический свод турецкой литературы, социальная поэзия.",1],
+["Rübab-ı Şikeste","Tevfik Fikret",1900,"siir","siir",["C1"],"Поэзия Сервет-и Фюнун, очень плотный османский язык.",1],
+["Piyale","Ahmet Haşim",1926,"siir","siir",["C1"],"Символистская поэзия, музыкальная и трудная.",1],
+["Kızıl Elma","Ziya Gökalp",1914,"siir","siir",["C1"],"Поэтический сборник идеолога тюркизма.",1],
+["Karacaoğlan Şiirleri","Karacaoğlan",1650,"siir","siir",["B2","C1"],"Народная поэзия ашыка: простые слова, но много диалектизмов.",1],
+["Pir Sultan Abdal Şiirleri","Pir Sultan Abdal",1550,"siir","siir",["C1"],"Алевитская поэзия XVI века, ритмичная и образная.",1],
+["Köroğlu Destanı","Anonim",1600,"cocuk","masal",["B2","C1"],"Народный эпос о разбойнике-мстителе, есть много упрощённых пересказов.",1],
+["Seyahatname (Seçmeler)","Evliya Çelebi",1682,"nonfic","tarih",["C1"],"Путевые записки XVII века, богатейший язык эпохи.",1],
+["Mesnevî (Türkçe Seçmeler)","Mevlânâ Celâleddin Rûmî",1273,"siir","siir",["C1"],"Суфийская поэма в турецком переводе, притчи с моралью.",1],
+["Nutuk","Mustafa Kemal Atatürk",1927,"nonfic","tarih",["C1"],"Речь Ататюрка, основополагающий текст республики, официальный стиль.",1],
+["Halk Masalları Derlemesi","Anonim",1900,"cocuk","masal",["A2","B1"],"Сборник народных сказок в современной обработке, короткие тексты.",1],
+["Dede Korkut Kitabı (Sadeleştirilmiş)","Anonim",1400,"cocuk","masal",["B1"],"Огузский эпос в упрощённом переложении на современный турецкий.",1],
+["Nasreddin Hoca Hikâyeleri (Resimli)","Anonim",1900,"cocuk","masal",["A1","A2"],"Иллюстрированное издание анекдотов, по одному на разворот.",1],
+["Türk Atasözleri ve Deyimleri","Anonim",1900,"nonfic","ogrenme",["B1","B2"],"Свободно распространяемые сборники пословиц с толкованием.",1],
+["Yedi İklim Türkçe A1 Çalışma Kitabı","Yunus Emre Enstitüsü",2015,"ders","ogrenme",["A1"],"Рабочая тетрадь к учебнику, официально бесплатна в электронном виде.",1],
+["Yedi İklim Türkçe A2 Çalışma Kitabı","Yunus Emre Enstitüsü",2015,"ders","ogrenme",["A2"],"Рабочая тетрадь второго уровня, бесплатный PDF.",1],
+["Yedi İklim Türkçe B1 Çalışma Kitabı","Yunus Emre Enstitüsü",2015,"ders","ogrenme",["B1"],"Рабочая тетрадь порогового уровня, бесплатный PDF.",1],
+["Türkçe Öğretimi Okuma Metinleri","Yunus Emre Enstitüsü",2018,"adapte","ogrenme",["A2","B1"],"Сборник учебных текстов института Юнуса Эмре, свободный доступ.",1],
+["Vatan yahut Silistre","Namık Kemal",1873,"roman","tarih",["C1"],"Патриотическая пьеса, вызвавшая волнения в Стамбуле.",1],
+["Zavallı Çocuk","Namık Kemal",1873,"roman","klasik",["C1"],"Ранняя турецкая драма о браке по принуждению.",1],
+["Küçük Şeyler","Sâmipaşazâde Sezai",1892,"oyku","klasik",["C1"],"Один из первых сборников рассказов в турецкой литературе.",1],
+["Sergüzeşt","Sâmipaşazâde Sezai",1889,"roman","klasik",["C1"],"Роман о рабстве и несвободе в османском доме.",1],
+["Gulyabani (Sadeleştirilmiş)","Hüseyin Rahmi Gürpınar",1912,"roman","klasik",["B2"],"Тот же роман в современной обработке, читается заметно легче оригинала.",1],
+["Bir Ömür Böyle Geçti","Sabahattin Ali",1937,"siir","siir",["B2"],"Стихи Сабахаттина Али, многие стали народными песнями.",1],
+["Sırça Köşk","Sabahattin Ali",1947,"oyku","klasik",["B2"],"Сказки для взрослых с политическим подтекстом, короткие тексты.",1],
+["Yeni Dünya","Sabahattin Ali",1943,"oyku","klasik",["B2"],"Сборник рассказов о жизни анатолийской провинции.",1],
+["Kağnı","Sabahattin Ali",1936,"oyku","klasik",["B2"],"Рассказы о деревне и несправедливости, ясный язык.",1],
+["Ses","Sabahattin Ali",1937,"oyku","klasik",["B2"],"Сборник рассказов, каждый на несколько страниц.",1],
+["Aşk-ı Memnu (Sadeleştirilmiş)","Halit Ziya Uşaklıgil",2010,"roman","klasik",["B2"],"Современная адаптация классики, доступна на B2 вместо C1.",0],
+["Çalıkuşu (Sadeleştirilmiş)","Reşat Nuri Güntekin",2010,"roman","klasik",["B1","B2"],"Упрощённое издание, удобный мост к оригиналу.",0],
+["İnce Memed (Gençlik Baskısı)","Yaşar Kemal",2015,"roman","klasik",["B2"],"Молодёжное издание с пояснениями диалектных слов.",0],
+["Türkçe Hikâyeler A1","Kolay Okuma Serisi",2019,"adapte","ogrenme",["A1"],"Рассказы на 300 самых частотных слов, с глоссарием.",0],
+["Türkçe Hikâyeler A2","Kolay Okuma Serisi",2019,"adapte","ogrenme",["A2"],"Рассказы на 600 слов, вводят прошедшее время.",0],
+["Türkçe Hikâyeler B1","Kolay Okuma Serisi",2020,"adapte","ogrenme",["B1"],"Более длинные адаптированные тексты с упражнениями.",0],
+["Resimli Türkçe Sözlük","TDK",2011,"nonfic","ogrenme",["A1","A2"],"Иллюстрированный словарь: слово, картинка, пример. Полезен с самого начала.",1],
+["Güncel Türkçe Sözlük","TDK",2019,"nonfic","ogrenme",["B1","B2"],"Официальный толковый словарь турецкого языка, доступен онлайн бесплатно.",1],
+["Yazım Kılavuzu","TDK",2019,"nonfic","ogrenme",["B2","C1"],"Официальный справочник по орфографии, бесплатная онлайн-версия.",1],
+["Bir Gün","Ayfer Tunç",2009,"roman","cagdas",["C1"],"Один день провинциального города, панорама общества."],
+["Kapıları Açmak","Ayfer Tunç",1996,"oyku","cagdas",["C1"],"Рассказы о повседневности и одиночестве."],
+["Cadı Ağacı","Sema Kaygusuz",2012,"roman","cagdas",["C1"],"Поэтичная проза о памяти и природе."],
+["Kar Kuyusu","Buket Uzuner",2014,"roman","cagdas",["B2","C1"],"Роман о природе и человеке из цикла Стихии."],
+["Toprak","Buket Uzuner",2015,"roman","cagdas",["B2","C1"],"Вторая книга цикла, экология и мифология Анатолии."],
+["Su","Buket Uzuner",2016,"roman","cagdas",["B2","C1"],"Третья книга цикла Стихии."],
+["Kayıp Balık Nemo Değil","Mario Levi",2011,"oyku","cagdas",["C1"],"Рассказы о Стамбуле и людях, длинные периоды."],
+["Bin Hüzünlü Haz","Hasan Ali Toptaş",1998,"roman","cagdas",["C1"],"Один из самых поэтичных и трудных современных романов."],
+["Gölgesizler","Hasan Ali Toptaş",1995,"roman","cagdas",["C1"],"Деревня, где исчезают люди, притча с размытой реальностью."],
+["Kırmızı Kitap","Nazlı Eray",1984,"roman","cagdas",["C1"],"Фантасмагорическая проза, сны и Стамбул."],
+["Şeker Rüyası","Mario Levi",2006,"roman","cagdas",["C1"],"Городская проза о памяти и семье."],
+["Fikrimin İnce Gülü","Adalet Ağaoğlu",1976,"roman","klasik",["C1"],"Гастарбайтер возвращается из Германии на новой машине."],
+["Yorgun Savaşçı","Kemal Tahir",1965,"roman","tarih",["C1"],"Роман о годах перед освободительной войной."],
+["Esir Şehrin İnsanları","Kemal Tahir",1956,"roman","tarih",["C1"],"Оккупированный Стамбул и подполье."],
+["Yılanların Öcü","Fakir Baykurt",1959,"roman","klasik",["C1"],"Деревенская проза о борьбе за землю, много диалектизмов."],
+["Bereketli Topraklar Üzerinde","Orhan Kemal",1954,"roman","klasik",["C1"],"Крестьяне идут на заработки в город, суровый реализм."],
+["Murtaza","Orhan Kemal",1952,"roman","klasik",["B2","C1"],"История сторожа, доведшего службу до абсурда."],
+["Baba Evi","Orhan Kemal",1949,"roman","klasik",["B2","C1"],"Автобиографический роман о юности и бегстве из дома."],
+["Hanımın Çiftliği","Orhan Kemal",1961,"roman","klasik",["C1"],"Роман о власти и земле в Чукурове."],
+["Ortadirek","Yaşar Kemal",1960,"roman","klasik",["C1"],"Первая часть трилогии о деревне и хлопке."],
+["Ölmez Otu","Yaşar Kemal",1968,"roman","klasik",["C1"],"Завершение трилогии, поэтичный и трудный язык."],
+["Binboğalar Efsanesi","Yaşar Kemal",1971,"roman","klasik",["C1"],"Кочевники-юрюки и утраченный мир."],
+["Deniz Küstü","Yaşar Kemal",1978,"roman","klasik",["C1"],"Мраморное море и рыбаки, экологическая тема."],
+["Şu Çılgın Türkler","Turgut Özakman",2005,"nonfic","tarih",["C1"],"Документальный роман об освободительной войне, огромный бестселлер."],
+["Diriliş: Çanakkale 1915","Turgut Özakman",2008,"nonfic","tarih",["C1"],"Документальная проза о битве при Чанаккале."],
+["Cumhuriyet: Türk Mucizesi","Turgut Özakman",2009,"nonfic","tarih",["C1"],"Продолжение документального цикла о республике."],
+["Kayıp Gül","Serdar Özkan",2003,"roman","cagdas",["B1","B2"],"Философская притча простым языком, переведена на десятки языков."],
+["Şeker Portakalı'nın Kardeşi","José Mauro de Vasconcelos",1970,"roman","cocukedeb",["B1"],"Продолжение популярного романа в турецком переводе."],
+["Beyaz Zambaklar Ülkesinde","Grigori Petrov",1923,"nonfic","deneme",["B2"],"Книга о Финляндии, десятилетиями читаемая в турецких школах.",1],
+["Sefiller (Kısaltılmış)","Victor Hugo",1862,"roman","cagdas",["B2"],"Отверженные в сокращённом турецком издании.",1],
+["Robinson Crusoe","Daniel Defoe",1719,"roman","cocukedeb",["B1","B2"],"Робинзон Крузо по-турецки, есть свободные переводы.",1],
+["Gulliver'in Gezileri","Jonathan Swift",1726,"roman","cocukedeb",["B1","B2"],"Путешествия Гулливера, доступны свободные издания.",1],
+["Tom Sawyer'ın Maceraları","Mark Twain",1876,"roman","cocukedeb",["B1"],"Том Сойер по-турецки, живые диалоги и простой сюжет.",1],
+["Define Adası","Robert Louis Stevenson",1883,"roman","cocukedeb",["B1","B2"],"Остров сокровищ, приключенческий сюжет тянет вперёд."],
+["Denizler Altında 20000 Fersah","Jules Verne",1870,"roman","cocukedeb",["B2"],"Жюль Верн по-турецки, много технической лексики.",1],
+["Seksen Günde Devri Âlem","Jules Verne",1873,"roman","cocukedeb",["B1","B2"],"Вокруг света за 80 дней, динамичный и понятный текст.",1],
+["Sherlock Holmes Hikâyeleri","Arthur Conan Doyle",1892,"oyku","polisiye",["B2"],"Рассказы о Холмсе по-турецки, короткие и с ясной структурой.",1],
+["Kırmızı Başlıklı Kız ve Diğer Masallar","Grimm Kardeşler",1812,"cocuk","masal",["A2"],"Сказки Гриммов по-турецки, знакомые сюжеты и короткие тексты.",1],
+["Andersen Masalları","Hans Christian Andersen",1837,"cocuk","masal",["A2","B1"],"Сказки Андерсена в турецком переводе.",1],
+["Ezop Masalları (Resimli)","Ezop",1900,"cocuk","masal",["A1"],"Иллюстрированные басни, по несколько строк каждая.",1],
+["Küçük Kara Balık","Samed Behrengi",1968,"cocuk","cocukedeb",["A2","B1"],"Маленькая чёрная рыбка, культовая детская притча, очень простой язык."],
+["Bir Şeftali Bin Şeftali","Samed Behrengi",1970,"cocuk","cocukedeb",["A2","B1"],"Детская притча о справедливости, короткая и ясная."],
+["Ulduz ve Kargalar","Samed Behrengi",1969,"cocuk","cocukedeb",["A2","B1"],"Детская повесть о девочке и воронах."],
+["Anne Frank'ın Hatıra Defteri","Anne Frank",1947,"nonfic","deneme",["B2"],"Дневник Анны Франк по-турецки, простые записи от первого лица."],
+["Momo ve Zaman Hırsızları","Michael Ende",1973,"roman","cocukedeb",["B1","B2"],"Полное издание Момо в турецком переводе."],
+["Bitmeyecek Öykü","Michael Ende",1979,"roman","cocukedeb",["B2"],"Бесконечная история по-турецки, объёмная фантазия."],
+["Harry Potter ve Felsefe Taşı","J. K. Rowling",1997,"roman","cocukedeb",["B1","B2"],"Первая книга о Гарри Поттере по-турецки. Знакомый сюжет сильно помогает."],
+["Harry Potter ve Sırlar Odası","J. K. Rowling",1998,"roman","cocukedeb",["B2"],"Вторая книга серии в турецком переводе."],
+["Hobbit","J. R. R. Tolkien",1937,"roman","cocukedeb",["B2"],"Хоббит по-турецки, приключенческий сюжет и много описаний."],
+["Yüzüklerin Efendisi: Yüzük Kardeşliği","J. R. R. Tolkien",1954,"roman","cocukedeb",["C1"],"Властелин колец по-турецки, сложная лексика и архаизмы."],
+["Simyacı (Resimli Baskı)","Paulo Coelho",1988,"roman","cagdas",["B1"],"Иллюстрированное издание Алхимика, короткие главы."],
+["1984","George Orwell",1949,"roman","cagdas",["B2","C1"],"Оруэлл по-турецки, много политической и абстрактной лексики."],
+["Fareler ve İnsanlar","John Steinbeck",1937,"roman","cagdas",["B2"],"О мышах и людях: короткая книга с простыми диалогами."],
+["İhtiyar Adam ve Deniz","Ernest Hemingway",1952,"roman","cagdas",["B1","B2"],"Старик и море: короткие предложения, идеальный текст для перехода к оригиналам."],
+["Suç ve Ceza","Fyodor Dostoyevski",1866,"roman","cagdas",["C1"],"Преступление и наказание по-турецки, объёмный и сложный текст."],
+["Beyaz Geceler","Fyodor Dostoyevski",1848,"roman","cagdas",["B2"],"Белые ночи: короткая повесть, хороший вход в Достоевского по-турецки."],
+["Martı Jonathan Livingston","Richard Bach",1970,"roman","cagdas",["B1"],"Чайка по имени Джонатан, совсем небольшой объём и простой язык."],
+["Momo'nun Arkadaşları","Michael Ende",1982,"cocuk","cocukedeb",["B1"],"Детские истории в турецком переводе."],
+["Bilinmeyen Bir Kadının Mektubu","Stefan Zweig",1922,"roman","cagdas",["B2"],"Письмо незнакомки: короткая новелла, часто советуют изучающим."],
+["Dünya Klasikleri Seti (Sadeleştirilmiş)","Çeşitli",2015,"adapte","klasik",["B1"],"Мировая классика в упрощённых турецких изданиях для школьников.",0],
+["Türk Klasikleri Seti (Sadeleştirilmiş)","Çeşitli",2016,"adapte","klasik",["B1","B2"],"Турецкая классика в упрощённом изложении с пояснениями.",0],
+["Şair Evlenmesi","Şinasi",1860,"roman","klasik",["B2","C1"],"Первая турецкая пьеса западного образца, короткая и с живыми диалогами.",1],
+["Terkib-i Bend","Ziya Paşa",1870,"siir","siir",["C1"],"Классическая поэма о превратностях мира, вершина поэзии Танзимата.",1],
+["Karabibik","Nabizade Nazım",1890,"roman","klasik",["B2","C1"],"Первая турецкая повесть о крестьянах, короткая и реалистичная.",1],
+["Zehra","Nabizade Nazım",1896,"roman","klasik",["C1"],"Психологический роман о ревности, один из первых в турецкой прозе.",1],
+["Şehir Mektupları","Ahmet Rasim",1899,"nonfic","deneme",["C1"],"Зарисовки о повседневном Стамбуле рубежа веков, живой городской язык.",1],
+["Falaka (Anılar)","Ahmet Rasim",1927,"nonfic","deneme",["B2","C1"],"Воспоминания о старой школе, тёплая ироничная проза.",1],
+["Makber","Abdülhak Hâmit Tarhan",1885,"siir","siir",["C1"],"Поэма-плач по умершей жене, поворотный текст турецкой поэзии.",1],
+["Çamlıca'daki Eniştemiz","Ercüment Ekrem Talu",1927,"roman","klasik",["C1"],"Сатирический роман о стамбульских нравах.",1],
+["Türk Sazı","Mehmet Emin Yurdakul",1914,"siir","siir",["B2","C1"],"Поэзия на простом народном турецком, редкость для своей эпохи.",1],
+["Çağlayanlar","Ahmet Hikmet Müftüoğlu",1922,"oyku","klasik",["C1"],"Сборник рассказов национального направления.",1],
+["Serâb-ı Ömrüm","Rıza Tevfik Bölükbaşı",1934,"siir","siir",["C1"],"Философская и народная поэзия, много суфийских мотивов.",1],
+["Efruz Bey","Ömer Seyfettin",1919,"roman","klasik",["B2"],"Сатирическая повесть о типичном приспособленце, язык уже близок к современному.",1],
+["Bomba","Ömer Seyfettin",1917,"oyku","klasik",["B2"],"Рассказы о Балканах и войне, короткие и напряжённые.",1],
+["Yüksek Ökçeler","Ömer Seyfettin",1922,"oyku","klasik",["B2"],"Сборник рассказов о стамбульском обществе.",1],
+["Beyaz Lale","Ömer Seyfettin",1914,"oyku","klasik",["B2","C1"],"Жёсткий рассказ о войне на Балканах.",1],
+["Kaşağı ve Diğer Seçme Hikâyeler","Ömer Seyfettin",1920,"oyku","klasik",["B1","B2"],"Расширенный школьный сборник с пояснениями сложных слов.",1],
+["Şıpsevdi (Sadeleştirilmiş)","Hüseyin Rahmi Gürpınar",2012,"roman","klasik",["B2"],"Современная адаптация сатиры, читается заметно легче.",1],
+["Ben Deli miyim?","Hüseyin Rahmi Gürpınar",1925,"roman","klasik",["C1"],"Роман о безумии и обществе, ироничный и разговорный.",1],
+["Utanç Duvarı","Hüseyin Rahmi Gürpınar",1931,"roman","klasik",["C1"],"Поздний роман о морали и лицемерии.",1],
+["Aşk-ı Memnu (Vikikaynak)","Halit Ziya Uşaklıgil",1900,"roman","klasik",["C1"],"Полный текст романа в открытом доступе на Vikikaynak.",1],
+["Kırık Hayatlar","Halit Ziya Uşaklıgil",1924,"roman","klasik",["C1"],"Роман о семье и врачебной этике.",1],
+["Ferdi ve Şürekâsı","Halit Ziya Uşaklıgil",1894,"roman","klasik",["C1"],"Ранний роман о торговом доме и любви.",1],
+["Genç Kız Kalbi","Mehmet Rauf",1914,"roman","klasik",["C1"],"Роман в форме дневника молодой девушки.",1],
+["Halas","Mehmet Rauf",1929,"roman","tarih",["C1"],"Роман о годах оккупации Измира.",1],
+["Divan (Seçmeler)","Fuzûlî",1550,"siir","siir",["C1"],"Классическая диванная поэзия XVI века, очень сложный язык.",1],
+["Divan (Seçmeler)","Bâkî",1580,"siir","siir",["C1"],"Вершина османской придворной поэзии.",1],
+["Hüsn ü Aşk","Şeyh Galib",1783,"siir","siir",["C1"],"Аллегорическая поэма, последний великий текст диванной традиции.",1],
+["Risâletü'n-Nushiyye","Yunus Emre",1307,"siir","siir",["C1"],"Дидактическая поэма Юнуса Эмре, старотурецкий язык.",1],
+["Battalname","Anonim",1400,"cocuk","masal",["B2","C1"],"Народный эпос о богатыре, есть современные пересказы.",1],
+["Ferhat ile Şirin","Anonim",1600,"cocuk","masal",["B1","B2"],"Народная поэма о любви, много упрощённых изданий.",1],
+["Kerem ile Aslı","Anonim",1600,"cocuk","masal",["B1","B2"],"Классическая народная история любви, короткие главы.",1],
+["Leyla ile Mecnun (Sadeleştirilmiş)","Fuzûlî",1535,"siir","masal",["B2"],"Знаменитая поэма в современном переложении.",1],
+["Şah İsmail Hikâyesi","Anonim",1700,"cocuk","masal",["B1","B2"],"Народное сказание в современной обработке.",1],
+["Tıflî Hikâyeleri","Anonim",1700,"oyku","masal",["C1"],"Городские повести османского Стамбула.",1],
+["Anadolu Efsaneleri","Anonim",1900,"cocuk","masal",["A2","B1"],"Легенды Анатолии в современном пересказе, короткие тексты.",1],
+["Türk Mitolojisi Sözlüğü","Anonim",2010,"nonfic","masal",["B2"],"Свободно распространяемый справочник по тюркской мифологии.",1],
+["Türkçe Sözlük (Çevrimiçi)","TDK",2020,"nonfic","ogrenme",["A1","A2","B1"],"Онлайн-словарь Турецкого лингвистического общества, бесплатный и официальный.",1],
+["Türkçede Batı Kökenli Kelimeler Sözlüğü","TDK",2015,"nonfic","ogrenme",["B2"],"Словарь заимствований, помогает узнавать знакомые слова.",1],
+["Kişi Adları Sözlüğü","TDK",2010,"nonfic","ogrenme",["A2","B1"],"Словарь имён с значениями, неожиданно полезен для лексики.",1],
+["Türkçe Dil Bilgisi Kılavuzu","MEB",2018,"nonfic","ogrenme",["B1","B2"],"Справочник Министерства образования, бесплатный PDF.",1],
+["MEB Okuma Kitapları 5. Sınıf","MEB",2019,"adapte","ogrenme",["B1"],"Школьные хрестоматии Минобразования, бесплатны в электронном виде.",1],
+["MEB Okuma Kitapları 6. Sınıf","MEB",2019,"adapte","ogrenme",["B1","B2"],"Тексты для шестого класса турецкой школы, свободный доступ.",1],
+["100 Temel Eser (Liste ve Metinler)","MEB",2005,"adapte","klasik",["B1","B2"],"Список ста базовых произведений турецкой школы, большинство доступны свободно.",1],
+["Ezop Masalları (Gutenberg)","Ezop",1900,"cocuk","masal",["A1","A2"],"Полный сборник басен на Project Gutenberg, тексты по несколько строк.",1],
+["Grimm Masalları (Tam Metin)","Grimm Kardeşler",1812,"cocuk","masal",["A2","B1"],"Полное собрание сказок Гриммов в свободном турецком переводе.",1],
+["Binbir Gece Masalları (Seçmeler)","Anonim",1700,"cocuk","masal",["B1","B2"],"Сказки тысячи и одной ночи, свободные турецкие издания.",1],
+["Alice Harikalar Diyarında","Lewis Carroll",1865,"cocuk","cocukedeb",["B1","B2"],"Алиса по-турецки, свободный перевод, много игры слов.",1],
+["Oz Büyücüsü","L. Frank Baum",1900,"cocuk","cocukedeb",["B1"],"Волшебник страны Оз, простой сюжет и короткие главы.",1],
+["Küçük Kadınlar","Louisa May Alcott",1868,"roman","cocukedeb",["B2"],"Маленькие женщины по-турецки, семейная проза.",1],
+["Kara İnci","Anna Sewell",1877,"roman","cocukedeb",["B1","B2"],"Чёрный красавчик, история от лица лошади, ясный язык.",1],
+["Heidi (Tam Metin)","Johanna Spyri",1881,"roman","cocukedeb",["B1","B2"],"Полный текст Хайди в свободном турецком переводе.",1],
+["Pinokyo (Tam Metin)","Carlo Collodi",1883,"cocuk","cocukedeb",["A2","B1"],"Полная версия Пиноккио, свободный перевод.",1],
+["Uğultulu Tepeler","Emily Brontë",1847,"roman","cagdas",["C1"],"Грозовой перевал по-турецки, сложный и мрачный текст.",1],
+["Gurur ve Önyargı","Jane Austen",1813,"roman","cagdas",["C1"],"Гордость и предубеждение, много диалогов и иронии.",1],
+["Frankenstein","Mary Shelley",1818,"roman","cagdas",["B2","C1"],"Франкенштейн в свободном турецком переводе.",1],
+["Dracula","Bram Stoker",1897,"roman","cagdas",["C1"],"Дракула по-турецки, эпистолярная форма и старая лексика.",1],
+["Dorian Gray'in Portresi","Oscar Wilde",1890,"roman","cagdas",["C1"],"Портрет Дориана Грея, афористичный и красивый язык.",1],
+["Kırmızı ve Siyah","Stendhal",1830,"roman","cagdas",["C1"],"Красное и чёрное по-турецки, объёмный классический роман.",1],
+["Madam Bovary","Gustave Flaubert",1856,"roman","cagdas",["C1"],"Госпожа Бовари в свободном турецком переводе.",1],
+["Sefiller (Tam Metin)","Victor Hugo",1862,"roman","cagdas",["C1"],"Полные Отверженные, очень большой объём.",1],
+["Notre Dame'ın Kamburu","Victor Hugo",1831,"roman","cagdas",["C1"],"Собор Парижской Богоматери по-турецки.",1],
+["Robinson Crusoe (Tam Metin)","Daniel Defoe",1719,"roman","cocukedeb",["B2"],"Полный текст Робинзона в свободном переводе.",1],
+["Kaptan Grant'ın Çocukları","Jules Verne",1868,"roman","cocukedeb",["B2"],"Дети капитана Гранта по-турецки.",1],
+["Aya Yolculuk","Jules Verne",1865,"roman","cocukedeb",["B2"],"С Земли на Луну, много технической лексики.",1],
+["Beyaz Diş (Tam Metin)","Jack London",1906,"roman","cocukedeb",["B1","B2"],"Полный текст Белого Клыка в свободном переводе.",1],
+["Vahşetin Çağrısı","Jack London",1903,"roman","cocukedeb",["B1","B2"],"Зов предков, короткий и динамичный.",1],
+["Ölü Canlar","Nikolay Gogol",1842,"roman","cagdas",["C1"],"Мёртвые души по-турецки, сатира и длинные периоды.",1],
+["Palto","Nikolay Gogol",1842,"oyku","cagdas",["B2"],"Шинель: короткая повесть, удобна для одного вечера.",1],
+["Anna Karenina","Lev Tolstoy",1877,"roman","cagdas",["C1"],"Анна Каренина в свободном турецком переводе.",1],
+["İvan İlyiç'in Ölümü","Lev Tolstoy",1886,"roman","cagdas",["B2","C1"],"Смерть Ивана Ильича, небольшой объём и ясная структура.",1],
+["Çehov Hikâyeleri","Anton Çehov",1900,"oyku","cagdas",["B2"],"Рассказы Чехова по-турецки, короткие и с ясным языком.",1],
+["Karamazov Kardeşler","Fyodor Dostoyevski",1880,"roman","cagdas",["C1"],"Братья Карамазовы, самый объёмный текст в этом списке.",1],
+["Yeraltından Notlar","Fyodor Dostoyevski",1864,"roman","cagdas",["C1"],"Записки из подполья, монолог и сложный синтаксис.",1]
+];
+
+let BOOKS=[];
+
+// ======================= ЛИЧНАЯ БИБЛИОТЕКА =======================
+// Всё хранится в localStorage браузера. Ничего никуда не отправляется.
+let LIB={saved:[],custom:[]};
+try{ const raw=localStorage.getItem('alterna_lib'); if(raw) LIB=Object.assign({saved:[],custom:[]},JSON.parse(raw)); }catch(e){}
+function saveLib(){ try{ localStorage.setItem('alterna_lib',JSON.stringify(LIB)); }catch(e){} }
+function keyOf(b){ return (b.name+'|'+b.author).toLowerCase(); }
+function isSaved(b){ return LIB.saved.indexOf(keyOf(b))>-1; }
+function toggleSave(id,ev){
+  if(ev) ev.stopPropagation();
+  const b=BOOKS[id]; if(!b) return;
+  const k=keyOf(b); const i=LIB.saved.indexOf(k);
+  if(i>-1) LIB.saved.splice(i,1); else LIB.saved.push(k);
+  saveLib();
+  if(st.view==='lib') renderLib(); else render();
+  const mb=document.getElementById('mSaveBtn');
+  if(mb && +mb.dataset.id===id) mb.textContent = isSaved(b) ? 'В библиотеке' : 'Сохранить в библиотеку';
+}
+function bmIcon(on){
+  return `<svg viewBox="0 0 24 24" fill="${on?'currentColor':'none'}"><path d="M6 3h12v18l-6-4.2L6 21z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>`;
+}
+
+// свои книги подмешиваются в общий каталог
+function rebuildBooks(){
+  const base=RAW.map((r,i)=>({id:i,name:r[0],author:r[1],year:r[2],fmt:r[3],genre:r[4],levels:r[5],desc:r[6],free:!!r[7]}));
+  const mine=LIB.custom.map((o,j)=>Object.assign({},o,{id:base.length+j,own:true}));
+  BOOKS=base.concat(mine);
+}
+
+let libTab='saved';
+function setLibTab(t){
+  libTab=t;
+  ['saved','mine','add'].forEach(k=>{
+    document.getElementById('lib'+k[0].toUpperCase()+k.slice(1)).style.display = (k===t)?'':'none';
+    document.getElementById('lt'+k[0].toUpperCase()+k.slice(1)).classList.toggle('active',k===t);
+  });
+  if(t!=='add') renderLib();
+}
+function renderLib(){
+  rebuildBooks();
+  const saved=BOOKS.filter(b=>isSaved(b));
+  const mine=BOOKS.filter(b=>b.own);
+  document.getElementById('cntSaved').textContent=saved.length;
+  document.getElementById('cntMine').textContent=mine.length;
+
+  renderLibSum(saved);
+
+  const sEl=document.getElementById('libSaved');
+  sEl.innerHTML = saved.length
+    ? `<div class="grid">${saved.map(b=>card(b)).join('')}</div>`
+    : `<div class="lib-empty"><b>Здесь пока пусто</b>Откройте каталог и нажмите закладку в углу обложки, книга появится тут.</div>`;
+
+  const mEl=document.getElementById('libMine');
+  mEl.innerHTML = mine.length
+    ? `<div class="grid">${mine.map(b=>card(b,{actions:true})).join('')}</div>`
+    : `<div class="lib-empty"><b>Своих книг пока нет</b>Перейдите на вкладку "Добавить книгу" и внесите то, чего нет в каталоге.</div>`;
+  hydrate(); observeReveal();
+}
+function removeCustom(k){
+  LIB.custom=LIB.custom.filter(o=>(o.name+'|'+o.author).toLowerCase()!==k);
+  LIB.saved=LIB.saved.filter(x=>x!==k);
+  saveLib(); rebuildBooks(); renderLib();
+}
+
+// ---- форма своей книги ----
+let formLevels=new Set(['B1']);
+function initForm(){
+  const fs=document.getElementById('fFmt');
+  fs.innerHTML=Object.keys(FMT).map(k=>`<option value="${k}">${FMT[k]}</option>`).join('');
+  const gs=document.getElementById('fGenre');
+  gs.innerHTML=Object.keys(G).map(k=>`<option value="${k}">${G[k]}</option>`).join('');
+  drawLevelPicker();
+}
+function drawLevelPicker(){
+  document.getElementById('fLevels').innerHTML=Object.keys(LEVELS).map(l=>
+    `<button type="button" class="${formLevels.has(l)?'on':''}" onclick="pickLevel('${l}')">${l}</button>`).join('');
+}
+function pickLevel(l){ formLevels.has(l)?formLevels.delete(l):formLevels.add(l); drawLevelPicker(); }
+function clearForm(){
+  ['fName','fAuthor','fYear','fDesc','fLink','fCover'].forEach(id=>document.getElementById(id).value='');
+  formLevels=new Set(['B1']); drawLevelPicker();
+  msg('','');
+}
+function msg(t,cls){ const m=document.getElementById('frmMsg'); m.textContent=t; m.className='frm-msg '+(cls||''); }
+function saveCustom(){
+  const name=document.getElementById('fName').value.trim();
+  const author=document.getElementById('fAuthor').value.trim();
+  if(!name || !author){ msg('Заполните название и автора.','err'); return; }
+  if(!formLevels.size){ msg('Выберите хотя бы один уровень.','err'); return; }
+  const k=(name+'|'+author).toLowerCase();
+  if(LIB.custom.some(o=>(o.name+'|'+o.author).toLowerCase()===k)){ msg('Такая книга уже есть в ваших.','err'); return; }
+  const y=parseInt(document.getElementById('fYear').value,10);
+  LIB.custom.push({
+    name, author,
+    year: isNaN(y) ? new Date().getFullYear() : y,
+    fmt: document.getElementById('fFmt').value,
+    genre: document.getElementById('fGenre').value,
+    levels: Object.keys(LEVELS).filter(l=>formLevels.has(l)),
+    desc: document.getElementById('fDesc').value.trim() || 'Своя книга, добавлена вручную.',
+    link: document.getElementById('fLink').value.trim(),
+    cover: document.getElementById('fCover').value.trim(),
+    free: false
+  });
+  if(LIB.saved.indexOf(k)<0) LIB.saved.push(k);
+  saveLib(); rebuildBooks(); clearForm();
+  msg('Книга добавлена в вашу библиотеку.','ok');
+  document.getElementById('cntMine').textContent=BOOKS.filter(b=>b.own).length;
+}
+
+// ---- перенос библиотеки между устройствами ----
+function exportLib(){
+  const blob=new Blob([JSON.stringify(LIB,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='alterna-kitaplik.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importLib(e){
+  const f=e.target.files && e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    try{
+      const d=JSON.parse(rd.result);
+      LIB.saved=[...new Set((LIB.saved||[]).concat(d.saved||[]))];
+      const have=new Set(LIB.custom.map(o=>(o.name+'|'+o.author).toLowerCase()));
+      (d.custom||[]).forEach(o=>{ const k=(o.name+'|'+o.author).toLowerCase(); if(!have.has(k)){ LIB.custom.push(o); have.add(k);} });
+      saveLib(); rebuildBooks(); renderLib();
+      alert('Библиотека загружена.');
+    }catch(err){ alert('Не получилось прочитать файл, проверьте, что это выгрузка из этого каталога.'); }
+  };
+  rd.readAsText(f);
+  e.target.value='';
+}
+
+const FAQ=[
+ {q:"С какого уровня можно читать по-турецки?",a:"С A1, но не художественную литературу, а адаптированные тексты и учебники. Настоящие книги начинаются примерно с B1, а турецкая классика в оригинале это уверенный B2 и выше."},
+ {q:"Что читать первым, если хочется настоящую книгу?",a:"Kürk Mantolu Madonna Сабахаттина Али или стихи Орхана Вели. У первой ясный современный язык и сильная история, у второго короткие разговорные стихи почти без сложных слов."},
+ {q:"Почему у классики почти всегда C1?",a:"Турецкий язык сильно менялся в XX веке. В книгах 1920-х и 1930-х много арабских и персидских слов, которые сегодня не используются. Читать их без подготовки тяжело даже носителям."},
+ {q:"Стоит ли читать переводы на турецкий?",a:"Да, и это недооценённый приём. Если вы уже читали книгу на своём языке, сюжет вам известен, и всё внимание уходит на язык. Поэтому в каталоге есть Маленький принц, Алхимик и Скотный двор по-турецки."},
+ {q:"Со словарём или без?",a:"Без словаря на первом проходе абзаца. Смотрите слово, только если оно встретилось третий раз или без него рушится смысл. Иначе чтение превращается в перевод и быстро надоедает."},
+ {q:"Где брать книги за пределами Турции?",a:"Kitapyurdu и D&R доставляют за границу, цены на турецкие издания заметно ниже европейских. Часть книг есть в Google Books электронно, а классика, вышедшая из-под охраны авторского права, доступна бесплатно."},
+ {q:"Учебники обязательны?",a:"На A1 и A2 практически да: без системной грамматики чтение не пойдёт, турецкий слишком отличается по строю. С B1 учебник становится вспомогательным, а книги основным."}
+];
+
+let st={view:"home",levels:new Set(),fmts:new Set(),genres:new Set(),q:"",sort:"level",group:"level",mode:"grid",onlyFree:false,period:null};
+
+// периоды для таймлайна: у турецкой литературы язык сильно менялся по эпохам
+const PERIODS=[
+  {k:'До 1900',   s:'старое',      from:0,    to:1899},
+  {k:'1900–29',   s:'османский',   from:1900, to:1929},
+  {k:'1930–49',   s:'реформа',     from:1930, to:1949},
+  {k:'1950–69',   s:'классика',    from:1950, to:1969},
+  {k:'1970–89',   s:'модерн',      from:1970, to:1989},
+  {k:'1990–09',   s:'современное', from:1990, to:2009},
+  {k:'2010+',     s:'новое',       from:2010, to:9999}
+];
+
+const NAV=[
+ {id:"home",   label:"Главная",       icon:'<path d="M4 10.6 12 4l8 6.6V20a1 1 0 0 1-1 1h-4v-6.2H9V21H5a1 1 0 0 1-1-1z" stroke-linejoin="round"/>'},
+ {id:"catalog",label:"Каталог",       icon:'<rect x="3.2" y="4" width="7" height="16" rx="1.6"/><rect x="13.8" y="4" width="7" height="16" rx="1.6"/>'},
+ {id:"lib",    label:"Библиотека",    icon:'<path d="M6.5 3h11v18l-5.5-4-5.5 4z" stroke-linejoin="round"/>'},
+ {id:"where",  label:"Где брать",     icon:'<path d="M4 9.2h16V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z" stroke-linejoin="round"/><path d="M4 9.2 5.6 3.8h12.8L20 9.2" stroke-linejoin="round"/>'},
+ {id:"faq",    label:"Вопросы",       icon:'<circle cx="12" cy="12" r="8.6"/><path d="M9.6 9.4A2.6 2.6 0 0 1 14.6 10.2c0 1.7-2.6 2.1-2.6 3.7" stroke-linecap="round"/><path d="M12 17.2h.01" stroke-linecap="round" stroke-width="2.4"/>'}
+];
+
+const HUES=[
+ "150deg,#1f6f60,#0d3d34",
+ "150deg,#8e4a45,#4b201e",
+ "150deg,#3a63a0,#1d3560",
+ "150deg,#a8813a,#5c4419",
+ "150deg,#5d4f8f,#2e2654",
+ "150deg,#46683c,#233621",
+ "150deg,#a35f3c,#59301f",
+ "150deg,#2e6a7d,#143944"
+];
+function hue(n){let h=0;for(let i=0;i<n.length;i++)h+=n.charCodeAt(i)*(i+1);return HUES[h%HUES.length];}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function gr(b){return "https://www.goodreads.com/search?q="+encodeURIComponent(b.name+" "+b.author);}
+function ky(b){return "https://www.kitapyurdu.com/index.php?route=product/search&filter_name="+encodeURIComponent(b.name);}
+function dr(b){return "https://www.dr.com.tr/search?q="+encodeURIComponent(b.name);}
+function gb(b){return "https://www.google.com/search?tbm=bks&q="+encodeURIComponent(b.name+" "+b.author);}
+function wk(b){return "https://tr.wikipedia.org/w/index.php?search="+encodeURIComponent(b.name+" "+b.author);}
+function ktb(b){return "https://www.google.com/search?q="+encodeURIComponent('site:ekitap.ktb.gov.tr '+b.name);}
+function wsrc(b){return "https://tr.wikisource.org/w/index.php?search="+encodeURIComponent(b.name+" "+b.author);}
+function arch(b){return "https://archive.org/search?query="+encodeURIComponent(b.name+" "+b.author);}
+function gut(b){return "https://www.gutenberg.org/ebooks/search/?query="+encodeURIComponent(b.name);}
+function yee(b){return "https://www.google.com/search?q="+encodeURIComponent('site:yee.org.tr '+b.name+' pdf');}
+function olib(b){return "https://openlibrary.org/search?q="+encodeURIComponent(b.name+" "+b.author);}
+function bin(b){return "https://1000kitap.com/arama?q="+encodeURIComponent(b.name);}
+function meb(b){return "https://www.google.com/search?q="+encodeURIComponent('site:meb.gov.tr '+b.name+' pdf');}
+function tdk(b){return "https://sozluk.gov.tr/";}
+function gbooksfree(b){return "https://www.google.com/search?tbm=bks&tbs=bkt:p&q="+encodeURIComponent(b.name+" "+b.author);}
+
+/* ============================================================
+   ТЕМА
+   ============================================================ */
+const ICO_SUN='<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.9"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>';
+const ICO_MOON='<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>';
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  try{ localStorage.setItem('alterna_theme',t); }catch(e){}
+  const el=document.getElementById('themeBtn'); if(el) el.innerHTML = (t==='dark') ? ICO_SUN : ICO_MOON;
+  const m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute('content', t==='dark'?'#0e0f12':'#f6f6f4');
+}
+function toggleTheme(){
+  setTheme((document.documentElement.getAttribute('data-theme')==='dark')?'light':'dark');
+}
+
+/* ============================================================
+   НАВИГАЦИЯ И ЭКРАНЫ
+   ============================================================ */
+function setView(v){
+  st.view=v;
+  document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
+  const el=document.getElementById('view-'+v); if(el) el.classList.add('active');
+  renderNav();
+  if(v==='catalog') render();
+  if(v==='lib') renderLib();
+  if(v==='home'){ observeReveal(); stats(); animateViz(); }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderNav(){
+  document.getElementById('nav').innerHTML=NAV.map(n=>
+    `<button class="${st.view===n.id?'active':''}" onclick="setView('${n.id}')">${n.label}</button>`).join('');
+  const tb=document.getElementById('tabbar');
+  if(tb) tb.innerHTML=NAV.map(n=>
+    `<button class="${st.view===n.id?'active':''}" onclick="setView('${n.id}')" aria-label="${n.label}">
+       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">${n.icon}</svg>
+       <span>${n.label}</span></button>`).join('');
+}
+
+/* ============================================================
+   ФИЛЬТРЫ
+   ============================================================ */
+function toggleLevel(l){st.levels.has(l)?st.levels.delete(l):st.levels.add(l);render();}
+function toggleFmt(v){st.fmts.has(v)?st.fmts.delete(v):st.fmts.add(v);render();}
+function toggleGenre(v){st.genres.has(v)?st.genres.delete(v):st.genres.add(v);render();}
+function toggleFree(){st.onlyFree=!st.onlyFree;render();}
+function setSort(v){st.sort=v;render();}
+function setGroup(v){st.group=v;render();}
+function setMode(v){
+  st.mode=v;
+  document.getElementById('bGrid').classList.toggle('active',v==='grid');
+  document.getElementById('bList').classList.toggle('active',v==='list');
+  render();
+}
+function toggleFilters(){
+  const p=document.getElementById('fPanel'), b=document.getElementById('fBtn');
+  const willOpen=p.classList.contains('hide');
+  p.classList.toggle('hide',!willOpen);
+  b.classList.toggle('open',willOpen);
+}
+function updateFilterCount(){
+  const n=st.levels.size+st.fmts.size+st.genres.size+(st.onlyFree?1:0)+(st.period!==null?1:0);
+  const c=document.getElementById('fCount');
+  if(c){ c.textContent=n; c.classList.toggle('on',n>0); }
+}
+function clearSearch(){
+  st.q=""; const i=document.getElementById('search'); i.value=""; i.focus();
+  document.getElementById('sClear').classList.remove('on');
+  render();
+}
+function resetFilters(){
+  st.levels=new Set();st.fmts=new Set();st.genres=new Set();st.onlyFree=false;st.q="";st.sort="level";st.group="level";st.period=null;
+  document.getElementById('search').value="";
+  document.getElementById('sClear').classList.remove('on');
+  document.getElementById('sortSel').value="level";
+  document.getElementById('groupSel').value="level";
+  render();
+}
+function jumpLevel(l){
+  st.levels=new Set([l]); st.onlyFree=false; st.q=""; st.period=null; st.genres=new Set(); st.fmts=new Set();
+  const s=document.getElementById('search'); if(s) s.value="";
+  document.getElementById('sClear').classList.remove('on');
+  setView('catalog');
+}
+
+/* ============================================================
+   КАРТОЧКИ
+   ============================================================ */
+// у каждой книги свой узор обложки, выбирается по названию и автору
+function patFor(n){ let h=0; for(let i=0;i<n.length;i++) h+=n.charCodeAt(i)*(i+3); return h%8; }
+function deco(b,mini){
+  const p='<div class="c-pat pt-'+patFor(b.author+b.name)+'"></div><div class="c-frame"></div>';
+  return mini ? p : p+'<div class="c-shine"></div>';
+}
+function cover(b,mini){
+ const g=hue(b.name);
+ if(mini) return `<div class="mini sk" data-bid="${b.id}" style="background:linear-gradient(${g})">${deco(b,true)}</div>`;
+ const badge = b.own ? '<span class="b-own">Своя</span>'
+             : (b.free ? '<span class="b-free">FREE</span>' : `<span class="b-fmt">${FMT[b.fmt]}</span>`);
+ return `<div class="cover sk" data-bid="${b.id}" style="background:linear-gradient(${g})">
+   ${deco(b)}
+   <button class="bm ${isSaved(b)?'on':''}" title="${isSaved(b)?'Убрать из библиотеки':'Сохранить в библиотеку'}" aria-label="Закладка" onclick="toggleSave(${b.id},event)">${bmIcon(isSaved(b))}</button>
+   <div class="c-top"><span class="b-lvl">${b._lvl||b.levels[0]}</span>${badge}</div>
+   <div class="c-mid"><div class="p-title">${esc(b.name)}</div><div class="c-auth">${esc(b.author)}</div><div class="c-mark">${b.year||''}</div></div>
+ </div>`;
+}
+function card(b,opts){
+ const acts = (opts&&opts.actions)
+   ? `<div class="mine-actions"><button onclick="event.stopPropagation();removeCustom('${keyOf(b).replace(/'/g,"")}')">Удалить</button></div>`
+   : '';
+ return `<article class="card reveal" onclick="if(!event.target.closest('a')&&!event.target.closest('button'))openBook(${b.id})">${cover(b)}
+   <div class="cb">
+     <h4>${esc(b.name)}</h4>
+     <div class="meta">${esc(b.author)} · ${b.year}</div>
+     <p>${esc(b.desc)}</p>
+     <div class="links"><a href="${ky(b)}" target="_blank" rel="noopener">Купить</a><a href="${gr(b)}" target="_blank" rel="noopener">Отзывы</a></div>
+     ${acts}
+   </div></article>`;
+}
+function row(b){
+ return `<div class="row reveal" onclick="if(!event.target.closest('a'))openBook(${b.id})">${cover(b,true)}
+   <div class="ri"><h4>${esc(b.name)}</h4><div class="meta">${esc(b.author)} · ${b.year} · ${G[b.genre]}</div></div>
+   <div class="rm"><span class="b-lvl">${b._lvl||b.levels[0]}</span><span class="b-fmt">${FMT[b.fmt]}</span>${b.free?'<span class="b-free">FREE</span>':''}${b.own?'<span class="b-own">Своя</span>':''}</div>
+   <div class="rl"><a href="${ky(b)}" target="_blank" rel="noopener">Купить</a><a href="${gr(b)}" target="_blank" rel="noopener">Отзывы</a></div></div>`;
+}
+
+/* появление карточек при прокрутке */
+let revObs=null, revFired=false;
+function showAllReveal(){ document.querySelectorAll('.reveal:not(.in)').forEach(e=>{e.style.transitionDelay='0ms';e.classList.add('in');}); }
+function observeReveal(){
+  const items=document.querySelectorAll('.reveal:not(.in)');
+  if(!('IntersectionObserver' in window)){ items.forEach(e=>e.classList.add('in')); return; }
+  if(!revObs) revObs=new IntersectionObserver(es=>{
+    revFired=true;
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
+  },{rootMargin:'100px 0px'});
+  items.forEach((e,i)=>{ e.style.transitionDelay=(Math.min(i,12)*30)+'ms'; revObs.observe(e); });
+  setTimeout(()=>{ if(!revFired) showAllReveal(); },900);
+}
+
+const LORD={A1:0,A2:1,B1:2,B2:3,C1:4};
+function sortItems(a){const r=a.slice();
+ if(st.sort==="level")r.sort((x,y)=>LORD[x.levels[0]]-LORD[y.levels[0]]||x.name.localeCompare(y.name,'ru'));
+ else if(st.sort==="author")r.sort((x,y)=>x.author.localeCompare(y.author,'tr')||x.year-y.year);
+ else if(st.sort==="name-asc")r.sort((x,y)=>x.name.localeCompare(y.name,'tr'));
+ else if(st.sort==="year-asc")r.sort((x,y)=>x.year-y.year);
+ else if(st.sort==="year-desc")r.sort((x,y)=>y.year-x.year);
+ else if(st.sort==="genre")r.sort((x,y)=>G[x.genre].localeCompare(G[y.genre],'ru')||x.name.localeCompare(y.name,'tr'));
+ return r;}
+
+function render(){
+ const lc={},fc={},gc={};
+ BOOKS.forEach(b=>{b.levels.forEach(l=>lc[l]=(lc[l]||0)+1);fc[b.fmt]=(fc[b.fmt]||0)+1;gc[b.genre]=(gc[b.genre]||0)+1;});
+ const lfree={};
+ BOOKS.forEach(b=>{ if(b.free) b.levels.forEach(l=>lfree[l]=(lfree[l]||0)+1); });
+
+ document.getElementById('lvlbar').innerHTML='<span class="lb">Уровень</span>'+Object.keys(LEVELS).filter(l=>lc[l]).map(l=>
+  `<button class="lp ${st.levels.has(l)?'on':''}" onclick="toggleLevel('${l}')" title="Всего ${lc[l]}, из них бесплатных ${lfree[l]||0}">${l}<span>${st.onlyFree?(lfree[l]||0):lc[l]}</span></button>`).join('')
+  + (st.period!==null ? `<button class="lp on pchip" onclick="clearPeriod()" title="Убрать фильтр по периоду">${PERIODS[st.period].k}<span>&times;</span></button>` : '');
+ document.getElementById('fmtF').innerHTML=Object.keys(FMT).filter(k=>fc[k]).map(k=>
+  `<button class="fc ${st.fmts.has(k)?'on':''}" onclick="toggleFmt('${k}')">${FMT[k]}<span class="n">${fc[k]}</span></button>`).join('');
+ document.getElementById('genreF').innerHTML=Object.keys(G).filter(k=>gc[k]).map(k=>
+  `<button class="fc ${st.genres.has(k)?'on':''}" onclick="toggleGenre('${k}')">${G[k]}<span class="n">${gc[k]}</span></button>`).join('');
+ const freeCount=BOOKS.filter(b=>b.free).length;
+ document.getElementById('freeF').innerHTML=
+  `<button class="fc free-chip ${st.onlyFree?'on':''}" onclick="toggleFree()">Только бесплатное<span class="n">${freeCount}</span></button>`;
+ updateFilterCount();
+
+ const q=(st.q||'').trim().toLowerCase();
+ let list=BOOKS.filter(b=>{
+  if(st.fmts.size&&!st.fmts.has(b.fmt))return false;
+  if(st.genres.size&&!st.genres.has(b.genre))return false;
+  if(st.levels.size&&!b.levels.some(l=>st.levels.has(l)))return false;
+  if(st.onlyFree&&!b.free)return false;
+  if(st.period!==null){ const p=PERIODS[st.period]; if(!p||b.year<p.from||b.year>p.to) return false; }
+  if(q&&!(b.name+' '+b.author+' '+b.desc+' '+G[b.genre]+' '+FMT[b.fmt]+' '+b.year).toLowerCase().includes(q))return false;
+  return true;});
+ list=sortItems(list);
+ countUp(document.getElementById('foundNum'),list.length,420);
+ document.getElementById('totalNum').textContent=BOOKS.length;
+ const note=document.getElementById('fnote');
+ if(st.group==='level'){
+  const cards=list.reduce((s,b)=>s+(st.levels.size?b.levels.filter(l=>st.levels.has(l)).length:b.levels.length),0);
+  note.textContent='Карточек на полке: '+cards+'. Книга показывается в каждом подходящем уровне.';
+ } else note.textContent='';
+
+ const el=document.getElementById('body');
+ if(!list.length){
+   el.innerHTML='<div class="empty">Ничего не найдено. Попробуйте сбросить фильтры или изменить запрос.</div>';
+   return;
+ }
+ const draw=st.mode==='grid'?card:row;
+ const wrap=h=>`<div class="${st.mode==='grid'?'grid':'list'}">${h}</div>`;
+ const sec=(title,count,inner)=>`<section class="sec"><div class="sech"><h3>${title}</h3><span class="cnt">${count}</span><hr></div>${inner}</section>`;
+
+ if(st.group==='level'){
+  const keys=st.levels.size?Object.keys(LEVELS).filter(l=>st.levels.has(l)):Object.keys(LEVELS);
+  el.innerHTML=keys.map(l=>{const it=list.filter(b=>b.levels.includes(l));if(!it.length)return'';
+   return sec('Уровень '+l,it.length,wrap(it.map(b=>draw(Object.assign({},b,{_lvl:l}))).join('')));}).join('')||'<div class="empty">Ничего не найдено.</div>';
+ } else if(st.group==='fmt'){
+  el.innerHTML=Object.keys(FMT).map(k=>{const it=list.filter(b=>b.fmt===k);if(!it.length)return'';
+   return sec(FMT[k],it.length,wrap(it.map(draw).join('')));}).join('');
+ } else if(st.group==='genre'){
+  el.innerHTML=Object.keys(G).map(k=>{const it=list.filter(b=>b.genre===k);if(!it.length)return'';
+   return sec(G[k],it.length,wrap(it.map(draw).join('')));}).join('');
+ } else el.innerHTML=wrap(list.map(draw).join(''));
+
+ hydrate(); observeReveal();
+}
+
+/* ============================================================
+   КАРТОЧКА КНИГИ
+   ============================================================ */
+function openBook(id){
+ const b=BOOKS[id]; if(!b) return;
+ document.getElementById('mTitle').textContent=b.name;
+ document.getElementById('mMeta').textContent=`${b.author} · ${b.year} · ${G[b.genre]} · ${FMT[b.fmt]}`;
+ document.getElementById('mDesc').textContent=b.desc;
+ document.getElementById('mBadges').innerHTML=`<span class="m-lv">${FMT[b.fmt]}</span>`+b.levels.map(l=>`<span class="m-lv">${l}</span>`).join('')+(b.free?'<span class="b-free">FREE</span>':'');
+ document.getElementById('mBuy').innerHTML=(b.link?`<a class="pri" href="${b.link}" target="_blank" rel="noopener">Моя ссылка</a>`:'')+`<a class="pri" href="${ky(b)}" target="_blank" rel="noopener">Kitapyurdu</a>
+  <a href="${dr(b)}" target="_blank" rel="noopener">D&amp;R</a><a href="${gb(b)}" target="_blank" rel="noopener">Google Books</a>`;
+ document.getElementById('mInfo').innerHTML=`<a href="${bin(b)}" target="_blank" rel="noopener">1000Kitap</a>
+  <a href="${gr(b)}" target="_blank" rel="noopener">Goodreads</a>
+  <a href="${wk(b)}" target="_blank" rel="noopener">Википедия</a>
+  <a href="${olib(b)}" target="_blank" rel="noopener">Open Library</a>`;
+ const fb=document.getElementById('mFreeBlk');
+ if(b.free){
+   fb.style.display='';
+   let links;
+   if(b.fmt==='ders'||b.fmt==='adapte'){
+     links = `<a class="pri" href="${yee(b)}" target="_blank" rel="noopener">Yunus Emre Enstitüsü</a>`
+           + `<a href="${meb(b)}" target="_blank" rel="noopener">MEB, Минобразования</a>`
+           + `<a href="${tdk(b)}" target="_blank" rel="noopener">TDK онлайн</a>`
+           + `<a href="${arch(b)}" target="_blank" rel="noopener">Archive.org</a>`;
+   } else if(b.fmt==='nonfic'){
+     links = `<a class="pri" href="${ktb(b)}" target="_blank" rel="noopener">Библиотека Минкульта</a>`
+           + `<a href="${tdk(b)}" target="_blank" rel="noopener">TDK онлайн</a>`
+           + `<a href="${olib(b)}" target="_blank" rel="noopener">Open Library</a>`
+           + `<a href="${arch(b)}" target="_blank" rel="noopener">Archive.org</a>`;
+   } else {
+     links = `<a class="pri" href="${ktb(b)}" target="_blank" rel="noopener">Библиотека Минкульта</a>`
+           + `<a href="${wsrc(b)}" target="_blank" rel="noopener">Vikikaynak</a>`
+           + `<a href="${gut(b)}" target="_blank" rel="noopener">Gutenberg</a>`
+           + `<a href="${arch(b)}" target="_blank" rel="noopener">Archive.org</a>`
+           + `<a href="${gbooksfree(b)}" target="_blank" rel="noopener">Google Books</a>`
+           + `<a href="${olib(b)}" target="_blank" rel="noopener">Open Library</a>`;
+   }
+   document.getElementById('mFree').innerHTML = links;
+ } else { fb.style.display='none'; }
+ document.getElementById('mTip').textContent='Уровень '+b.levels.join(', ')+'. Если на первой странице больше пяти незнакомых слов, отложите книгу и вернитесь к ней позже.';
+ const sb=document.getElementById('mSaveBtn');
+ sb.dataset.id=b.id;
+ sb.textContent=isSaved(b)?'В библиотеке':'Сохранить в библиотеку';
+ sb.className='btn '+(isSaved(b)?'btn-gh':'btn-acc');
+ sb.onclick=()=>{ toggleSave(b.id); sb.className='btn '+(isSaved(b)?'btn-gh':'btn-acc'); };
+ const mc=document.getElementById('mCover');
+ mc.style.background='linear-gradient('+hue(b.name)+')';
+ mc.dataset.bid=b.id;
+ mc.className='mcover sk';
+ mc.innerHTML=deco(b)+`<div class="c-mid"><div class="p-title" style="font-size:20px">${esc(b.name)}</div><div class="c-auth">${esc(b.author)}</div><div class="c-mark">${b.year||''}</div></div>`;
+ resolveCover(b).then(p=>applyCover(mc,p,'c-photo'));
+ document.getElementById('modal').classList.add('open');
+ document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+function randomItem(){openBook(BOOKS[Math.floor(Math.random()*BOOKS.length)].id);}
+
+/* ============================================================
+   ГЛАВНАЯ И FAQ
+   ============================================================ */
+function renderFaq(){
+  document.getElementById('faqList').innerHTML=FAQ.map((f,i)=>
+   `<div class="faq" id="faq-${i}">
+      <div class="faq-q" onclick="toggleFaq(${i})"><span>${f.q}</span>
+        <span class="faq-i"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg></span>
+      </div>
+      <div class="faq-a"><div><p>${f.a}</p></div></div>
+    </div>`).join('');
+}
+function toggleFaq(i){document.getElementById('faq-'+i).classList.toggle('open');}
+
+function shelf(){
+ const el=document.getElementById('shelf'); if(!el) return;
+ const picks=["Kürk Mantolu Madonna","İnce Memed","Huzur","Aylak Adam","Çalıkuşu","Serenad"];
+ const items=picks.map(n=>BOOKS.find(x=>x.name===n)).filter(Boolean);
+ while(items.length<6 && items.length<BOOKS.length){
+   const cand=BOOKS[items.length*7 % BOOKS.length];
+   if(!items.includes(cand)) items.push(cand); else break;
+ }
+ el.innerHTML=items.map(b=>
+  `<div class="hs sk" data-bid="${b.id}" style="background:linear-gradient(${hue(b.name)})" onclick="openBook(${b.id})" title="${esc(b.name)}">
+     ${deco(b)}<div class="hs-t">${esc(b.name)}</div></div>`).join('');
+ hydrate();
+}
+function renderQuick(){
+ const el=document.getElementById('lvlQuick'); if(!el) return;
+ const lc={}; BOOKS.forEach(b=>b.levels.forEach(l=>lc[l]=(lc[l]||0)+1));
+ el.innerHTML='<span class="ql">Начать с уровня</span>'+Object.keys(LEVELS).filter(l=>lc[l]).map(l=>
+  `<button onclick="jumpLevel('${l}')">${l}<span style="color:var(--ink-3);font-weight:500;margin-left:5px;">${lc[l]}</span></button>`).join('');
+}
+const REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(el,to,dur){
+  if(!el) return;
+  if(REDUCED){ el.textContent=to; return; }
+  const from=parseInt(el.textContent,10)||0;
+  if(from===to){ el.textContent=to; return; }
+  const d=dur||900, t0=performance.now();
+  const token=(el._ct=(el._ct||0)+1);
+  const tick=t=>{
+    if(el._ct!==token) return;
+    const k=Math.min(1,(t-t0)/d), e=1-Math.pow(1-k,3);
+    el.textContent=Math.round(from+(to-from)*e);
+    if(k<1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+function stats(){
+ const a=BOOKS.length,
+       b2=BOOKS.filter(b=>b.levels.includes('A1')||b.levels.includes('A2')).length,
+       c=BOOKS.filter(b=>b.free).length,
+       d=new Set(BOOKS.map(b=>b.author)).size;
+ countUp(document.getElementById('stTotal'),a,950);
+ countUp(document.getElementById('stA1'),b2,1050);
+ countUp(document.getElementById('stFree'),c,1150);
+ countUp(document.getElementById('stAuthors'),d,1250);
+}
+
+/* ============================================================
+   ВИЗУАЛИЗАЦИЯ КАТАЛОГА
+   ============================================================ */
+const VIZ_COLORS=['#0f6b5c','#3a63a0','#a8813a','#8e4a45','#5d4f8f','#46683c','#2e6a7d'];
+function jumpCell(l,g){
+  st.levels=new Set([l]); st.genres=new Set([g]); st.fmts=new Set();
+  st.onlyFree=false; st.q=""; st.period=null; st.group='none';
+  const i=document.getElementById('search'); if(i) i.value="";
+  const sc=document.getElementById('sClear'); if(sc) sc.classList.remove('on');
+  const gs=document.getElementById('groupSel'); if(gs) gs.value='none';
+  setView('catalog');
+}
+function jumpPeriod(i){
+  st.period=(st.period===i)?null:i;
+  st.levels=new Set(); st.genres=new Set(); st.fmts=new Set(); st.onlyFree=false; st.q="";
+  const inp=document.getElementById('search'); if(inp) inp.value="";
+  const sc=document.getElementById('sClear'); if(sc) sc.classList.remove('on');
+  setView('catalog');
+}
+function clearPeriod(){ st.period=null; render(); }
+
+// матрица «уровень × жанр»: клик открывает пересечение
+function renderHeat(){
+  const el=document.getElementById('heat'); if(!el) return;
+  const lvls=Object.keys(LEVELS);
+  const gens=Object.keys(G);
+  const m={}; let max=0;
+  BOOKS.forEach(b=>b.levels.forEach(l=>{
+    const k=l+'|'+b.genre; m[k]=(m[k]||0)+1; if(m[k]>max) max=m[k];
+  }));
+  let h='<div class="hm-h"></div>'+lvls.map(l=>'<div class="hm-h">'+l+'</div>').join('');
+  gens.forEach(g=>{
+    const tot=lvls.reduce((s,l)=>s+(m[l+'|'+g]||0),0);
+    if(!tot) return;
+    h+='<div class="hm-r" title="'+esc(G[g])+'">'+esc(G[g])+'</div>';
+    lvls.forEach(l=>{
+      const n=m[l+'|'+g]||0;
+      const p=max?n/max:0;
+      if(!n){ h+='<div class="hm-c z">·</div>'; return; }
+      h+='<button class="hm-c'+(p>.6?' hot':'')+'" style="background:color-mix(in srgb, var(--accent) '
+        +Math.round(12+p*88)+'%, var(--surface-2))" onclick="jumpCell(\''+l+'\',\''+g+'\')" '
+        +'title="'+esc(G[g])+', уровень '+l+': '+n+' книг. Нажмите, чтобы открыть">'+n+'</button>';
+    });
+  });
+  el.innerHTML=h;
+  el.style.gridTemplateColumns='auto repeat('+lvls.length+',minmax(0,1fr))';
+}
+
+// таймлайн: сколько книг какой эпохи
+function renderTimeline(){
+  const el=document.getElementById('tline'); if(!el) return;
+  const c=PERIODS.map(p=>BOOKS.filter(b=>b.year>=p.from&&b.year<=p.to).length);
+  const max=Math.max(1,...c);
+  el.innerHTML=PERIODS.map((p,i)=>
+    '<button class="tlb'+(st.period===i?' on':'')+'" onclick="jumpPeriod('+i+')" '
+    +'title="'+p.k+', '+p.s+': '+c[i]+' книг. Нажмите, чтобы открыть">'
+    +'<span class="tlv" data-h="'+Math.round(c[i]/max*100)+'"><b>'+c[i]+'</b></span>'
+    +'<span class="tlk">'+p.k+'<br><i>'+p.s+'</i></span></button>').join('');
+}
+function renderViz(){
+  const lc={},lf={},fc={};
+  BOOKS.forEach(b=>{
+    b.levels.forEach(l=>{ lc[l]=(lc[l]||0)+1; if(b.free) lf[l]=(lf[l]||0)+1; });
+    fc[b.fmt]=(fc[b.fmt]||0)+1;
+  });
+  const lvls=Object.keys(LEVELS).filter(l=>lc[l]);
+  const max=Math.max(1,...lvls.map(l=>lc[l]));
+  const lb=document.getElementById('lvlBars');
+  if(lb) lb.innerHTML=lvls.map(l=>
+    `<button class="bar" onclick="jumpLevel('${l}')" title="Открыть книги уровня ${l}">
+       <span class="bk">${l}</span>
+       <span class="bt"><span class="bf" data-w="${Math.round(lc[l]/max*100)}"></span></span>
+       <span class="bn"><b>${lc[l]}</b>${lf[l]?' · '+lf[l]+' free':''}</span>
+     </button>`).join('');
+
+  const keys=Object.keys(FMT).filter(k=>fc[k]).sort((x,y)=>fc[y]-fc[x]);
+  const total=keys.reduce((s,k)=>s+fc[k],0)||1;
+  let acc=0; const stops=[];
+  keys.forEach((k,i)=>{
+    const from=acc/total*360; acc+=fc[k]; const to=acc/total*360;
+    stops.push(VIZ_COLORS[i%VIZ_COLORS.length]+' '+from.toFixed(2)+'deg '+to.toFixed(2)+'deg');
+  });
+  const d=document.getElementById('fmtDonut');
+  if(d) d.style.background='conic-gradient('+stops.join(',')+')';
+  const dt=document.getElementById('dTotal'); if(dt) dt.textContent=BOOKS.length;
+  const lg=document.getElementById('fmtLeg');
+  if(lg) lg.innerHTML=keys.map((k,i)=>
+    `<button onclick="jumpFmt('${k}')" title="Открыть: ${FMT[k]}">
+       <i style="background:${VIZ_COLORS[i%VIZ_COLORS.length]}"></i><span>${FMT[k]}</span><b>${fc[k]}</b></button>`).join('');
+
+  renderHeat();
+  renderTimeline();
+}
+function animateViz(){
+  const tl=document.querySelectorAll('#tline .tlv');
+  const cells=document.querySelectorAll('#heat .hm-c');
+  if(REDUCED){
+    tl.forEach(e=>e.style.height=e.dataset.h+'%');
+    cells.forEach(e=>e.style.opacity='');
+  } else {
+    tl.forEach(e=>e.style.height='0%');
+    cells.forEach(e=>{ e.style.opacity='0'; e.style.transform='scale(.86)'; });
+    setTimeout(()=>tl.forEach((e,i)=>setTimeout(()=>e.style.height=e.dataset.h+'%', i*60)),120);
+    setTimeout(()=>cells.forEach((e,i)=>setTimeout(()=>{ e.style.opacity=''; e.style.transform=''; }, i*11)),160);
+  }
+  const bars=document.querySelectorAll('#lvlBars .bf');
+  if(REDUCED){ bars.forEach(e=>e.style.width=e.dataset.w+'%'); return; }
+  bars.forEach(e=>e.style.width='0%');
+  const d=document.getElementById('fmtDonut');
+  if(d){ d.classList.remove('in'); void d.offsetWidth; }
+  setTimeout(()=>{
+    bars.forEach((e,i)=>setTimeout(()=>e.style.width=e.dataset.w+'%', i*70));
+    if(d) d.classList.add('in');
+  },90);
+}
+function jumpFmt(k){
+  st.fmts=new Set([k]); st.levels=new Set(); st.genres=new Set(); st.onlyFree=false; st.q=""; st.period=null;
+  const s2=document.getElementById('search'); if(s2) s2.value="";
+  document.getElementById('sClear').classList.remove('on');
+  setView('catalog');
+}
+function openFilters(){
+  setView('catalog');
+  setTimeout(()=>{
+    const p=document.getElementById('fPanel'), b=document.getElementById('fBtn');
+    if(p.classList.contains('hide')){ p.classList.remove('hide'); b.classList.add('open'); }
+    p.scrollIntoView({behavior:'smooth',block:'center'});
+  },220);
+}
+function focusSearch(){
+  setView('catalog');
+  setTimeout(()=>{ const i=document.getElementById('search'); if(i){ i.focus({preventScroll:true}); i.closest('.ctrl').scrollIntoView({behavior:'smooth',block:'center'}); } },220);
+}
+
+/* сводка сохранённого */
+function renderLibSum(saved){
+  const el=document.getElementById('libSum'); if(!el) return;
+  if(!saved.length){ el.style.display='none'; return; }
+  el.style.display='';
+  const lc={}; saved.forEach(b=>b.levels.forEach(l=>lc[l]=(lc[l]||0)+1));
+  const max=Math.max(1,...Object.keys(LEVELS).map(l=>lc[l]||0));
+  const free=saved.filter(b=>b.free).length;
+  el.innerHTML=`<div class="lsn"><b>${saved.length}</b><span>книг сохранено</span></div>
+    <div class="lsn"><b>${free}</b><span>из них бесплатных</span></div>
+    <div class="lsbars">${Object.keys(LEVELS).map(l=>
+      `<div class="lsb" title="${l}: ${lc[l]||0}"><div class="lsv" data-h="${Math.round((lc[l]||0)/max*100)}"></div><div class="lsk">${l}</div></div>`).join('')}</div>`;
+  const bars=el.querySelectorAll('.lsv');
+  if(REDUCED){ bars.forEach(e=>e.style.height=e.dataset.h+'%'); return; }
+  setTimeout(()=>bars.forEach((e,i)=>setTimeout(()=>e.style.height=e.dataset.h+'%', i*60)),60);
+}
+
+/* наклон обложки за курсором */
+let tiltEl=null;
+function clearTilt(){
+  if(!tiltEl) return;
+  const c=tiltEl.querySelector('.cover');
+  if(c){ c.style.removeProperty('--rx'); c.style.removeProperty('--ry'); }
+  tiltEl.classList.remove('tilting'); tiltEl=null;
+}
+function initTilt(){
+  if(REDUCED) return;
+  if(window.matchMedia && matchMedia('(pointer: coarse)').matches) return;
+  document.addEventListener('mousemove',e=>{
+    const card=e.target.closest ? e.target.closest('.grid .card') : null;
+    if(!card){ clearTilt(); return; }
+    if(card!==tiltEl){ clearTilt(); tiltEl=card; card.classList.add('tilting'); }
+    const c=card.querySelector('.cover'); if(!c) return;
+    const r=c.getBoundingClientRect(); if(!r.width) return;
+    const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    c.style.setProperty('--ry',(x*10).toFixed(2)+'deg');
+    c.style.setProperty('--rx',(-y*10).toFixed(2)+'deg');
+  },{passive:true});
+}
+
+/* ============================================================
+   ПРОКРУТКА
+   ============================================================ */
+let lastScroll=-1;
+function onScroll(){
+  const y=window.scrollY||document.documentElement.scrollTop;
+  if(Math.abs(y-lastScroll)<4) return;
+  lastScroll=y;
+  document.getElementById('topbar').classList.toggle('stuck',y>8);
+  document.getElementById('toTop').classList.toggle('on',y>600);
+  const sp=document.getElementById('sprog');
+  if(sp){
+    const h=document.documentElement.scrollHeight-window.innerHeight;
+    sp.style.width=(h>0?Math.min(1,y/h)*100:0)+'%';
+    sp.classList.toggle('on',y>40);
+  }
+}
+window.addEventListener('scroll',()=>requestAnimationFrame(onScroll),{passive:true});
+
+/* ============================================================
+   СТАРТ
+   ============================================================ */
+document.getElementById('search').addEventListener('input',e=>{
+  st.q=e.target.value;
+  document.getElementById('sClear').classList.toggle('on',!!e.target.value);
+  if(st.view!=='catalog') setView('catalog'); else render();
+});
+
+document.documentElement.classList.add('js-reveal');
+rebuildBooks();
+initForm();
+renderNav();
+renderFaq();
+stats();
+shelf();
+renderQuick();
+renderViz();
+initTilt();
+markKey();
+setTheme(document.documentElement.getAttribute('data-theme')||'light');
+if(window.innerWidth<=900){
+  document.getElementById('fPanel').classList.add('hide');
+} else {
+  document.getElementById('fBtn').classList.add('open');
+}
+if(RUNTIME_KEY){try{document.getElementById('kbInput').value=RUNTIME_KEY;}catch(e){}}
+setView('home');
+onScroll();
+setTimeout(animateViz,300);
+</script>
+</body>
+</html>
